@@ -18,4 +18,8 @@ final class QueuesServiceProvider extends ServiceProvider
     {
     }
 
+    public function boot()
+    {
+        $this->loadRoutesFrom(__DIR__ . '/Api/V1/Config/Routing/api.php');
+    }
 }

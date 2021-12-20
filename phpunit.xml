@@ -11,8 +11,11 @@
         <!--        <testsuite name="Feature">-->
         <!--            <directory suffix="Test.php">./tests/Feature</directory>-->
         <!--        </testsuite>-->
-        <testsuite name="Whole">
+        <testsuite name="Generic">
             <directory suffix="Test.php">./src/Tests</directory>
+        </testsuite>
+        <testsuite name="ApiV1">
+            <directory suffix="Test.php">./src/Api/V1/Tests</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

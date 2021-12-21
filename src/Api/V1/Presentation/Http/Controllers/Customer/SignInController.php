@@ -4,6 +4,7 @@ namespace Queues\Api\V1\Presentation\Http\Controllers\Customer;
 
 use App\Jobs\ClearTokens;
 use App\Models\User;
+use Carbon\Carbon;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\SignInRequest;
 
@@ -13,7 +14,9 @@ class SignInController extends ApiController
     {
         $user = User::findByCredentialsOrFail($request->username, $request->password);
         $token = $user->createToken($request->userAgent());
-        ClearTokens::dispatch($user, $token->accessToken->name);
+        ClearTokens::dispatch($user, $token->accessToken->name)
+            ->onConnection('redis')
+            ->delay(Carbon::now()->addSeconds(1));
         return $this->respond($token->plainTextToken);
     }
 }

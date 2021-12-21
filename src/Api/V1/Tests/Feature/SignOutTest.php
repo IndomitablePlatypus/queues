@@ -6,7 +6,6 @@ use App\Models\User;
 use Cardz\Support\MobileAppGateway\Config\Routes\RouteName;
 use Cardz\Support\MobileAppGateway\Tests\Shared\Fixtures\UserLoginInfo;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Queues\Api\V1\Config\Routing\Routing;
 use Queues\Api\V1\Tests\TestApplicationTrait;
@@ -30,6 +29,7 @@ class SignOutTest extends BaseTestCase
 
         $token = $user->createToken($this->faker->word());
         $this->withToken($token->plainTextToken);
+        dd($this->defaultHeaders);
 
         $response = $this->get(Routing::for(Routing::SIGN_OUT));
         $response->assertSuccessful();

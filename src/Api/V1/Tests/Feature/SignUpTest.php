@@ -10,7 +10,7 @@ class SignUpTest extends BaseTestCase
 {
     use TestApplicationTrait;
 
-    public function test_sign_up_fails_on_validation()
+    public function test_customer_sign_up_fails_on_validation()
     {
         $response = $this->post(Routing::for(Routing::SIGN_UP));
         $response->assertJsonValidationErrorFor('username');

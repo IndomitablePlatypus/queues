@@ -10,7 +10,7 @@ use Stringable;
 
 trait ArrayPresenterTrait
 {
-    public function toArray(bool $snakify = false, bool $publicOnly = false): array
+    public function _toArray(bool $snakify = false, bool $publicOnly = false): array
     {
         $filter = $publicOnly ? ReflectionProperty::IS_PUBLIC : null;
         $array = [];
@@ -18,14 +18,14 @@ trait ArrayPresenterTrait
         $reflectionClass = new ReflectionClass($this);
         foreach ($reflectionClass->getProperties($filter) as $property) {
             $property->setAccessible(true);
-            $value = $property->hasType() && $property->isInitialized($this) ? $this->toArrayNestedValue($property->getValue($this)) : null;
+            $value = $property->hasType() && $property->isInitialized($this) ? $this->_toArrayNestedValue($property->getValue($this)) : null;
             $array[$this->transformName($property->getName(), $snakify)] = $value;
         }
 
         return $array;
     }
 
-    protected function toArrayNestedValue($value): mixed
+    protected function _toArrayNestedValue($value): mixed
     {
         return match (true) {
             $value instanceof Carbon => $value,

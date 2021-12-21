@@ -11,7 +11,7 @@ class SignInTest extends BaseTestCase
 {
     use TestApplicationTrait;
 
-    public function test_sign_in_fails_on_validation()
+    public function test_customer_sign_in_fails_on_validation()
     {
         $response = $this->post(Routing::for(Routing::SIGN_IN));
         $response->assertJsonValidationErrorFor('username');

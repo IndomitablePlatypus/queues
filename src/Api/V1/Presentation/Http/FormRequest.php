@@ -7,9 +7,7 @@ use Illuminate\Foundation\Http\FormRequest as IlluminateFormRequest;
 
 class FormRequest extends IlluminateFormRequest
 {
-    use ArrayPresenterTrait {
-        ArrayPresenterTrait::toArray as __toArray;
-    }
+    use ArrayPresenterTrait;
 
     public function passedValidation()
     {
@@ -21,6 +19,6 @@ class FormRequest extends IlluminateFormRequest
 
     public function toArray(): array
     {
-        return $this->__toArray(true, true);
+        return $this->_toArray(true, true);
     }
 }

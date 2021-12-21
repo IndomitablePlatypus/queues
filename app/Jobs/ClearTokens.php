@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\Sanctum;
 
 class ClearTokens implements ShouldQueue
@@ -23,7 +24,8 @@ class ClearTokens implements ShouldQueue
 
     public function handle(): void
     {
-        $userId = $this->user->user_id;
+        $userId = $this->user->id;
+        Log::info(sprintf('ClearTokens: user %s, tokenName: %s', $userId, $this->tokenName));
 
         /** @var Model $tokenModel */
         $tokenModel = Sanctum::$personalAccessTokenModel;

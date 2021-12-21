@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -20,9 +22,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id',
-        'registration_initiated_at',
         'name',
-        'email',
+        'username',
         'phone',
         'password',
     ];
@@ -46,4 +47,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'registration_initiated_at' => 'datetime',
     ];
+
+    public static function findByCredentialsOrFail(string $username, string $password): static
+    {
+        $user = User::query()
+            ->where('username', $username)
+            ->firstOrFail();
+
+        if (!Hash::check($password, $user->password)) {
+            throw new Exception('Unknown credentials');
+        }
+
+        return $user;
+    }
+
 }

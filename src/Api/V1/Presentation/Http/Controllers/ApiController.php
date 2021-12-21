@@ -7,8 +7,8 @@ use Illuminate\Http\JsonResponse;
 
 class ApiController extends Controller
 {
-    public function respond($response): JsonResponse
+    public function respond($response, int $code = 200): JsonResponse
     {
-        return response()->json($response);
+        return response()->json($response, $code);
     }
 }

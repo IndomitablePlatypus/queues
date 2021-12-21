@@ -14,12 +14,10 @@ class CreateInvitesTable extends Migration
     public function up()
     {
         Schema::create('invites', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('member_id')->index();
+            $table->uuid('invite_id')->primary();
             $table->uuid('workspace_id')->index();
 
             $table->dateTime('proposed_at')->index();
-            $table->dateTime('accepted_at')->nullable()->index();
 
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->index();

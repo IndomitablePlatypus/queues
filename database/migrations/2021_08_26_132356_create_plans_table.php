@@ -14,7 +14,7 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('plan_id')->primary();
             $table->uuid('workspace_id')->index();
 
             $table->string('description')->nullable();
@@ -23,6 +23,7 @@ class CreatePlansTable extends Migration
             $table->dateTime('launched_at')->nullable()->index();
             $table->dateTime('stopped_at')->nullable()->index();
             $table->dateTime('archived_at')->nullable()->index();
+            $table->dateTime('expiration_date')->nullable()->index();
 
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->index();

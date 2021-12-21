@@ -14,7 +14,7 @@ class CreateCardsTable extends Migration
     public function up()
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('card_id')->primary();
             $table->uuid('plan_id')->index();
             $table->uuid('customer_id')->index();
 

@@ -9,6 +9,7 @@ class Routing
         'api',
     ];
 
+    public const SIGN_IN = '/sign-in';
     public const SIGN_UP = '/sign-up';
 
     public static function for(string $route): string

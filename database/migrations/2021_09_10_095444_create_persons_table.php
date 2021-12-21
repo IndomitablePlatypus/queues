@@ -14,8 +14,10 @@ class CreatePersonsTable extends Migration
     public function up()
     {
         Schema::create('persons', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('person_id')->primary();
             $table->string('name')->index();
+
+            $table->dateTime('joined_at')->index();
 
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->index();

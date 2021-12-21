@@ -14,17 +14,19 @@ class CreateRelationsTable extends Migration
     public function up()
     {
         Schema::create('relations', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('relation_id')->primary();
             $table->uuid('collaborator_id')->index();
             $table->uuid('workspace_id')->index();
 
             $table->string('relation_type')->index();
 
-            $table->dateTime('entered_at')->nullable()->index();
-            $table->dateTime('left_at')->nullable()->index();
+            $table->dateTime('established_at')->nullable()->index();
 
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->index();
+
+            $table->index(['collaborator_id', 'workspace_id']);
+            $table->unique(['collaborator_id', 'workspace_id']);
         });
     }
 

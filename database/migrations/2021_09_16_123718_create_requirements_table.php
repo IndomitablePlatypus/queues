@@ -14,11 +14,12 @@ class CreateRequirementsTable extends Migration
     public function up()
     {
         Schema::create('requirements', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('requirement_id')->primary();
             $table->uuid('plan_id')->index();
 
             $table->string('description')->index();
             $table->dateTime('added_at')->index();
+            $table->dateTime('removed_at')->nullable()->index();
 
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->index();

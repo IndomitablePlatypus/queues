@@ -24,7 +24,7 @@ class ClearTokens implements ShouldQueue
     public function handle(ClearTokenService $clearTokenService): void
     {
         $userId = $this->user->id;
-        Log::info(sprintf('ClearTokens: user %s, tokenName: %s', $userId, $this->tokenName));
+        Log::info(sprintf('ClearTokens: user %s, tokenName: %s', $userId, $this->tokenName ?? 'N/A'));
 
         $this->tokenName
             ? $clearTokenService->deleteOldTokens($this->user, $this->tokenName)

@@ -28,3 +28,4 @@ docker-compose.override.yml
 /.vscode
 
 _ide_helper_models.php
+/docker/rabbitmq/data/.erlang.cookie

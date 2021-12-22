@@ -13,7 +13,7 @@ class SignInTest extends BaseTestCase
 
     public function test_customer_sign_in_fails_on_validation()
     {
-        $response = $this->post(Routing::for(Routing::SIGN_IN));
+        $response = $this->post(Routing::SIGN_IN());
         $response->assertJsonValidationErrorFor('username');
         $response->assertJsonValidationErrorFor('password');
     }
@@ -23,7 +23,7 @@ class SignInTest extends BaseTestCase
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
-        $response = $this->post(Routing::for(Routing::SIGN_IN), [
+        $response = $this->post(Routing::SIGN_IN(), [
             'username' => $user->username,
             'password' => 'password',
         ]);

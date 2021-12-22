@@ -29,7 +29,6 @@ class SignOutTest extends BaseTestCase
 
         $token = $user->createToken($this->faker->word());
         $this->withToken($token->plainTextToken);
-        dd($this->defaultHeaders);
 
         $response = $this->get(Routing::for(Routing::SIGN_OUT));
         $response->assertSuccessful();

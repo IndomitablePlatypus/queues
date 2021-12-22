@@ -26,6 +26,7 @@ services:
             - redis
             - meilisearch
             - selenium
+            - rabbitmq
     pgsql:
         image: 'postgres:13'
         ports:
@@ -55,6 +56,20 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        environment:
+            RABBITMQ_DEFAULT_USER: guest
+            RABBITMQ_DEFAULT_PASS: guest
+        volumes:
+            - 'sailrabbitmqetc:/etc/rabbitmq/'
+            - 'sailrabbitmqdata:/var/lib/rabbitmq/'
+            - 'sailrabbitmqlog:/var/log/rabbitmq/'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6672}:5672'
+            - '${FORWARD_REDIS_MAN_PORT:-6673}:15672'
+        networks:
+            - sail
     meilisearch:
         image: 'getmeili/meilisearch:latest'
         platform: linux/x86_64
@@ -90,4 +105,10 @@ volumes:
     sailredis:
         driver: local
     sailmeilisearch:
+        driver: local
+    sailrabbitmqetc:
+        driver: local
+    sailrabbitmqdata:
+        driver: local
+    sailrabbitmqlog:
         driver: local

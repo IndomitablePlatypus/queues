@@ -70,6 +70,11 @@ services:
             - '${FORWARD_REDIS_MAN_PORT:-6673}:15672'
         networks:
             - sail
+        healthcheck:
+            test: rabbitmq-diagnostics -q ping
+            interval: 10s
+            timeout: 10s
+            retries: 10
     meilisearch:
         image: 'getmeili/meilisearch:latest'
         platform: linux/x86_64

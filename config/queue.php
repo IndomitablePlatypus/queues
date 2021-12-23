@@ -76,6 +76,7 @@ return [
             'driver' => 'rabbitmq',
             'queue' => env('RABBITMQ_QUEUE', 'default'),
             'connection' => PhpAmqpLib\Connection\AMQPLazyConnection::class,
+            'retry_after' => 90,
 
             'hosts' => [
                 [
@@ -97,21 +98,27 @@ return [
                     'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
                 ],
 
-                'exchange' => [
-                    'name' => env('RABBITMQ_EXCHANGE_NAME', 'queues_exchange'),
-                    // Determine if exchange should be created if it does not exist.
-                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
-                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
-                    'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
-                    'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
-                    'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
-                ],
+                //'exchange' => [
+                //    'name' => env('RABBITMQ_EXCHANGE_NAME', 'default'),
+                //    // Determine if exchange should be created if it does not exist.
+                //    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+                //    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
+                //    'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
+                //    'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
+                //    'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
+                //    'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
+                //],
 
                 'queue' => [
                     'job' => VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob::class,
+
+                    'name' => env('RABBITMQ_QUEUE', 'default'),
+
+                    'exchange' => env('RABBITMQ_EXCHANGE_NAME', 'default'),
+                    'exchange_type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
                     // Determine if queue should be created if it does not exist.
                     'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
+
                     // Determine if queue should be binded to the exchange created.
                     'bind' => env('RABBITMQ_QUEUE_DECLARE_BIND', true),
                     'passive' => env('RABBITMQ_QUEUE_PASSIVE', false),
@@ -119,6 +126,10 @@ return [
                     'exclusive' => env('RABBITMQ_QUEUE_EXCLUSIVE', false),
                     'auto_delete' => env('RABBITMQ_QUEUE_AUTODELETE', false),
                     'arguments' => env('RABBITMQ_QUEUE_ARGUMENTS'),
+
+                    'reroute_failed' => true,
+                    'failed_exchange' => 'failed-exchange',
+                    'failed_routing_key' => 'application-x.%s',
                 ],
             ],
 

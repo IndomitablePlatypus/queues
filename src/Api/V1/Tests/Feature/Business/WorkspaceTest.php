@@ -2,28 +2,44 @@
 
 namespace Feature\Business;
 
+use App\Jobs\EstablishRelation;
 use App\Models\User;
 use App\Models\Workspace;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Domain\RelationType;
+use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
 
 class WorkspaceTest extends BaseTestCase
 {
-    use TestApplicationTrait;
+    use TestApplicationTrait, RoutingTestTrait;
 
-    public function test_workspace_can_be_added()
+    public function test_workspace_can_be_added(): void
     {
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
-        $token = $user->createToken($this->faker->word());
-        $this->withToken($token->plainTextToken);
+        $this->tokenize($user);
 
         /** @var Workspace $workspace */
-        $workspace = Workspace::factory()->make();
-        $workspace->keeper_id = $user->id;
-        $response = $this->post(Routing::WORKSPACES_ADD(), $workspace->profile);
+        $workspace = Workspace::factory()->make(['keeper_id' => $user->id]);
+        $response = $this->rPost(Routing::WORKSPACES_ADD(), $workspace->profile);
+        $response->assertSuccessful();
+    }
+
+    public function test_workspace_profile_can_be_updated(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->make();
+        $workspace = Workspace::factory()->make(['keeper_id' => $user->id]);
+        $user->save();
+        $workspace->save();
+        EstablishRelation::dispatchSync($user->id, $workspace->id, RelationType::KEEPER());
+        $this->tokenize($user);
+
+        $profile = array_merge($workspace->profile, ['description' => 'changed']);
+        $response = $this->rPut(Routing::WORKSPACES_CHANGE_PROFILE(), ['workspaceId' => $workspace->id], $profile);
         $response->assertSuccessful();
     }
 

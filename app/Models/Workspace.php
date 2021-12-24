@@ -28,4 +28,9 @@ class Workspace extends Model
     {
         return $this->hasMany(Plan::class);
     }
+
+    public function getIdAttribute(): string
+    {
+        return $this->workspace_id;
+    }
 }

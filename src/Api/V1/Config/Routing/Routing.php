@@ -15,7 +15,7 @@ namespace Queues\Api\V1\Config\Routing;
  */
 class Routing
 {
-    public const PREFIX_API = 'api/v1';
+    public const PREFIX_API = '/api/v1';
     public const PREFIX_BUSINESS = '/business';
     public const MIDDLEWARE_API = ['api'];
     public const MIDDLEWARE_AUTH = ['auth:sanctum'];

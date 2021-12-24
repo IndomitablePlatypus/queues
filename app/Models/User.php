@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -62,10 +62,14 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function workspaces(): Collection
+    public function workspaces(): BelongsToMany
     {
-        $query = "select w.* from workspaces w inner join relations r on w.workspace_id = r.workspace_id where r.collaborator_id = :collaborator_id;";
-        return Workspace::query()->fromQuery($query, ['collaborator_id' => $this->id]);
+        return $this->belongsToMany(Workspace::class, 'relations', 'collaborator_id', 'workspace_id');
+    }
+
+    public function workspace(string $id): BelongsToMany
+    {
+        return $this->workspaces()->where('workspaces.workspace_id', '=', $id);
     }
 
 }

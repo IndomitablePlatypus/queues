@@ -10,7 +10,7 @@ class WorkspacesGetOneController extends ApiController
 {
     public function __invoke(GetRequest $request)
     {
-        $workspace = $request->user()->workspaces()->where('workspace_id', '=', $request->workspaceId)->firstOrFail();
+        $workspace = $request->user()->workspace($request->workspaceId)->firstOrFail();
         return $this->respond($workspace);
     }
 }

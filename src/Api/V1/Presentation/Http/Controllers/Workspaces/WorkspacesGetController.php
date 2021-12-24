@@ -10,7 +10,7 @@ class WorkspacesGetController extends ApiController
 {
     public function __invoke(GetRequest $request)
     {
-        $workspaces = $request->user()->workspaces();
+        $workspaces = $request->user()->workspaces()->get();
         return $this->respond($workspaces);
     }
 }

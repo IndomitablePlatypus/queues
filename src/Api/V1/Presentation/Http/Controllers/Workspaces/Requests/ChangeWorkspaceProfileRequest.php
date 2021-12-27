@@ -12,8 +12,6 @@ final class ChangeWorkspaceProfileRequest extends FormRequest
 {
     use ArrayPresenterTrait;
 
-    public GenericIdInterface $collaboratorId;
-
     public GenericIdInterface $workspaceId;
 
     #[ArrayShape(['name' => 'string', 'description' => 'string', 'address' => 'string'])]
@@ -41,7 +39,6 @@ final class ChangeWorkspaceProfileRequest extends FormRequest
 
     public function passedValidation(): void
     {
-        $this->collaboratorId = GuidBasedImmutableId::of($this->input('collaboratorId'));
         $this->workspaceId = GuidBasedImmutableId::of($this->input('workspaceId'));
         $this->profile['name'] = $this->input('name');
         $this->profile['description'] = $this->input('description');
@@ -51,7 +48,6 @@ final class ChangeWorkspaceProfileRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'collaboratorId' => $this->user()->id,
             'workspaceId' => $this->route('workspaceId'),
         ]);
     }

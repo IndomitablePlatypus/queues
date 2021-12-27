@@ -9,7 +9,7 @@ class WorkspacesChangeProfileController extends ApiController
 {
     public function __invoke(ChangeWorkspaceProfileRequest $request)
     {
-        $workspace = $request->user()->workspaces()->firstOrFail();
+        $workspace = $this->user()->getWorkspace($request->workspaceId);
         $workspace->fill($request->toArray());
         $workspace->save();
         return $this->respond($workspace);

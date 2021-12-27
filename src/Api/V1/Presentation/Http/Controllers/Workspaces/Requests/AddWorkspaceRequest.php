@@ -18,7 +18,6 @@ final class AddWorkspaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'keeperId' => 'required',
             'name' => 'required',
             'description' => 'required',
             'address' => 'required',
@@ -28,7 +27,6 @@ final class AddWorkspaceRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'keeperId.required' => 'keeperId required',
             'name.required' => 'name required',
             'description.required' => 'description required',
             'address.required' => 'address required',
@@ -40,13 +38,6 @@ final class AddWorkspaceRequest extends FormRequest
         $this->profile['name'] = $this->input('name');
         $this->profile['description'] = $this->input('description');
         $this->profile['address'] = $this->input('address');
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'keeperId' => $this->user()->id,
-        ]);
     }
 
     public function toArray(): array

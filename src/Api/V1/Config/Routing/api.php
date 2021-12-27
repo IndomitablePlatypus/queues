@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
+use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteDiscardController;
+use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteProposeController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignInController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignOutController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignUpController;
@@ -45,5 +48,19 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::put(Routing::WORKSPACES_CHANGE_PROFILE)
             ->name(Routing::WORKSPACES_CHANGE_PROFILE)
             ->uses(WorkspacesChangeProfileController::class);
+
+
+        Route::post(Routing::INVITE_PROPOSE)
+            ->name(Routing::INVITE_PROPOSE)
+            ->uses(InviteProposeController::class);
+
+        Route::put(Routing::INVITE_ACCEPT)
+            ->name(Routing::INVITE_ACCEPT)
+            ->uses(InviteAcceptController::class);
+
+        Route::delete(Routing::INVITE_DISCARD)
+            ->name(Routing::INVITE_DISCARD)
+            ->uses(InviteDiscardController::class);
+
     });
 });

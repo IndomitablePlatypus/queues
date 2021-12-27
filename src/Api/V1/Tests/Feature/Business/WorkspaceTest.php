@@ -17,6 +17,7 @@ class WorkspaceTest extends BaseTestCase
 
     public function test_workspace_can_be_added(): void
     {
+
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
@@ -26,6 +27,10 @@ class WorkspaceTest extends BaseTestCase
         $workspace = Workspace::factory()->make(['keeper_id' => $user->id]);
         $response = $this->rPost(Routing::WORKSPACES_ADD(), $workspace->profile);
         $response->assertSuccessful();
+        $workspaceId = $response->json('workspace_id');
+
+        $workspace = Workspace::query()->find($workspaceId);
+        $this->assertEquals($user->id, $workspace->keeper_id);
     }
 
     public function test_workspace_profile_can_be_updated(): void
@@ -44,3 +49,4 @@ class WorkspaceTest extends BaseTestCase
     }
 
 }
+

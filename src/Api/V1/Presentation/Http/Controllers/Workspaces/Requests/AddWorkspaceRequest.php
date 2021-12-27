@@ -12,10 +12,6 @@ final class AddWorkspaceRequest extends FormRequest
 {
     use ArrayPresenterTrait;
 
-    public GenericIdInterface $keeperId;
-
-    public GenericIdInterface $workspaceId;
-
     #[ArrayShape(['name' => 'string', 'description' => 'string', 'address' => 'string'])]
     public array $profile = [];
 
@@ -41,8 +37,6 @@ final class AddWorkspaceRequest extends FormRequest
 
     public function passedValidation(): void
     {
-        $this->keeperId = GuidBasedImmutableId::of($this->input('keeperId'));
-        $this->workspaceId = GuidBasedImmutableId::make();
         $this->profile['name'] = $this->input('name');
         $this->profile['description'] = $this->input('description');
         $this->profile['address'] = $this->input('address');

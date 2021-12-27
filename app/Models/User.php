@@ -69,11 +69,6 @@ class User extends Authenticatable
         return $this->hasMany(Workspace::class, 'keeper_id');
     }
 
-    public function invites(): HasMany
-    {
-        return $this->hasMany(Invite::class, 'collaborator_id');
-    }
-
     public function workspaces(): BelongsToMany
     {
         return $this->belongsToMany(Workspace::class, 'relations', 'collaborator_id', 'workspace_id');
@@ -83,6 +78,13 @@ class User extends Authenticatable
     {
         /** @var Workspace $workspace */
         $workspace = $this->workspaces()->where('workspaces.workspace_id', '=', $id)->firstOrFail();
+        return $workspace;
+    }
+
+    public function getOwnWorkspace(string $id): Workspace
+    {
+        /** @var Workspace $workspace */
+        $workspace = $this->ownWorkspaces()->where('workspaces.workspace_id', '=', $id)->firstOrFail();
         return $workspace;
     }
 

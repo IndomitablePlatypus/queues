@@ -11,7 +11,7 @@ class InviteDiscardController extends ApiController
     {
         $this
             ->user()
-            ->getWorkspace($request->workspaceId)
+            ->getOwnWorkspace($request->workspaceId)
             ->getInvite($request->inviteId)
             ->delete();
 

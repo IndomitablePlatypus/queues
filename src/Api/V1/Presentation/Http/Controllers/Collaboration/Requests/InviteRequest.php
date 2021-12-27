@@ -29,8 +29,8 @@ class InviteRequest extends FormRequest
 
     public function passedValidation(): void
     {
-        $this->workspaceId = $this->input('workspaceId');
-        $this->inviteId = $this->input('inviteId');
+        $this->workspaceId = GuidBasedImmutableId::of($this->input('workspaceId'));
+        $this->inviteId = GuidBasedImmutableId::of($this->input('inviteId'));
     }
 
     protected function prepareForValidation(): void

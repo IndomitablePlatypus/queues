@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Support\IdTrait;
+use App\Models\Support\PersistTrait;
+use Carbon\Carbon;
+use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Workspace extends Model
 {
-    use HasFactory, PersistTrait;
+    use HasFactory, PersistTrait, IdTrait;
 
     public $table = 'workspaces';
 
@@ -42,7 +46,8 @@ class Workspace extends Model
     {
         /** @var Invite $invite */
         $invite = $this->invites()->create([
-            'collaborator_id' => $this->keeper_id,
+            'invite_id' => GuidBasedImmutableId::makeValue(),
+            'proposed_at' => Carbon::now(),
         ]);
         return $invite;
     }

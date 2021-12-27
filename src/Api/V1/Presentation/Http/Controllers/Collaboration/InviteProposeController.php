@@ -11,7 +11,7 @@ class InviteProposeController extends ApiController
     {
         $invite = $this
             ->user()
-            ->getWorkspace($request->workspaceId)
+            ->getOwnWorkspace($request->workspaceId)
             ->invite()
             ->persist();
 

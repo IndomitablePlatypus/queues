@@ -19,6 +19,18 @@ namespace Queues\Api\V1\Config\Routing;
  *
  * @method static string COLLABORATION_LEAVE()
  * @method static string COLLABORATION_FIRE()
+ *
+ * @method static string PLANS_GET()
+ * @method static string PLANS_GET_ONE()
+ * @method static string PLANS_ADD()
+ * @method static string PLANS_CHANGE_DESCRIPTION()
+ * @method static string PLANS_LAUNCH()
+ * @method static string PLANS_STOP()
+ * @method static string PLANS_ARCHIVE()
+ *
+ * @method static string REQUIREMENTS_ADD()
+ * @method static string REQUIREMENTS_CHANGE()
+ * @method static string REQUIREMENTS_DELETE()
  */
 class Routing
 {
@@ -43,6 +55,19 @@ class Routing
 
     public const COLLABORATION_LEAVE = '/workspace/{workspaceId}/collaboration/leave';
     public const COLLABORATION_FIRE = '/workspace/{workspaceId}/collaboration/fire/{collaboratorId}';
+
+    public const PLANS_GET = '/workspace/{workspaceId}/plan';
+    public const PLANS_ADD = '/workspace/{workspaceId}/plan';
+    public const PLANS_GET_ONE = '/workspace/{workspaceId}/plan/{planId}';
+    public const PLANS_CHANGE_DESCRIPTION = '/workspace/{workspaceId}/plan/{planId}/description';
+    public const PLANS_LAUNCH = '/workspace/{workspaceId}/plan/{planId}/launch';
+    public const PLANS_STOP = '/workspace/{workspaceId}/plan/{planId}/stop';
+    public const PLANS_ARCHIVE = '/workspace/{workspaceId}/plan/{planId}/archive';
+
+    public const REQUIREMENTS_ADD = '/workspace/{workspaceId}/plan/{planId}/requirement';
+    public const REQUIREMENTS_CHANGE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
+    public const REQUIREMENTS_DELETE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
+
 
     public static function __callStatic(string $name, array $arguments): string
     {

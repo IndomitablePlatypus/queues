@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Codderz\Platypus\Exceptions\LogicException;
 use Codderz\Platypus\Exceptions\ParameterAssertionException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
@@ -56,6 +57,10 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof ParameterAssertionException) {
             return $this->errorResponse('Wrong input: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($e instanceof LogicException) {
+            return $this->errorResponse('Logic exception: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if ($e instanceof MethodNotAllowedHttpException) {

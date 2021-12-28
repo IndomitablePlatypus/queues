@@ -9,12 +9,12 @@ class InviteProposeController extends ApiController
 {
     public function __invoke(InviteProposeRequest $request)
     {
-        $invite = $this
-            ->user()
-            ->getOwnWorkspace($request->workspaceId)
-            ->invite()
-            ->persist();
-
-        return $this->respond($invite);
+        return $this->respond(
+            $this
+                ->user()
+                ->getOwnWorkspace($request->workspaceId)
+                ->invite()
+                ->persist()
+        );
     }
 }

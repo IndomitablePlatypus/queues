@@ -9,12 +9,12 @@ class InviteDiscardController extends ApiController
 {
     public function __invoke(InviteRequest $request)
     {
-        $this
-            ->user()
-            ->getOwnWorkspace($request->workspaceId)
-            ->getInvite($request->inviteId)
-            ->delete();
-
-        return $this->respond();
+        return $this->respond(
+            $this
+                ->user()
+                ->getOwnWorkspace($request->workspaceId)
+                ->getInvite($request->inviteId)
+                ->discard()
+        );
     }
 }

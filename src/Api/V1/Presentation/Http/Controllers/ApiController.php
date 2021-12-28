@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
+    protected User $user;
+
     public function respond($response = 'Ok', int $code = 200): JsonResponse
     {
         return response()->json($response, $code);
@@ -16,6 +18,11 @@ class ApiController extends Controller
 
     protected function user(): User
     {
-        return User::query()->findOrFail(Auth::id());
+        return  $this->user ?? $this->user = User::query()->findOrFail(Auth::id());
+    }
+
+    protected function userId(): string
+    {
+        return $this->user()->id;
     }
 }

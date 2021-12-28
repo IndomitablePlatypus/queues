@@ -1,11 +1,11 @@
 <?php
 
-namespace Queues\Api\V1\Presentation\Http\Controllers\Workspaces;
+namespace Queues\Api\V1\Presentation\Http\Controllers\Plans;
 
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
-use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\Requests\GetOneRequest;
+use Queues\Api\V1\Presentation\Http\Controllers\Plans\Requests\GetOneRequest;
 
-class WorkspacesGetOneController extends ApiController
+class PlansGetOneController extends ApiController
 {
     public function __invoke(GetOneRequest $request)
     {
@@ -13,6 +13,7 @@ class WorkspacesGetOneController extends ApiController
             $this
                 ->user()
                 ->getWorkspace($request->workspaceId)
+                ->getPlan($request->planId)
         );
     }
 }

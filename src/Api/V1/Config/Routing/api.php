@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationFireController;
+use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeaveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteDiscardController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteProposeController;
@@ -61,6 +63,15 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::delete(Routing::INVITE_DISCARD)
             ->name(Routing::INVITE_DISCARD)
             ->uses(InviteDiscardController::class);
+
+
+        Route::post(Routing::COLLABORATION_LEAVE)
+            ->name(Routing::COLLABORATION_LEAVE)
+            ->uses(CollaborationLeaveController::class);
+
+        Route::post(Routing::COLLABORATION_FIRE)
+            ->name(Routing::COLLABORATION_FIRE)
+            ->uses(CollaborationFireController::class);
 
     });
 });

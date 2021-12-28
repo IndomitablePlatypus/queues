@@ -16,6 +16,9 @@ namespace Queues\Api\V1\Config\Routing;
  * @method static string INVITE_PROPOSE()
  * @method static string INVITE_ACCEPT()
  * @method static string INVITE_DISCARD()
+ *
+ * @method static string COLLABORATION_LEAVE()
+ * @method static string COLLABORATION_FIRE()
  */
 class Routing
 {
@@ -37,6 +40,9 @@ class Routing
     public const INVITE_PROPOSE = '/workspace/{workspaceId}/invite';
     public const INVITE_ACCEPT = '/workspace/{workspaceId}/invite/{inviteId}/accept';
     public const INVITE_DISCARD = '/workspace/{workspaceId}/invite/{inviteId}/discard';
+
+    public const COLLABORATION_LEAVE = '/workspace/{workspaceId}/collaboration/leave';
+    public const COLLABORATION_FIRE = '/workspace/{workspaceId}/collaboration/fire/{collaboratorId}';
 
     public static function __callStatic(string $name, array $arguments): string
     {

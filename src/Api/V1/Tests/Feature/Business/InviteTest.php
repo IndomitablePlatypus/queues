@@ -111,5 +111,4 @@ class InviteTest extends BaseTestCase
         $response->assertSuccessful();
     }
 
-
 }

@@ -19,10 +19,10 @@ class PlanFactory extends Factory
             'plan_id' => GuidBasedImmutableId::makeValue(),
             'workspace_id' => GuidBasedImmutableId::makeValue(),
             'description' => $this->faker->text(),
-            'launched_at' => Carbon::now(),
+            'launched_at' => null,
             'stopped_at' => null,
             'archived_at' => null,
-            'expiration_date' => Carbon::now()->addDays(60),
+            'expiration_date' => null,
         ];
     }
 }

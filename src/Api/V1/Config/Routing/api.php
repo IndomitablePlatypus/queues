@@ -12,9 +12,12 @@ use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignOutController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignUpController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\WorkspacesAllController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansAddController;
+use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansArchiveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansChangeDescriptionController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetOneController;
+use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansLaunchController;
+use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansStopController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesAddController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesChangeProfileController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesGetController;
@@ -93,6 +96,18 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::put(Routing::PLANS_CHANGE_DESCRIPTION)
             ->name(Routing::PLANS_CHANGE_DESCRIPTION)
             ->uses(PlansChangeDescriptionController::class);
+
+        Route::put(Routing::PLANS_LAUNCH)
+            ->name(Routing::PLANS_LAUNCH)
+            ->uses(PlansLaunchController::class);
+
+        Route::put(Routing::PLANS_STOP)
+            ->name(Routing::PLANS_STOP)
+            ->uses(PlansStopController::class);
+
+        Route::put(Routing::PLANS_ARCHIVE)
+            ->name(Routing::PLANS_ARCHIVE)
+            ->uses(PlansArchiveController::class);
 
     });
 });

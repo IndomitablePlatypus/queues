@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -61,4 +64,35 @@ class User extends Authenticatable
         return $user;
     }
 
+    public function ownWorkspaces(): HasMany
+    {
+        return $this->hasMany(Workspace::class, 'keeper_id');
+    }
+
+    public function workspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'relations', 'collaborator_id', 'workspace_id');
+    }
+
+    public function getWorkspace(string $id): Workspace
+    {
+        /** @var Workspace $workspace */
+        $workspace = $this->workspaces()->where('workspaces.workspace_id', '=', $id)->firstOrFail();
+        return $workspace;
+    }
+
+    public function getOwnWorkspace(string $id): Workspace
+    {
+        /** @var Workspace $workspace */
+        $workspace = $this->ownWorkspaces()->where('workspaces.workspace_id', '=', $id)->firstOrFail();
+        return $workspace;
+    }
+
+    public function addWorkspace(array $properties): Workspace
+    {
+        $properties['workspace_id'] = GuidBasedImmutableId::makeValue();
+        /** @var Workspace $workspace */
+        $workspace = $this->ownWorkspaces()->create($properties);
+        return $workspace;
+    }
 }

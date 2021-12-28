@@ -3,34 +3,31 @@
 namespace Queues\Api\V1\Tests\Feature;
 
 use App\Models\User;
-use Cardz\Support\MobileAppGateway\Config\Routes\RouteName;
-use Cardz\Support\MobileAppGateway\Tests\Shared\Fixtures\UserLoginInfo;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\Sanctum;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
 
 class SignOutTest extends BaseTestCase
 {
-    use TestApplicationTrait;
+    use TestApplicationTrait, RoutingTestTrait;
 
-    public function test_customer_sign_out_fails_on_unauthenticated()
+    public function test_customer_sign_out_fails_on_unauthenticated(): void
     {
-        $response = $this->get(Routing::for(Routing::SIGN_OUT));
+        $response = $this->rGet(Routing::SIGN_OUT());
         $response->assertUnauthorized();
     }
 
-    public function test_customer_can_sign_out()
+    public function test_customer_can_sign_out(): void
     {
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
+        $this->tokenize($user);
 
-        $token = $user->createToken($this->faker->word());
-        $this->withToken($token->plainTextToken);
-
-        $response = $this->get(Routing::for(Routing::SIGN_OUT));
+        $response = $this->rGet(Routing::SIGN_OUT());
         $response->assertSuccessful();
 
         /** @var Model $model */

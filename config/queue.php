@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'redis'),
+    'default' => env('QUEUE_CONNECTION', 'sync'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +69,73 @@ return [
             'retry_after' => 90,
             'block_for' => 2,
             'after_commit' => false,
+        ],
+
+        'rabbitmq' => [
+
+            'driver' => 'rabbitmq',
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
+            'connection' => PhpAmqpLib\Connection\AMQPLazyConnection::class,
+            //'retry_after' => 90,
+
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', '127.0.0.1'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'guest'),
+                    'password' => env('RABBITMQ_PASSWORD', 'guest'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+
+            'options' => [
+                'ssl_options' => [
+                    'ssl_on' => env('RABBITMQ_SSL', false),
+                    'cafile' => env('RABBITMQ_SSL_CAFILE', null),
+                    'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
+                    'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
+                    'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
+                    'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
+                ],
+
+                'exchange' => [
+                    'name' => env('RABBITMQ_EXCHANGE_NAME', 'default'),
+                    // Determine if exchange should be created if it does not exist.
+                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
+                    'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
+                    'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
+                    'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
+                    'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
+                ],
+
+                'queue' => [
+                    'job' => VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob::class,
+
+                    //'exchange' => env('RABBITMQ_EXCHANGE_NAME', 'default'),
+                    //'exchange_type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'),
+
+                    //'reroute_failed' => true,
+                    //'failed_exchange' => 'failed-exchange',
+                    //'failed_routing_key' => 'application-x.%s',
+
+                    // Determine if queue should be created if it does not exist.
+                    'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
+                    // Determine if queue should be binded to the exchange created.
+                    'bind' => env('RABBITMQ_QUEUE_DECLARE_BIND', true),
+                    'passive' => env('RABBITMQ_QUEUE_PASSIVE', false),
+                    'durable' => env('RABBITMQ_QUEUE_DURABLE', true),
+                    'exclusive' => env('RABBITMQ_QUEUE_EXCLUSIVE', false),
+                    'auto_delete' => env('RABBITMQ_QUEUE_AUTODELETE', false),
+                    'arguments' => env('RABBITMQ_QUEUE_ARGUMENTS'),
+                ],
+            ],
+
+            /*
+             * Set to "horizon" if you wish to use Laravel Horizon.
+             */
+            'worker' => env('RABBITMQ_WORKER', \Queues\Api\V1\Infrastructure\RabbitWorker::class),
+
         ],
 
     ],

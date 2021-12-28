@@ -10,7 +10,6 @@ final class QueuesServiceProvider extends ServiceProvider
     {
         return [
             self::class,
-
         ];
     }
 

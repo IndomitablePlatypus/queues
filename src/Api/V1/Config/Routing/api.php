@@ -109,5 +109,17 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(Routing::PLANS_ARCHIVE)
             ->uses(PlansArchiveController::class);
 
+        Route::post(Routing::REQUIREMENTS_ADD)
+            ->name(Routing::REQUIREMENTS_ADD)
+            ->uses(PlansArchiveController::class);
+
+        Route::put(Routing::REQUIREMENTS_CHANGE)
+            ->name(Routing::REQUIREMENTS_CHANGE)
+            ->uses(PlansArchiveController::class);
+
+        Route::delete(Routing::REQUIREMENTS_REMOVE)
+            ->name(Routing::REQUIREMENTS_REMOVE)
+            ->uses(PlansArchiveController::class);
+
     });
 });

@@ -30,7 +30,7 @@ namespace Queues\Api\V1\Config\Routing;
  *
  * @method static string REQUIREMENTS_ADD()
  * @method static string REQUIREMENTS_CHANGE()
- * @method static string REQUIREMENTS_DELETE()
+ * @method static string REQUIREMENTS_REMOVE()
  */
 class Routing
 {
@@ -66,7 +66,7 @@ class Routing
 
     public const REQUIREMENTS_ADD = '/workspace/{workspaceId}/plan/{planId}/requirement';
     public const REQUIREMENTS_CHANGE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
-    public const REQUIREMENTS_DELETE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
+    public const REQUIREMENTS_REMOVE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
 
 
     public static function __callStatic(string $name, array $arguments): string

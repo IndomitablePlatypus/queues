@@ -2,9 +2,7 @@
 
 namespace Queues\Api\V1\Presentation\Http\Controllers\Workspaces\Requests;
 
-use Codderz\Platypus\Contracts\GenericIdInterface;
 use Codderz\Platypus\Infrastructure\Support\ArrayPresenterTrait;
-use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 

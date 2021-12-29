@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Codderz\Platypus\Exceptions\LogicException;
 use Codderz\Platypus\Exceptions\ParameterAssertionException;
 use Codderz\Platypus\Infrastructure\Support\ArrayPresenterTrait;
+use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,12 +42,29 @@ class Plan extends Model
 
     public function cards(): HasMany
     {
-        return $this->hasMany(Card::class);
+        return $this->hasMany(Card::class, 'plan_id', 'plan_id');
     }
 
     public function requirements(): HasMany
     {
-        return $this->hasMany(Requirement::class);
+        return $this->hasMany(Requirement::class, 'plan_id', 'plan_id');
+    }
+
+    public function addRequirement(string $description): Requirement
+    {
+        /** @var Requirement $requirement */
+        $requirement = $this->requirements()->create([
+            'requirement_id' => GuidBasedImmutableId::makeValue(),
+            'description' => $description,
+        ]);
+        return $requirement;
+    }
+
+    public function getRequirement(string $id): Requirement
+    {
+        /** @var Requirement $requirement */
+        $requirement = $this->requirements()->where('requirement_id', '=', $id)->firstOrFail();
+        return $requirement;
     }
 
     public function setDescription(string $description): static

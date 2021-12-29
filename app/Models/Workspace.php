@@ -30,11 +30,6 @@ class Workspace extends Model
         'profile' => 'array',
     ];
 
-    public function getIdAttribute(): string
-    {
-        return $this->workspace_id;
-    }
-
     public function relateTo(string $collaboratorId, RelationType $relationType): static
     {
         EstablishRelation::dispatch($collaboratorId, $this->id, $relationType);

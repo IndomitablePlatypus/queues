@@ -45,9 +45,4 @@ final class ChangePlanDescriptionRequest extends FormRequest
             'planId' => $this->route('planId'),
         ]);
     }
-
-    public function toArray()
-    {
-        return ['description' => $this->description];
-    }
 }

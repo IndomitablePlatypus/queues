@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Requirement extends Model
 {
-    use HasFactory, PersistTrait, IdTrait;
+    use HasFactory, IdTrait;
 
     public $table = 'requirements';
 
@@ -43,5 +43,11 @@ class Requirement extends Model
     {
         $this->removed_at = Carbon::now();
         return $this;
+    }
+
+    public function persist(): Plan
+    {
+        $this->save();
+        return $this->plan;
     }
 }

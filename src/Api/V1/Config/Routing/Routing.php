@@ -31,6 +31,16 @@ namespace Queues\Api\V1\Config\Routing;
  * @method static string REQUIREMENTS_ADD()
  * @method static string REQUIREMENTS_CHANGE()
  * @method static string REQUIREMENTS_REMOVE()
+ *
+ * @method static string CARDS_GET()
+ * @method static string CARDS_ISSUE()
+ * @method static string CARDS_GET_ONE()
+ * @method static string CARDS_COMPLETE()
+ * @method static string CARDS_REVOKE()
+ * @method static string CARDS_BLOCK()
+ * @method static string CARDS_UNBLOCK()
+ * @method static string CARDS_NOTE_ACHIEVEMENT()
+ * @method static string CARDS_DISMISS_ACHIEVEMENT()
  */
 class Routing
 {
@@ -67,6 +77,16 @@ class Routing
     public const REQUIREMENTS_ADD = '/workspace/{workspaceId}/plan/{planId}/requirement';
     public const REQUIREMENTS_CHANGE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
     public const REQUIREMENTS_REMOVE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
+
+    public const CARDS_GET = '/workspace/{workspaceId}/card';
+    public const CARDS_ISSUE = '/workspace/{workspaceId}/card';
+    public const CARDS_GET_ONE = '/workspace/{workspaceId}/card/{cardId}';
+    public const CARDS_COMPLETE = '/workspace/{workspaceId}/card/{cardId}/complete';
+    public const CARDS_REVOKE = '/workspace/{workspaceId}/card/{cardId}/revoke';
+    public const CARDS_BLOCK = '/workspace/{workspaceId}/card/{cardId}/block';
+    public const CARDS_UNBLOCK = '/workspace/{workspaceId}/card/{cardId}/unblock';
+    public const CARDS_NOTE_ACHIEVEMENT = '/workspace/{workspaceId}/card/{cardId}/achievement';
+    public const CARDS_DISMISS_ACHIEVEMENT = '/workspace/{workspaceId}/card/{cardId}/achievement/{achievementId}';
 
 
     public static function __callStatic(string $name, array $arguments): string

@@ -12,8 +12,7 @@ class WorkspacesGetController extends ApiController
         return $this->respond(
             $this
                 ->user()
-                ->workspaces()
-                ->get()
+                ->getWorkspaces()
         );
     }
 }

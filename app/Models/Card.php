@@ -2,12 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Support\IdTrait;
+use App\Models\Support\PersistTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Card extends Model
 {
+    use HasFactory, PersistTrait, IdTrait;
+
     public $table = 'cards';
+
+    public $primaryKey = 'card_id';
+
+    protected $keyType = 'string';
 
     public $incrementing = false;
 
@@ -25,7 +34,7 @@ class Card extends Model
 
     public function plan(): BelongsTo
     {
-        return $this->belongsTo(Plan::class);
+        return $this->belongsTo(Plan::class, 'plan_id', 'plan_id');
     }
 
 }

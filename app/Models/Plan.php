@@ -7,8 +7,8 @@ use App\Models\Support\PersistTrait;
 use Carbon\Carbon;
 use Codderz\Platypus\Exceptions\LogicException;
 use Codderz\Platypus\Exceptions\ParameterAssertionException;
-use Codderz\Platypus\Infrastructure\Support\ArrayPresenterTrait;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +17,7 @@ use Throwable;
 
 class Plan extends Model
 {
-    use HasFactory, PersistTrait, IdTrait, ArrayPresenterTrait;
+    use HasFactory, PersistTrait, IdTrait;
 
     public $table = 'plans';
 
@@ -51,7 +51,12 @@ class Plan extends Model
 
     public function requirements(): HasMany
     {
-        return $this->hasMany(Requirement::class, 'plan_id', 'plan_id');
+        return $this->hasMany(Requirement::class, 'plan_id', 'plan_id')->whereNull('removed_at');
+    }
+
+    public function getRequirements(): Collection
+    {
+        return $this->requirements()->get();
     }
 
     public function addRequirement(string $description): Requirement
@@ -109,5 +114,18 @@ class Plan extends Model
     {
         $this->archived_at = Carbon::now();
         return $this;
+    }
+
+    public function issueCard(string $customerId): Card
+    {
+        /** @var Card $card */
+        $card = $this->cards()->create([
+            'card_id' => GuidBasedImmutableId::makeValue(),
+            'customer_id' => $customerId,
+            'description' => $this->description,
+            'issued_at' => Carbon::now(),
+            'requirements' => $this->getRequirements()->toArray(),
+        ]);
+        return $card;
     }
 }

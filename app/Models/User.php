@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -74,6 +75,11 @@ class User extends Authenticatable
     public function workspaces(): BelongsToMany
     {
         return $this->belongsToMany(Workspace::class, 'relations', 'collaborator_id', 'workspace_id');
+    }
+
+    public function getWorkspaces(): Collection
+    {
+        return $this->workspaces()->get();
     }
 
     public function getWorkspace(string $id): Workspace

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsIssueController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetOneController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationFireController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeaveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
@@ -44,7 +47,7 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         ->name(Routing::WORKSPACES_ALL)
         ->uses(WorkspacesAllController::class);
 
-    Route::group(['middleware' => Routing::MIDDLEWARE_AUTH], function() {
+    Route::group(['middleware' => Routing::MIDDLEWARE_AUTH], function () {
         Route::get(Routing::WORKSPACES_GET)
             ->name(Routing::WORKSPACES_GET)
             ->uses(WorkspacesGetController::class);
@@ -61,7 +64,6 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(Routing::WORKSPACES_CHANGE_PROFILE)
             ->uses(WorkspacesChangeProfileController::class);
 
-
         Route::post(Routing::INVITE_PROPOSE)
             ->name(Routing::INVITE_PROPOSE)
             ->uses(InviteProposeController::class);
@@ -74,7 +76,6 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(Routing::INVITE_DISCARD)
             ->uses(InviteDiscardController::class);
 
-
         Route::post(Routing::COLLABORATION_LEAVE)
             ->name(Routing::COLLABORATION_LEAVE)
             ->uses(CollaborationLeaveController::class);
@@ -82,7 +83,6 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::post(Routing::COLLABORATION_FIRE)
             ->name(Routing::COLLABORATION_FIRE)
             ->uses(CollaborationFireController::class);
-
 
         Route::get(Routing::PLANS_GET)
             ->name(Routing::PLANS_GET)
@@ -124,5 +124,16 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(Routing::REQUIREMENTS_REMOVE)
             ->uses(RequirementsRemoveController::class);
 
+        Route::get(Routing::CARDS_GET)
+            ->name(Routing::CARDS_GET)
+            ->uses(CardsGetController::class);
+
+        Route::get(Routing::CARDS_GET_ONE)
+            ->name(Routing::CARDS_GET_ONE)
+            ->uses(CardsGetOneController::class);
+
+        Route::post(Routing::CARDS_ISSUE)
+            ->name(Routing::CARDS_ISSUE)
+            ->uses(CardsIssueController::class);
     });
 });

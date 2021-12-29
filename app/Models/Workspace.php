@@ -8,9 +8,11 @@ use App\Models\Support\IdTrait;
 use App\Models\Support\PersistTrait;
 use Carbon\Carbon;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Queues\Api\V1\Domain\RelationType;
 
 class Workspace extends Model
@@ -82,6 +84,16 @@ class Workspace extends Model
         return $this->hasMany(Plan::class, 'workspace_id', 'workspace_id');
     }
 
+    public function cards(): HasManyThrough
+    {
+        return $this->hasManyThrough(Card::class, Plan::class, 'workspace_id', 'plan_id', 'workspace_id', 'plan_id');
+    }
+
+    public function getPlans(): Collection
+    {
+        return $this->plans()->get();
+    }
+
     public function getPlan(string $id): Plan
     {
         /** @var Plan $plan */
@@ -99,5 +111,21 @@ class Workspace extends Model
         ]);
         return $plan;
     }
+
+    /**
+     * @return Card[]
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards()->get();
+    }
+
+    public function getCard(string $id): Card
+    {
+        /** @var Card $card */
+        $card = $this->cards()->where('card_id', '=', $id)->firstOrFail();
+        return $card;
+    }
+
 
 }

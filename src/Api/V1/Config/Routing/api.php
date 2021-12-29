@@ -2,9 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsBlockController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsCompleteController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsIssueController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetOneController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsRevokeController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsUnblockController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationFireController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeaveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
@@ -135,5 +139,21 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::post(Routing::CARDS_ISSUE)
             ->name(Routing::CARDS_ISSUE)
             ->uses(CardsIssueController::class);
+
+        Route::put(Routing::CARDS_COMPLETE)
+            ->name(Routing::CARDS_COMPLETE)
+            ->uses(CardsCompleteController::class);
+
+        Route::put(Routing::CARDS_REVOKE)
+            ->name(Routing::CARDS_REVOKE)
+            ->uses(CardsRevokeController::class);
+
+        Route::put(Routing::CARDS_BLOCK)
+            ->name(Routing::CARDS_BLOCK)
+            ->uses(CardsBlockController::class);
+
+        Route::put(Routing::CARDS_UNBLOCK)
+            ->name(Routing::CARDS_UNBLOCK)
+            ->uses(CardsUnblockController::class);
     });
 });

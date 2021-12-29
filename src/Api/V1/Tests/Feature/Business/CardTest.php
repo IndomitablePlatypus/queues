@@ -3,6 +3,7 @@
 namespace Feature\Business;
 
 use App\Jobs\EstablishRelation;
+use App\Models\Card;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Workspace;
@@ -44,5 +45,97 @@ class CardTest extends BaseTestCase
             ['workspaceId' => $workspace->id, 'cardId' => $response->json('card_id')],
         )->json('plan_id');
         $this->assertEquals($plan->id, $planId);
+    }
+
+    public function test_collaborator_can_complete_card()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $card = Card::factory()->make(['satisfied_at' => Carbon::now(), 'plan_id' => $plan->id]);
+
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $card->save();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        $this->tokenize($collaborator);
+
+        $response = $this->rPut(
+            Routing::CARDS_COMPLETE(),
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id]
+        );
+        $response->assertSuccessful();
+    }
+
+    public function test_collaborator_can_revoke_card()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $card = Card::factory()->make(['satisfied_at' => Carbon::now(), 'plan_id' => $plan->id]);
+
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $card->save();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        $this->tokenize($collaborator);
+
+        $response = $this->rPut(
+            Routing::CARDS_REVOKE(),
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id]
+        );
+        $response->assertSuccessful();
+    }
+
+    public function test_collaborator_can_block_card()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $card = Card::factory()->make(['satisfied_at' => Carbon::now(), 'plan_id' => $plan->id]);
+
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $card->save();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        $this->tokenize($collaborator);
+
+        $response = $this->rPut(
+            Routing::CARDS_BLOCK(),
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id]
+        );
+        $response->assertSuccessful();
+    }
+
+    public function test_collaborator_can_unblock_card()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $card = Card::factory()->make(['blocked_at' => Carbon::now(), 'plan_id' => $plan->id]);
+
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $card->save();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        $this->tokenize($collaborator);
+
+        $response = $this->rPut(
+            Routing::CARDS_UNBLOCK(),
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id]
+        );
+        $response->assertSuccessful();
     }
 }

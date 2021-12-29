@@ -19,6 +19,8 @@ class RequirementFactory extends Factory
             'requirement_id' => GuidBasedImmutableId::makeValue(),
             'plan_id' => GuidBasedImmutableId::makeValue(),
             'description' => $this->faker->text(),
+            'added_at' => Carbon::now(),
+            'removed_at' => null,
         ];
     }
 }

@@ -16,6 +16,7 @@ class RequirementsRemoveController extends ApiController
                 ->getPlan($request->planId)
                 ->getRequirement($request->requirementId)
                 ->remove()
+                ->persist()
         );
     }
 }

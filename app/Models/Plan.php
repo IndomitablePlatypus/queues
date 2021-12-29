@@ -23,9 +23,13 @@ class Plan extends Model
 
     public $primaryKey = 'plan_id';
 
+    protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $guarded = [];
+
+    protected $with = ['requirements'];
 
     protected $casts = [
         'added_at' => 'datetime',
@@ -56,6 +60,7 @@ class Plan extends Model
         $requirement = $this->requirements()->create([
             'requirement_id' => GuidBasedImmutableId::makeValue(),
             'description' => $description,
+            'added_at' => Carbon::now(),
         ]);
         return $requirement;
     }

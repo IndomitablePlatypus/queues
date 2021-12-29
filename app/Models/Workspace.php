@@ -21,6 +21,8 @@ class Workspace extends Model
 
     protected $primaryKey = 'workspace_id';
 
+    protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $guarded = [];

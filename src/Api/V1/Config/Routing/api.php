@@ -18,6 +18,9 @@ use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetOneController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansLaunchController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansStopController;
+use Queues\Api\V1\Presentation\Http\Controllers\Requirements\RequirementsAddController;
+use Queues\Api\V1\Presentation\Http\Controllers\Requirements\RequirementsChangeController;
+use Queues\Api\V1\Presentation\Http\Controllers\Requirements\RequirementsRemoveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesAddController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesChangeProfileController;
 use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesGetController;
@@ -111,15 +114,15 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
 
         Route::post(Routing::REQUIREMENTS_ADD)
             ->name(Routing::REQUIREMENTS_ADD)
-            ->uses(PlansArchiveController::class);
+            ->uses(RequirementsAddController::class);
 
         Route::put(Routing::REQUIREMENTS_CHANGE)
             ->name(Routing::REQUIREMENTS_CHANGE)
-            ->uses(PlansArchiveController::class);
+            ->uses(RequirementsChangeController::class);
 
         Route::delete(Routing::REQUIREMENTS_REMOVE)
             ->name(Routing::REQUIREMENTS_REMOVE)
-            ->uses(PlansArchiveController::class);
+            ->uses(RequirementsRemoveController::class);
 
     });
 });

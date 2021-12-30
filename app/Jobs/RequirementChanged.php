@@ -26,7 +26,7 @@ class RequirementChanged implements ShouldQueue
         $cards = $this->requirement->plan->getCards();
         /** @var Card $card */
         foreach ($cards as $card) {
-            $card->fixRequirementDescription($this->requirement->id, $this->requirement->description);
+            $card->fixRequirementDescription($this->requirement->id, $this->requirement->description)->persist();
         }
     }
 }

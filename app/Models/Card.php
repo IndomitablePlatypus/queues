@@ -104,37 +104,34 @@ class Card extends Model
         if ($this->isSatisfied() || $this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
             throw new LogicException('Invalid card state');
         }
-
-        $this->tryToSatisfy();
-
-        $this->achievements[$id] = $description;
-        return $this;
+//        $this->achievements[$id] = $description;
+        return $this->tryToSatisfy();
     }
 
-    public function dismissAchievement(string $id): self
+    public function dismissAchievement(string $id): static
     {
         if ($this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
             throw new LogicException('Invalid card state');
         }
 
-        unset ($this->achievements[$id]);
-        $this->tryToWithdrawSatisfaction();
+//        unset ($this->achievements[$id]);
+        return $this->tryToWithdrawSatisfaction();
+    }
+
+    public function fixRequirementDescription(string $id, string $description): static
+    {
+        //$this->achievements[$id] = $description;
+        //$this->requirements[$id] = $description;
         return $this;
     }
 
-    public function fixRequirementDescription(string $id, string $description): self
-    {
-        $this->achievements[$id] = $description;
-        $this->requirements[$id] = $description;
-    }
-
-    public function acceptRequirements(array $requirements): self
+    public function acceptRequirements(array $requirements): static
     {
         $this->requirements = $requirements;
-        $this->tryToSatisfy();
+        return $this->tryToSatisfy();
     }
 
-    private function tryToSatisfy(): self
+    private function tryToSatisfy(): static
     {
         $requirements = array_diff($this->requirements, $this->achievements);
         if (empty($requirements)){
@@ -143,7 +140,7 @@ class Card extends Model
         return $this;
     }
 
-    private function tryToWithdrawSatisfaction(): self
+    private function tryToWithdrawSatisfaction(): static
     {
         if (!$this->isSatisfied()) {
             return $this;

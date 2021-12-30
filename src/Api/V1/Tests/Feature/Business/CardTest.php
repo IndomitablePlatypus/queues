@@ -3,8 +3,10 @@
 namespace Feature\Business;
 
 use App\Jobs\EstablishRelation;
+use App\Jobs\RequirementsChanged;
 use App\Models\Card;
 use App\Models\Plan;
+use App\Models\Requirement;
 use App\Models\User;
 use App\Models\Workspace;
 use Carbon\Carbon;
@@ -138,4 +140,42 @@ class CardTest extends BaseTestCase
         );
         $response->assertSuccessful();
     }
+
+
+    public function test_collaborator_can_note_achievement()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $requirement = Requirement::factory()->make(['plan_id' => $plan->id]);
+        $card = Card::factory()->make(['plan_id' => $plan->id]);
+
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $requirement->save();
+        $card->save();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        RequirementsChanged::dispatchSync($plan);
+        $this->tokenize($collaborator);
+
+        $response = $this->rGet(
+            Routing::CARDS_GET_ONE,
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id],
+        );
+        $response->assertSuccessful();
+        $this->assertCount(1, $response->json('requirements'));
+
+        $newRequirement = Requirement::factory()->make(['plan_id' => $plan->id]);
+        $response = $this->rPost(
+            Routing::CARDS_NOTE_ACHIEVEMENT,
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id],
+            ['achievementId' => $newRequirement->id, 'description' => $newRequirement->description],
+        );
+        $response->assertSuccessful();
+        $this->assertCount(0, $response->json('achievements'));
+    }
+
 }

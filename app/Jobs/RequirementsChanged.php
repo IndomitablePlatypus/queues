@@ -25,7 +25,7 @@ class RequirementsChanged implements ShouldQueue
         $compactRequirements = Plan::compactRequirements($this->plan->getRequirements()->toArray());
         /** @var Card $card */
         foreach ($cards as $card) {
-            $card->acceptRequirements($compactRequirements);
+            $card->acceptRequirements($compactRequirements)->persist();
         }
     }
 }

@@ -9,6 +9,8 @@ use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetOneController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsRevokeController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsUnblockController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\DismissAchievementController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\NoteAchievementController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationFireController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeaveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
@@ -155,5 +157,13 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::put(Routing::CARDS_UNBLOCK)
             ->name(Routing::CARDS_UNBLOCK)
             ->uses(CardsUnblockController::class);
+
+        Route::post(Routing::CARDS_NOTE_ACHIEVEMENT)
+            ->name(Routing::CARDS_NOTE_ACHIEVEMENT)
+            ->uses(NoteAchievementController::class);
+
+        Route::delete(Routing::CARDS_DISMISS_ACHIEVEMENT)
+            ->name(Routing::CARDS_DISMISS_ACHIEVEMENT)
+            ->uses(DismissAchievementController::class);
     });
 });

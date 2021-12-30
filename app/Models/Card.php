@@ -44,8 +44,6 @@ class Card extends Model
         return $this->satisfied_at !== null;
     }
 
-
-
     public function isCompleted(): bool
     {
         return $this->completed_at !== null;
@@ -98,6 +96,64 @@ class Card extends Model
         }
 
         $this->blocked_at = null;
+        return $this;
+    }
+
+    public function noteAchievement(string $id, string $description): static
+    {
+        if ($this->isSatisfied() || $this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
+            throw new LogicException('Invalid card state');
+        }
+
+        $this->tryToSatisfy();
+
+        $this->achievements[$id] = $description;
+        return $this;
+    }
+
+    public function dismissAchievement(string $id): self
+    {
+        if ($this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
+            throw new LogicException('Invalid card state');
+        }
+
+        unset ($this->achievements[$id]);
+        $this->tryToWithdrawSatisfaction();
+        return $this;
+    }
+
+    public function fixRequirementDescription(string $id, string $description): self
+    {
+        $this->achievements[$id] = $description;
+        $this->requirements[$id] = $description;
+    }
+
+    public function acceptRequirements(array $requirements): self
+    {
+        $this->requirements = $requirements;
+        $this->tryToSatisfy();
+    }
+
+    private function tryToSatisfy(): self
+    {
+        $requirements = array_diff($this->requirements, $this->achievements);
+        if (empty($requirements)){
+            $this->satisfied_at = Carbon::now();
+        }
+        return $this;
+    }
+
+    private function tryToWithdrawSatisfaction(): self
+    {
+        if (!$this->isSatisfied()) {
+            return $this;
+        }
+
+        $requirements = array_diff($this->requirements, $this->achievements);
+        if (empty($requirements)){
+            $this->satisfied_at = null;
+        }
+
         return $this;
     }
 

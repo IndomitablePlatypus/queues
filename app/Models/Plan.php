@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\RequirementsChanged;
 use App\Models\Support\IdTrait;
 use App\Models\Support\PersistTrait;
 use Carbon\Carbon;
@@ -49,6 +50,11 @@ class Plan extends Model
         return $this->hasMany(Card::class, 'plan_id', 'plan_id');
     }
 
+    public function getCards(): Collection
+    {
+        return $this->cards()->get();
+    }
+
     public function requirements(): HasMany
     {
         return $this->hasMany(Requirement::class, 'plan_id', 'plan_id')->whereNull('removed_at');
@@ -67,6 +73,7 @@ class Plan extends Model
             'description' => $description,
             'added_at' => Carbon::now(),
         ]);
+        RequirementsChanged::dispatch($this);
         return $requirement;
     }
 
@@ -116,6 +123,15 @@ class Plan extends Model
         return $this;
     }
 
+    public static function compactRequirements(array $requirements): array
+    {
+        $compact = [];
+        foreach ($requirements as $requirement) {
+            $compact[$requirement['requirement_id']] = $requirement['description'];
+        }
+        return $compact;
+    }
+
     public function issueCard(string $customerId): Card
     {
         /** @var Card $card */
@@ -124,7 +140,7 @@ class Plan extends Model
             'customer_id' => $customerId,
             'description' => $this->description,
             'issued_at' => Carbon::now(),
-            'requirements' => $this->getRequirements()->toArray(),
+            'requirements' => static::compactRequirements($this->getRequirements()->toArray()),
         ]);
         return $card;
     }

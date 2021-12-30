@@ -33,14 +33,14 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPost(
-            Routing::REQUIREMENTS_ADD(),
+            Routing::REQUIREMENTS_ADD,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
             ['description' => Requirement::factory()->make()->description],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 
@@ -64,14 +64,14 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::REQUIREMENTS_CHANGE(),
+            Routing::REQUIREMENTS_CHANGE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id, 'requirementId' => $requirement->id],
             ['description' => 'changed'],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 
@@ -95,13 +95,13 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rDelete(
-            Routing::REQUIREMENTS_REMOVE(),
+            Routing::REQUIREMENTS_REMOVE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id, 'requirementId' => $requirement->id],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 

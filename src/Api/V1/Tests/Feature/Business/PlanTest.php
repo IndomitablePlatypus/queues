@@ -32,14 +32,14 @@ class PlanTest extends BaseTestCase
         $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
 
         $response = $this->rPost(
-            Routing::PLANS_ADD(),
+            Routing::PLANS_ADD,
             ['workspaceId' => $workspace->id],
             ['description' => $plan->description],
         );
         $response->assertSuccessful();
 
         $workspaceId = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $response->json('plan_id')],
         )->json('workspace_id');
         $this->assertEquals($workspace->id, $workspaceId);
@@ -59,7 +59,7 @@ class PlanTest extends BaseTestCase
         $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
 
         $response = $this->rPost(
-            Routing::PLANS_ADD(),
+            Routing::PLANS_ADD,
             ['workspaceId' => $workspace->id],
             ['description' => $plan->description],
         );
@@ -83,14 +83,14 @@ class PlanTest extends BaseTestCase
         $expirationDate = Carbon::now()->addDays(60);
 
         $response = $this->rPut(
-            Routing::PLANS_LAUNCH(),
+            Routing::PLANS_LAUNCH,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
             ['expirationDate' => $expirationDate],
         );
         $response->assertSuccessful();
 
         $planExpirationDate = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('expiration_date');
         $this->assertEquals($expirationDate->format('Y-m-d\TH:i:s.000000\Z'), $planExpirationDate);
@@ -111,13 +111,13 @@ class PlanTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::PLANS_STOP(),
+            Routing::PLANS_STOP,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         );
         $response->assertSuccessful();
 
         $launchedAt = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('launched_at');
         $this->assertNull($launchedAt);
@@ -138,13 +138,13 @@ class PlanTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::PLANS_ARCHIVE(),
+            Routing::PLANS_ARCHIVE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         );
         $response->assertSuccessful();
 
         $archivedAt = $this->rGet(
-            Routing::PLANS_GET_ONE(),
+            Routing::PLANS_GET_ONE,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('archived_at');
         $this->assertNotNull($archivedAt);
@@ -165,7 +165,7 @@ class PlanTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::PLANS_LAUNCH(),
+            Routing::PLANS_LAUNCH,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
             ['expirationDate' => Carbon::now()->addDays(2)],
         );

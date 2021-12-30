@@ -14,16 +14,6 @@ trait RoutingTestTrait
 
     protected string $token = '';
 
-    public function getRoute(string $name, array $arguments = []): string
-    {
-        try {
-            $path = explode(Routing::PREFIX_API, $name);
-            return route(end($path), $arguments);
-        } catch (RouteNotFoundException) {
-            $this->fail("Route $name not found");
-        }
-    }
-
     protected function rGet(string $name, array $routeArgs = []): TestResponse
     {
         return $this->request('get', $name, $routeArgs);
@@ -49,7 +39,7 @@ trait RoutingTestTrait
         if (!empty($this->token)) {
             $this->withToken($this->token);
         }
-        return $this->$method($this->getRoute($name, $routeArgs), $params);
+        return $this->$method(Routing::route($name, $routeArgs), $params);
     }
 
     protected function tokenize(User $user): void

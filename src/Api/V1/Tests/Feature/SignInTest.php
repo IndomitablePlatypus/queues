@@ -14,7 +14,7 @@ class SignInTest extends BaseTestCase
 
     public function test_customer_sign_in_fails_on_validation(): void
     {
-        $response = $this->rPost(Routing::SIGN_IN());
+        $response = $this->rPost(Routing::SIGN_IN);
         $response->assertJsonValidationErrorFor('username');
         $response->assertJsonValidationErrorFor('password');
     }
@@ -24,7 +24,7 @@ class SignInTest extends BaseTestCase
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
-        $response = $this->rPost(Routing::SIGN_IN(), [
+        $response = $this->rPost(Routing::SIGN_IN, [
             'username' => $user->username,
             'password' => 'password',
         ]);

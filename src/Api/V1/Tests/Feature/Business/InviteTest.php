@@ -30,7 +30,7 @@ class InviteTest extends BaseTestCase
         EstablishRelation::dispatchSync($keeper->id, $workspace->id, RelationType::KEEPER());
         $this->tokenize($keeper);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE(), ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
         $response->assertSuccessful();
     }
 
@@ -50,7 +50,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($collaborator);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE(), ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
         $response->assertNotFound();
     }
 
@@ -67,7 +67,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($user);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE(), ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
         $response->assertNotFound();
     }
 
@@ -86,7 +86,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($keeper);
 
-        $response = $this->rDelete(Routing::INVITE_DISCARD(), ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
+        $response = $this->rDelete(Routing::INVITE_DISCARD, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
         $response->assertSuccessful();
     }
 
@@ -107,7 +107,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($user);
 
-        $response = $this->rPut(Routing::INVITE_ACCEPT(), ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
+        $response = $this->rPut(Routing::INVITE_ACCEPT, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
         $response->assertSuccessful();
     }
 

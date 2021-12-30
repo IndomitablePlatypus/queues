@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -69,6 +70,10 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof NotFoundHttpException) {
             return $this->errorResponse('Not Found', Response::HTTP_NOT_FOUND);
+        }
+
+        if ($e instanceof RouteNotFoundException) {
+            return $this->errorResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
         }
 
         if ($e instanceof HttpException) {

@@ -34,14 +34,14 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPost(
-            Routing::CARDS_ISSUE(),
+            Routing::CARDS_ISSUE,
             ['workspaceId' => $workspace->id],
             ['customerId' => GuidBasedImmutableId::makeValue(), 'planId' => $plan->id]
         );
         $response->assertSuccessful();
 
         $planId = $this->rGet(
-            Routing::CARDS_GET_ONE(),
+            Routing::CARDS_GET_ONE,
             ['workspaceId' => $workspace->id, 'cardId' => $response->json('card_id')],
         )->json('plan_id');
         $this->assertEquals($plan->id, $planId);
@@ -64,7 +64,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_COMPLETE(),
+            Routing::CARDS_COMPLETE,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -87,7 +87,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_REVOKE(),
+            Routing::CARDS_REVOKE,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -110,7 +110,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_BLOCK(),
+            Routing::CARDS_BLOCK,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -133,7 +133,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_UNBLOCK(),
+            Routing::CARDS_UNBLOCK,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();

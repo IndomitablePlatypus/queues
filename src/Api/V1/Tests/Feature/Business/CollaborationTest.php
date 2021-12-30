@@ -34,7 +34,7 @@ class CollaborationTest extends BaseTestCase
         EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
         $this->tokenize($keeper);
 
-        $response = $this->rPost(Routing::COLLABORATION_FIRE(), ['workspaceId' => $workspace->id, 'collaboratorId' => $collaborator->id]);
+        $response = $this->rPost(Routing::COLLABORATION_FIRE, ['workspaceId' => $workspace->id, 'collaboratorId' => $collaborator->id]);
         $response->assertSuccessful();
     }
 
@@ -56,7 +56,7 @@ class CollaborationTest extends BaseTestCase
         EstablishRelation::dispatchSync($secondCollaborator->id, $workspace->id, RelationType::MEMBER());
         $this->tokenize($firstCollaborator);
 
-        $response = $this->rPost(Routing::COLLABORATION_FIRE(), ['workspaceId' => $workspace->id, 'collaboratorId' => $secondCollaborator->id]);
+        $response = $this->rPost(Routing::COLLABORATION_FIRE, ['workspaceId' => $workspace->id, 'collaboratorId' => $secondCollaborator->id]);
         $response->assertNotFound();
     }
 
@@ -75,7 +75,7 @@ class CollaborationTest extends BaseTestCase
         EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
         $this->tokenize($collaborator);
 
-        $response = $this->rPost(Routing::COLLABORATION_LEAVE(), ['workspaceId' => $workspace->id, 'collaboratorId' => $collaborator->id]);
+        $response = $this->rPost(Routing::COLLABORATION_LEAVE, ['workspaceId' => $workspace->id, 'collaboratorId' => $collaborator->id]);
         $response->assertSuccessful();
     }
 

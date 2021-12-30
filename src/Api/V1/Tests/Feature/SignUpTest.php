@@ -13,7 +13,7 @@ class SignUpTest extends BaseTestCase
 
     public function test_customer_sign_up_fails_on_validation(): void
     {
-        $response = $this->rPost(Routing::SIGN_UP());
+        $response = $this->rPost(Routing::SIGN_UP);
         $response->assertJsonValidationErrorFor('username');
         $response->assertJsonValidationErrorFor('password');
         $response->assertJsonValidationErrorFor('name');
@@ -21,7 +21,7 @@ class SignUpTest extends BaseTestCase
 
     public function test_customer_can_sign_up(): void
     {
-        $response = $this->rPost(Routing::SIGN_UP(), [
+        $response = $this->rPost(Routing::SIGN_UP, [
             'username' => $this->faker->userName(),
             'password' => $this->faker->password(),
             'name' => $this->faker->name(),

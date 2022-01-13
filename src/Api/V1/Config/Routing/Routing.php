@@ -8,8 +8,8 @@ class Routing
     public const MIDDLEWARE_API = ['api'];
     public const MIDDLEWARE_AUTH = ['auth:sanctum'];
 
-    public const SIGN_IN = '/customer/register';
-    public const SIGN_UP = '/customer/get-token';
+    public const SIGN_IN = '/customer/get-token';
+    public const SIGN_UP = '/customer/register';
     public const SIGN_OUT = '/customer/wipe-tokens';
 
     public const WORKSPACES_ALL = '/customer/workspaces';

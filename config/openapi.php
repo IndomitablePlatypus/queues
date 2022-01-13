@@ -25,7 +25,7 @@ return [
                     'variables' => [],
                 ],
                 [
-                    'url' => 'http://localhost:8000/api/v1',
+                    'url' => 'http://localhost/api/v1',
                     'description' => 'Default',
                     'variables' => [],
                 ],

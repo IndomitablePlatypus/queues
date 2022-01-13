@@ -5,99 +5,227 @@
     },
     "servers": [
         {
-            "url": "http:\/\/localhost",
+            "url": "http:\/\/localhost\/api\/v1",
             "description": "App Environment"
         },
         {
-            "url": "http:\/\/localhost:8000",
+            "url": "http:\/\/localhost\/api\/v1",
             "description": "Default"
         }
     ],
+    "paths": {
+        "\/customer\/register": {
+            "post": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Register user",
+                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
+                "operationId": "RegisterCustomer",
+                "requestBody": {
+                    "description": "Register new customer",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "API Access Bearer Token",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/customer\/get-token": {
+            "post": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Get user token",
+                "description": "Returns new API user token (for basic bearer auth). Requires identity, password and device name.",
+                "operationId": "GetCustomerToken",
+                "requestBody": {
+                    "description": "Get customer API access token for the specific device. <br>\n                          With each request new token is generated. Old ones are invalidated shortly after. <br>\n                          *Tokens on other customer devices remain unaffected.\n            ",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/GetTokenRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "API Access Bearer Token",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        }
+    },
     "components": {
         "schemas": {
             "BusinessWorkspace": {
                 "type": "object",
+                "required": [
+                    "workspaceId",
+                    "keeperId",
+                    "name",
+                    "description",
+                    "address"
+                ],
                 "properties": {
                     "workspaceId": {
                         "description": "Workspace Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "keeperId": {
                         "description": "Keeper Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "name": {
                         "description": "Workspace (business) name",
                         "type": "string",
-                        "example": "O'Keefe and Sons"
+                        "nullable": false,
+                        "example": "Kuvalis Group"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Doloribus sint reiciendis ipsam non. Maxime in dolorem explicabo quia dolore amet. Asperiores enim et sit ducimus."
+                        "nullable": false,
+                        "example": "Omnis vero eveniet voluptatem consequatur. Eaque dicta dolores officia tempora. Sit ut eligendi cumque fugiat. Similique aut exercitationem ut animi distinctio quia."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "1950 Hackett Heights Apt. 816\nPort Era, AR 23077-3619"
+                        "nullable": false,
+                        "example": "28667 Zieme Crest Suite 893\nHagenesfort, ID 17462-2697"
                     }
                 }
             },
             "BusinessCard": {
                 "type": "object",
+                "required": [
+                    "cardId",
+                    "planId",
+                    "customerId",
+                    "isIssued",
+                    "isSatisfied",
+                    "isCompleted",
+                    "isRevoked",
+                    "isBlocked",
+                    "achievements",
+                    "requirements"
+                ],
                 "properties": {
                     "cardId": {
                         "description": "Card Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "planId": {
                         "description": "Plan Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "customerId": {
                         "description": "Customer Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "isIssued": {
                         "description": "Whether the card is issued",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isSatisfied": {
                         "description": "Whether all the requirements to receive a bonus are satisfied",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isCompleted": {
                         "description": "Whether the customer has received the bonus for this card",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isRevoked": {
                         "description": "Whether the card has been revoked",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isBlocked": {
                         "description": "Whether the card has been blocked",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "achievements": {
                         "description": "Achieved requirements",
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": [
+                                "achievementId",
+                                "description"
+                            ],
                             "properties": {
                                 "achievementId": {
                                     "description": "Achievement Id = corresponding requirement id",
                                     "format": "uuid",
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": false
                                 },
                                 "description": {
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
-                                    "example": "Et eos unde reprehenderit. Debitis perferendis veritatis quas commodi vitae praesentium. Consequatur vel blanditiis in est impedit maiores odio. Quia aspernatur est rerum quia et amet sint in."
+                                    "nullable": false,
+                                    "example": "Nihil et itaque asperiores sunt. Tenetur exercitationem nulla quidem vel dolores. Corporis ut enim cum distinctio dolor voluptatem velit. Repellendus velit porro officiis velit."
                                 }
                             }
                         }
@@ -107,16 +235,22 @@
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": [
+                                "requirementId",
+                                "description"
+                            ],
                             "properties": {
                                 "requirementId": {
                                     "description": "Requirement id",
                                     "format": "uuid",
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": false
                                 },
                                 "description": {
                                     "description": "Requirement description",
                                     "type": "string",
-                                    "example": "Iste non sed rerum quas exercitationem ex. Voluptates veniam necessitatibus quo placeat sint asperiores. Ea sint alias dignissimos numquam aliquam tenetur pariatur."
+                                    "nullable": false,
+                                    "example": "Rerum blanditiis aspernatur aliquid. Dolorem voluptatem et ut repellendus voluptas deleniti."
                                 }
                             }
                         }
@@ -135,17 +269,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Ullrich-Shields"
+                        "example": "Hills, Boehm and Langworth"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Nulla dolorum eos at eligendi aperiam dolore. Tempore sunt delectus unde ullam quo quia. Sed et perferendis et sed nihil. Corrupti error excepturi consequatur."
+                        "example": "Voluptas explicabo est dolorem qui. Eligendi architecto nemo aut quia ullam. Dolorem officiis quis nulla occaecati quia iure voluptas. Distinctio dolorem ut alias delectus possimus in dolore."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "8632 Koelpin Pines Suite 641\nSouth Olga, HI 96899"
+                        "example": "26969 Ziemann Cape Apt. 652\nRossiemouth, NY 77781-7788"
                     }
                 }
             },
@@ -172,7 +306,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "Perspiciatis quis et quis. Eaque minus quae sint velit. Itaque qui assumenda sapiente debitis enim tenetur sed."
+                        "example": "Quae necessitatibus corporis reiciendis doloribus. Consectetur ducimus aliquid repudiandae est dolorem veritatis labore. Delectus pariatur nihil eum consequatur."
                     }
                 }
             },
@@ -206,7 +340,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Omnis non mollitia dolore. Dolorum dolorem odit at molestiae hic et. Sit eos hic totam dolore porro quo aliquam."
+                        "example": "Quidem qui expedita maxime. Ex ut esse quo omnis explicabo. Libero voluptatibus et et ducimus veritatis quia."
                     }
                 }
             },
@@ -222,100 +356,58 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "jgibson@bashirian.info"
+                        "example": "gibson.soledad@yahoo.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "`\\B05=#{"
+                        "example": "72ilk,)]"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "consequatur"
+                        "example": "nam"
                     }
                 }
             },
             "RegisterRequest": {
-                "anyOf": [
-                    {
-                        "description": "Phone required",
-                        "type": "object",
-                        "required": [
-                            "phone",
-                            "name",
-                            "password",
-                            "deviceName"
-                        ],
-                        "properties": {
-                            "phone": {
-                                "description": "Phone",
-                                "type": "string",
-                                "example": "228-477-5366"
-                            },
-                            "email": {
-                                "description": "Email is required if phone is not provided",
-                                "type": "string",
-                                "example": "domenico.ondricka@lind.com"
-                            },
-                            "name": {
-                                "description": "Customer name",
-                                "type": "string",
-                                "example": "Kellie Gutkowski"
-                            },
-                            "password": {
-                                "description": "Password",
-                                "format": "password",
-                                "type": "string",
-                                "example": "+b~%H?v?8w%LPm|u"
-                            },
-                            "deviceName": {
-                                "description": "Device name is required to distinguish between different access tokens",
-                                "type": "string",
-                                "example": "consequatur"
-                            }
-                        }
+                "description": "Register new user",
+                "type": "object",
+                "required": [
+                    "phone",
+                    "name",
+                    "password",
+                    "deviceName"
+                ],
+                "properties": {
+                    "phone": {
+                        "description": "Phone",
+                        "type": "string",
+                        "example": "640.457.4189"
                     },
-                    {
-                        "description": "Email required",
-                        "type": "object",
-                        "required": [
-                            "email",
-                            "name",
-                            "password",
-                            "deviceName"
-                        ],
-                        "properties": {
-                            "phone": {
-                                "description": "Phone",
-                                "type": "string",
-                                "example": "228-477-5366"
-                            },
-                            "email": {
-                                "description": "Email is required if phone is not provided",
-                                "type": "string",
-                                "example": "domenico.ondricka@lind.com"
-                            },
-                            "name": {
-                                "description": "Customer name",
-                                "type": "string",
-                                "example": "Kellie Gutkowski"
-                            },
-                            "password": {
-                                "description": "Password",
-                                "format": "password",
-                                "type": "string",
-                                "example": "+b~%H?v?8w%LPm|u"
-                            },
-                            "deviceName": {
-                                "description": "Device name is required to distinguish between different access tokens",
-                                "type": "string",
-                                "example": "consequatur"
-                            }
-                        }
+                    "email": {
+                        "description": "Email is required if phone is not provided",
+                        "type": "string",
+                        "example": "pfeffer.shaun@hotmail.com"
+                    },
+                    "name": {
+                        "description": "Customer name",
+                        "type": "string",
+                        "example": "Lolita Stiedemann"
+                    },
+                    "password": {
+                        "description": "Password",
+                        "format": "password",
+                        "type": "string",
+                        "example": "w'7#\\B6*|#Q"
+                    },
+                    "deviceName": {
+                        "description": "Device name is required to distinguish between different access tokens",
+                        "type": "string",
+                        "example": "quia"
                     }
-                ]
+                }
             },
             "NewCard": {
                 "description": "New card request",
@@ -337,72 +429,100 @@
                     }
                 }
             },
-            "": {
+            "IssuedCard": {
                 "type": "object",
+                "required": [
+                    "cardId",
+                    "planId",
+                    "customerId",
+                    "description",
+                    "satisfied",
+                    "completed",
+                    "achievements",
+                    "requirements"
+                ],
                 "properties": {
                     "cardId": {
                         "description": "Card Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "planId": {
                         "description": "Plan Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "customerId": {
                         "description": "Customer Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "description": {
                         "description": "Card (plan) description",
                         "type": "string",
-                        "example": "Ab ipsum nulla debitis dicta. Id illo sit est voluptatem sed cum est consequuntur. Eaque labore dolores error adipisci."
+                        "nullable": false,
+                        "example": "Deserunt expedita voluptates ab cum non sed. Magnam sit rerum suscipit temporibus consequatur sed quia. Doloribus architecto sit et non voluptas aut dolor."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "completed": {
                         "description": "Whether customer has received the bonus for this card",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "achievements": {
                         "description": "Achieved requirements",
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": [
+                                "achievementId",
+                                "description"
+                            ],
                             "properties": {
                                 "achievementId": {
                                     "description": "Achievement Id = corresponding requirement id",
                                     "format": "uuid",
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": false
                                 },
                                 "description": {
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
-                                    "example": "Praesentium praesentium culpa consequuntur temporibus delectus velit. Beatae deserunt iste eveniet modi tempore pariatur."
+                                    "nullable": false,
+                                    "example": "Similique necessitatibus fuga quidem cum maxime sapiente eum. Rerum et ratione maiores in voluptas tenetur aliquam non."
                                 }
                             }
                         },
-                        "example": "Consectetur est aut commodi cupiditate illum. Reiciendis quo aut vel placeat possimus blanditiis tempora. Itaque dolor rem in velit tempora reprehenderit aliquid."
+                        "example": "Hic sit enim voluptatem necessitatibus officia. Facilis temporibus autem laborum qui voluptates. Fugit eum id quis praesentium ipsam at quod est."
                     },
                     "requirements": {
                         "description": "All requirements",
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": [
+                                "requirementId",
+                                "description"
+                            ],
                             "properties": {
                                 "requirementId": {
                                     "description": "Requirement id",
                                     "format": "uuid",
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": false
                                 },
                                 "description": {
                                     "description": "Requirement description",
                                     "type": "string",
-                                    "example": "Vel sed voluptates et ipsam vel esse quae. Quia est optio sint aut. Reiciendis cum eius sit nisi eos. A exercitationem nam et aliquid dolore. Qui et ullam doloremque ipsa quibusdam."
+                                    "nullable": false,
+                                    "example": "Ex tempora aut distinctio alias ut dolor doloribus. Laboriosam cupiditate est quis et laborum quia. Iusto itaque doloremque asperiores voluptatem esse odit ex."
                                 }
                             }
                         }
@@ -411,74 +531,105 @@
             },
             "CustomerWorkspace": {
                 "type": "object",
+                "required": [
+                    "workspaceId",
+                    "name",
+                    "description",
+                    "address"
+                ],
                 "properties": {
                     "workspaceId": {
                         "description": "Workspace Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "name": {
                         "description": "Workspace (business) name",
                         "type": "string",
-                        "example": "Streich-Grant"
+                        "nullable": false,
+                        "example": "Casper, Windler and Kunze"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Quod qui consequatur totam repudiandae eos deleniti consequatur. Ut officia veritatis sint ut quam qui dolores. Similique consequatur temporibus aut rerum dolorem."
+                        "nullable": false,
+                        "example": "Qui quis eum tempore sed debitis possimus. Eaque dignissimos aut qui."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "2121 Fay Summit Apt. 382\nHowellburgh, SD 40108-1033"
+                        "nullable": false,
+                        "example": "10102 Batz Harbor\nNew Mattiefort, MA 74480"
                     }
                 }
             },
             "BusinessPlan": {
                 "type": "object",
+                "required": [
+                    "planId",
+                    "workspaceId",
+                    "description",
+                    "isLaunched",
+                    "isStopped",
+                    "isArchived",
+                    "requirements"
+                ],
                 "properties": {
                     "planId": {
                         "description": "Plan Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "workspaceId": {
                         "description": "Workspace Id",
                         "format": "uuid",
-                        "type": "string"
+                        "type": "string",
+                        "nullable": false
                     },
                     "description": {
                         "description": "Plan description",
                         "type": "string",
-                        "example": "Cumque laudantium voluptate provident maxime delectus mollitia magnam. Doloribus est aut quas laudantium. Distinctio vitae nulla dolorem eius officiis incidunt ut et. Quasi sint ea iusto."
+                        "nullable": false,
+                        "example": "Architecto itaque temporibus unde ea. Tempore aut asperiores enim excepturi. Sunt dignissimos sapiente corrupti molestias qui quae."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isStopped": {
                         "description": "Whether the plan is stopped",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "isArchived": {
                         "description": "Whether the plan is archived",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "nullable": false
                     },
                     "requirements": {
                         "description": "All requirements",
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": [
+                                "requirementId",
+                                "description"
+                            ],
                             "properties": {
                                 "requirementId": {
                                     "description": "Requirement id",
                                     "format": "uuid",
-                                    "type": "string"
+                                    "type": "string",
+                                    "nullable": false
                                 },
                                 "description": {
                                     "description": "Requirement description",
                                     "type": "string",
-                                    "example": "Incidunt voluptatem itaque aut sed modi eum at. Ut magnam doloremque sint qui voluptatem."
+                                    "nullable": false,
+                                    "example": "Voluptatum rerum vitae eligendi soluta vero. Voluptates aliquid eligendi consectetur. Culpa quia molestiae porro et tempore tempore. Id in sed ut culpa necessitatibus ab."
                                 }
                             }
                         }
@@ -493,10 +644,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Parameters Assertion Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Wrong string format for UUID"
                                 }
                             }
@@ -510,9 +665,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message",
+                                "errors"
+                            ],
                             "properties": {
                                 "message": {
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "The given data was invalid."
                                 },
                                 "errors": {
@@ -523,6 +683,7 @@
                                             "type": "string"
                                         }
                                     },
+                                    "nullable": false,
                                     "example": {
                                         "field": [
                                             "Something is wrong with this field!"
@@ -540,10 +701,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Authorization Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Subject <Subject Id> is not authorized for <Resource Type> <Resource Id>"
                                 }
                             }
@@ -557,10 +722,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "User Already Registered Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "User with given identity already registered"
                                 }
                             }
@@ -574,10 +743,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Unexpected Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Unexpected exception"
                                 }
                             }
@@ -591,10 +764,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Requested resource not found",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Not found exception: <Resource Name>: <Resource Id>"
                                 }
                             }
@@ -608,10 +785,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Authentication Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Invalid access token"
                                 }
                             }
@@ -625,10 +806,14 @@
                     "application\/json": {
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "message"
+                            ],
                             "properties": {
                                 "message": {
                                     "description": "Domain Exception",
                                     "type": "string",
+                                    "nullable": false,
                                     "example": "Domain logic forbids requested operation"
                                 }
                             }
@@ -639,7 +824,8 @@
         },
         "securitySchemes": {
             "BearerToken": {
-                "type": "apiKey",
+                "type": "http",
+                "name": "BearerToken",
                 "in": "header",
                 "scheme": "bearer",
                 "bearerFormat": "JWT"

@@ -17,9 +17,10 @@ class UnexpectedExceptionResponse extends ResponseFactory implements Reusable
                 MediaType::json()->schema(
                     Schema::object()->properties(
                         Schema::string('message')
+                            ->nullable(false)
                             ->description('Unexpected Exception')
                             ->example('Unexpected exception')
-                    )
+                    )->required('message')
                 )
             );
     }

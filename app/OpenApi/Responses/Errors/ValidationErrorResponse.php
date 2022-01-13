@@ -13,13 +13,16 @@ class ValidationErrorResponse extends ResponseFactory implements Reusable
     public function build(): Response
     {
         $response = Schema::object()->properties(
-            Schema::string('message')->example('The given data was invalid.'),
+            Schema::string('message')
+                ->nullable(false)
+                ->example('The given data was invalid.'),
             Schema::object('errors')
+                ->nullable(false)
                 ->additionalProperties(
                     Schema::array()->items(Schema::string())
                 )
                 ->example(['field' => ['Something is wrong with this field!']])
-        );
+        )->required('message', 'errors');
 
         return Response::unprocessableEntity('ValidationError')
             ->description('Validation errors')

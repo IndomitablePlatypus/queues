@@ -40,18 +40,10 @@ class RegisterRequestSchema extends SchemaFactory implements Reusable
             ->description('Device name is required to distinguish between different access tokens')
             ->example($this->word());
 
-        $phoneRequired = Schema::object('Phone identity')
-            ->description('Phone required')
+        return Schema::object('RegisterRequest')
+            ->description('Register new user')
             ->required($phone, $name, $password, $deviceName)
             ->properties($phone, $email, $name, $password, $deviceName);
-
-        $emailRequired = Schema::object('Email identity')
-            ->description('Email required')
-            ->required($email, $name, $password, $deviceName)
-            ->properties($phone, $email, $name, $password, $deviceName);
-
-        return AnyOf::create('RegisterRequest')
-            ->schemas($phoneRequired, $emailRequired);
     }
 
 }

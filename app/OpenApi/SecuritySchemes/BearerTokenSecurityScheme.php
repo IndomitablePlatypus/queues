@@ -10,7 +10,8 @@ class BearerTokenSecurityScheme extends SecuritySchemeFactory
     public function build(): SecurityScheme
     {
         return SecurityScheme::create('BearerToken')
-            ->type(SecurityScheme::TYPE_API_KEY)
+            ->name('BearerToken')
+            ->type(SecurityScheme::TYPE_HTTP)
             ->in(SecurityScheme::IN_HEADER)
             ->scheme('bearer')
             ->bearerFormat('JWT');

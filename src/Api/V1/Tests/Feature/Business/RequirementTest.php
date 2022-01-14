@@ -7,8 +7,7 @@ use App\Models\Plan;
 use App\Models\Requirement;
 use App\Models\User;
 use App\Models\Workspace;
-use Carbon\Carbon;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Domain\RelationType;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
@@ -33,14 +32,14 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPost(
-            Routing::REQUIREMENTS_ADD,
+            RouteName::ADD_PLAN_REQUIREMENT,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
             ['description' => Requirement::factory()->make()->description],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE,
+            RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 
@@ -64,14 +63,14 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::REQUIREMENTS_CHANGE,
+            RouteName::CHANGE_PLAN_REQUIREMENT,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id, 'requirementId' => $requirement->id],
             ['description' => 'changed'],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE,
+            RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 
@@ -95,13 +94,13 @@ class RequirementTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rDelete(
-            Routing::REQUIREMENTS_REMOVE,
+            RouteName::REMOVE_PLAN_REQUIREMENT,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id, 'requirementId' => $requirement->id],
         );
         $response->assertSuccessful();
 
         $requirements = $this->rGet(
-            Routing::PLANS_GET_ONE,
+            RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
         )->json('requirements');
 

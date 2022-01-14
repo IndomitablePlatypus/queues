@@ -6,10 +6,13 @@ class RouteName
 {
     public const REGISTER = 'RegisterCustomer';
     public const GET_TOKEN = 'GetCustomerToken';
+    public const CLEAR_TOKENS = 'ClearCustomerTokens';
+
     public const GET_WORKSPACES = 'ListAllWorkspace';
     public const ADD_WORKSPACE = 'AddWorkspace';
     public const GET_PLANS = 'ListAllPlan';
     public const ISSUE_CARD = 'IssueCard';
+    public const GET_CARDS = 'GetCards';
     public const GET_CARD = 'GetCard';
     public const COMPLETE_CARD = 'CompleteCard';
     public const REVOKE_CARD = 'RevokeCard';
@@ -35,7 +38,7 @@ class RouteName
     public const FIRE_COLLABORATOR = 'FireCollaborator';
 
     public const GET_WORKSPACE = 'GetWorkspace';
-    public const CHANGE_PROFILE = 'ChangeWorkspaceProfile';
+    public const CHANGE_WORKSPACE_PROFILE = 'ChangeWorkspaceProfile';
     public const GET_PLAN = 'GetPlan';
 
     public const CUSTOMER_WORKSPACES = 'GetCustomerWorkspaces';

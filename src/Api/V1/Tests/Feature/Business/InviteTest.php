@@ -7,7 +7,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\Workspace;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Domain\RelationType;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
@@ -16,7 +16,6 @@ use Queues\Tests\BaseTestCase;
 class InviteTest extends BaseTestCase
 {
     use TestApplicationTrait, RoutingTestTrait;
-
 
     public function test_keeper_can_invite()
     {
@@ -30,7 +29,7 @@ class InviteTest extends BaseTestCase
         EstablishRelation::dispatchSync($keeper->id, $workspace->id, RelationType::KEEPER());
         $this->tokenize($keeper);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(RouteName::PROPOSE_INVITE, ['workspaceId' => $workspace->id]);
         $response->assertSuccessful();
     }
 
@@ -50,7 +49,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($collaborator);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(RouteName::PROPOSE_INVITE, ['workspaceId' => $workspace->id]);
         $response->assertNotFound();
     }
 
@@ -67,7 +66,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($user);
 
-        $response = $this->rPost(Routing::INVITE_PROPOSE, ['workspaceId' => $workspace->id]);
+        $response = $this->rPost(RouteName::PROPOSE_INVITE, ['workspaceId' => $workspace->id]);
         $response->assertNotFound();
     }
 
@@ -86,7 +85,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($keeper);
 
-        $response = $this->rDelete(Routing::INVITE_DISCARD, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
+        $response = $this->rDelete(RouteName::DISCARD_INVITE, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
         $response->assertSuccessful();
     }
 
@@ -107,7 +106,7 @@ class InviteTest extends BaseTestCase
 
         $this->tokenize($user);
 
-        $response = $this->rPut(Routing::INVITE_ACCEPT, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
+        $response = $this->rPut(RouteName::ACCEPT_INVITE, ['workspaceId' => $workspace->id, 'inviteId' => $invite->id]);
         $response->assertSuccessful();
     }
 

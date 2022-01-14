@@ -5,7 +5,7 @@ namespace Queues\Api\V1\Tests\Feature;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\Sanctum;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
@@ -16,7 +16,7 @@ class SignOutTest extends BaseTestCase
 
     public function test_customer_sign_out_fails_on_unauthenticated(): void
     {
-        $response = $this->rGet(Routing::SIGN_OUT);
+        $response = $this->rGet(RouteName::CLEAR_TOKENS);
         $response->assertUnauthorized();
     }
 
@@ -27,7 +27,7 @@ class SignOutTest extends BaseTestCase
         $user->save();
         $this->tokenize($user);
 
-        $response = $this->rGet(Routing::SIGN_OUT);
+        $response = $this->rGet(RouteName::CLEAR_TOKENS);
         $response->assertSuccessful();
 
         /** @var Model $model */

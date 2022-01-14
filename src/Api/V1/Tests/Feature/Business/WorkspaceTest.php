@@ -5,7 +5,7 @@ namespace Feature\Business;
 use App\Jobs\EstablishRelation;
 use App\Models\User;
 use App\Models\Workspace;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Domain\RelationType;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
@@ -17,7 +17,6 @@ class WorkspaceTest extends BaseTestCase
 
     public function test_workspace_can_be_added(): void
     {
-
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
@@ -25,7 +24,7 @@ class WorkspaceTest extends BaseTestCase
 
         /** @var Workspace $workspace */
         $workspace = Workspace::factory()->make(['keeper_id' => $user->id]);
-        $response = $this->rPost(Routing::WORKSPACES_ADD, $workspace->profile);
+        $response = $this->rPost(RouteName::ADD_WORKSPACE, $workspace->profile);
         $response->assertSuccessful();
         $workspaceId = $response->json('workspace_id');
 
@@ -44,7 +43,7 @@ class WorkspaceTest extends BaseTestCase
         $this->tokenize($user);
 
         $profile = array_merge($workspace->profile, ['description' => 'changed']);
-        $response = $this->rPut(Routing::WORKSPACES_CHANGE_PROFILE, ['workspaceId' => $workspace->id], $profile);
+        $response = $this->rPut(RouteName::CHANGE_WORKSPACE_PROFILE, ['workspaceId' => $workspace->id], $profile);
         $response->assertSuccessful();
     }
 

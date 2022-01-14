@@ -3,7 +3,7 @@
 namespace Queues\Api\V1\Tests\Feature;
 
 use App\Models\User;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
@@ -14,7 +14,7 @@ class SignInTest extends BaseTestCase
 
     public function test_customer_sign_in_fails_on_validation(): void
     {
-        $response = $this->rPost(Routing::SIGN_IN);
+        $response = $this->rPost(RouteName::GET_TOKEN);
         $response->assertJsonValidationErrorFor('username');
         $response->assertJsonValidationErrorFor('password');
     }
@@ -24,7 +24,7 @@ class SignInTest extends BaseTestCase
         /** @var User $user */
         $user = User::factory()->make();
         $user->save();
-        $response = $this->rPost(Routing::SIGN_IN, [
+        $response = $this->rPost(RouteName::GET_TOKEN, [
             'username' => $user->username,
             'password' => 'password',
         ]);

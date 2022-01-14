@@ -11,7 +11,7 @@ use App\Models\User;
 use App\Models\Workspace;
 use Carbon\Carbon;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
-use Queues\Api\V1\Config\Routing\Routing;
+use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Domain\RelationType;
 use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
@@ -36,14 +36,14 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPost(
-            Routing::CARDS_ISSUE,
+            RouteName::ISSUE_CARD,
             ['workspaceId' => $workspace->id],
             ['customerId' => GuidBasedImmutableId::makeValue(), 'planId' => $plan->id]
         );
         $response->assertSuccessful();
 
         $planId = $this->rGet(
-            Routing::CARDS_GET_ONE,
+            RouteName::GET_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $response->json('card_id')],
         )->json('plan_id');
         $this->assertEquals($plan->id, $planId);
@@ -66,7 +66,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_COMPLETE,
+            RouteName::COMPLETE_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -89,7 +89,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_REVOKE,
+            RouteName::REVOKE_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -112,7 +112,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_BLOCK,
+            RouteName::BLOCK_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
@@ -135,12 +135,11 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rPut(
-            Routing::CARDS_UNBLOCK,
+            RouteName::UNBLOCK_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id]
         );
         $response->assertSuccessful();
     }
-
 
     public function test_collaborator_can_note_achievement()
     {
@@ -162,7 +161,7 @@ class CardTest extends BaseTestCase
         $this->tokenize($collaborator);
 
         $response = $this->rGet(
-            Routing::CARDS_GET_ONE,
+            RouteName::GET_CARD,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id],
         );
         $response->assertSuccessful();
@@ -170,7 +169,7 @@ class CardTest extends BaseTestCase
 
         $newRequirement = Requirement::factory()->make(['plan_id' => $plan->id]);
         $response = $this->rPost(
-            Routing::CARDS_NOTE_ACHIEVEMENT,
+            RouteName::NOTE_ACHIEVEMENT,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id],
             ['achievementId' => $newRequirement->id, 'description' => $newRequirement->description],
         );

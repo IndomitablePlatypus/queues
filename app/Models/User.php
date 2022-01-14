@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Codderz\Platypus\Contracts\GenericIdInterface;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -77,6 +78,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Workspace::class, 'relations', 'collaborator_id', 'workspace_id');
     }
 
+    public function cards(): HasMany
+    {
+        return $this->hasMany(Card::class, 'customer_id');
+    }
+
     public function getWorkspaces(): Collection
     {
         return $this->workspaces()->get();
@@ -102,5 +108,17 @@ class User extends Authenticatable
         /** @var Workspace $workspace */
         $workspace = $this->ownWorkspaces()->create($properties);
         return $workspace;
+    }
+
+    public function getCards(): Collection
+    {
+        return $this->cards()->get();
+    }
+
+    public function getCard(string $cardId): Card
+    {
+        /** @var Card $card */
+        $card = $this->cards()->where('card_id', '=', $cardId)->firstOrFail();
+        return $card;
     }
 }

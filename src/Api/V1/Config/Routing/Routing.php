@@ -8,48 +8,59 @@ class Routing
     public const MIDDLEWARE_API = ['api'];
     public const MIDDLEWARE_AUTH = ['auth:sanctum'];
 
-    public const SIGN_IN = '/customer/get-token';
-    public const SIGN_UP = '/customer/register';
-    public const SIGN_OUT = '/customer/wipe-tokens';
+    protected const URIS = [
+        RouteName::GET_TOKEN => '/customer/get-token',
+        RouteName::REGISTER => '/customer/register',
+        RouteName::CLEAR_TOKENS => '/customer/wipe-tokens',
 
-    public const WORKSPACES_ALL = '/customer/workspaces';
+        RouteName::CUSTOMER_WORKSPACES => '/customer/workspaces',
+        RouteName::CUSTOMER_CARDS => '/customer/card',
+        RouteName::CUSTOMER_CARD => '/customer/card/{cardId}',
+        RouteName::CUSTOMER_ID => '/customer/id',
 
-    public const WORKSPACES_GET = '/workspace';
-    public const WORKSPACES_ADD = '/workspace';
-    public const WORKSPACES_GET_ONE = '/workspace/{workspaceId}';
-    public const WORKSPACES_CHANGE_PROFILE = '/workspace/{workspaceId}/profile';
+        RouteName::GET_WORKSPACES => '/workspace',
+        RouteName::ADD_WORKSPACE => '/workspace',
+        RouteName::GET_WORKSPACE => '/workspace/{workspaceId}',
+        RouteName::CHANGE_WORKSPACE_PROFILE => '/workspace/{workspaceId}/profile',
 
-    public const INVITE_PROPOSE = '/workspace/{workspaceId}/invite';
-    public const INVITE_ACCEPT = '/workspace/{workspaceId}/invite/{inviteId}/accept';
-    public const INVITE_DISCARD = '/workspace/{workspaceId}/invite/{inviteId}/discard';
+        RouteName::PROPOSE_INVITE => '/workspace/{workspaceId}/invite',
+        RouteName::ACCEPT_INVITE => '/workspace/{workspaceId}/invite/{inviteId}/accept',
+        RouteName::DISCARD_INVITE => '/workspace/{workspaceId}/invite/{inviteId}/discard',
 
-    public const COLLABORATION_LEAVE = '/workspace/{workspaceId}/collaboration/leave';
-    public const COLLABORATION_FIRE = '/workspace/{workspaceId}/collaboration/fire/{collaboratorId}';
+        RouteName::LEAVE_RELATION => '/workspace/{workspaceId}/collaboration/leave',
+        RouteName::FIRE_COLLABORATOR => '/workspace/{workspaceId}/collaboration/fire/{collaboratorId}',
 
-    public const PLANS_GET = '/workspace/{workspaceId}/plan';
-    public const PLANS_ADD = '/workspace/{workspaceId}/plan';
-    public const PLANS_GET_ONE = '/workspace/{workspaceId}/plan/{planId}';
-    public const PLANS_CHANGE_DESCRIPTION = '/workspace/{workspaceId}/plan/{planId}/description';
-    public const PLANS_LAUNCH = '/workspace/{workspaceId}/plan/{planId}/launch';
-    public const PLANS_STOP = '/workspace/{workspaceId}/plan/{planId}/stop';
-    public const PLANS_ARCHIVE = '/workspace/{workspaceId}/plan/{planId}/archive';
+        RouteName::GET_PLANS => '/workspace/{workspaceId}/plan',
+        RouteName::ADD_PLAN => '/workspace/{workspaceId}/plan',
+        RouteName::GET_PLAN => '/workspace/{workspaceId}/plan/{planId}',
+        RouteName::CHANGE_PLAN_DESCRIPTION => '/workspace/{workspaceId}/plan/{planId}/description',
+        RouteName::LAUNCH_PLAN => '/workspace/{workspaceId}/plan/{planId}/launch',
+        RouteName::STOP_PLAN => '/workspace/{workspaceId}/plan/{planId}/stop',
+        RouteName::ARCHIVE_PLAN => '/workspace/{workspaceId}/plan/{planId}/archive',
 
-    public const REQUIREMENTS_ADD = '/workspace/{workspaceId}/plan/{planId}/requirement';
-    public const REQUIREMENTS_CHANGE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
-    public const REQUIREMENTS_REMOVE = '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}';
+        RouteName::ADD_PLAN_REQUIREMENT => '/workspace/{workspaceId}/plan/{planId}/requirement',
+        RouteName::CHANGE_PLAN_REQUIREMENT => '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}',
+        RouteName::REMOVE_PLAN_REQUIREMENT => '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}',
 
-    public const CARDS_GET = '/workspace/{workspaceId}/card';
-    public const CARDS_ISSUE = '/workspace/{workspaceId}/card';
-    public const CARDS_GET_ONE = '/workspace/{workspaceId}/card/{cardId}';
-    public const CARDS_COMPLETE = '/workspace/{workspaceId}/card/{cardId}/complete';
-    public const CARDS_REVOKE = '/workspace/{workspaceId}/card/{cardId}/revoke';
-    public const CARDS_BLOCK = '/workspace/{workspaceId}/card/{cardId}/block';
-    public const CARDS_UNBLOCK = '/workspace/{workspaceId}/card/{cardId}/unblock';
-    public const CARDS_NOTE_ACHIEVEMENT = '/workspace/{workspaceId}/card/{cardId}/achievement';
-    public const CARDS_DISMISS_ACHIEVEMENT = '/workspace/{workspaceId}/card/{cardId}/achievement/{achievementId}';
+        RouteName::GET_CARDS => '/workspace/{workspaceId}/card',
+        RouteName::ISSUE_CARD => '/workspace/{workspaceId}/card',
+        RouteName::GET_CARD => '/workspace/{workspaceId}/card/{cardId}',
+        RouteName::COMPLETE_CARD => '/workspace/{workspaceId}/card/{cardId}/complete',
+        RouteName::REVOKE_CARD => '/workspace/{workspaceId}/card/{cardId}/revoke',
+        RouteName::BLOCK_CARD => '/workspace/{workspaceId}/card/{cardId}/block',
+        RouteName::UNBLOCK_CARD => '/workspace/{workspaceId}/card/{cardId}/unblock',
+        RouteName::NOTE_ACHIEVEMENT => '/workspace/{workspaceId}/card/{cardId}/achievement',
+        RouteName::DISMISS_ACHIEVEMENT => '/workspace/{workspaceId}/card/{cardId}/achievement/{achievementId}',
+
+    ];
 
     public static function route(string $name, array $arguments = []): string
     {
         return route($name, $arguments);
+    }
+
+    public static function uri(string $name): string
+    {
+        return static::URIS[$name] ?? '';
     }
 }

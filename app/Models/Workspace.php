@@ -126,6 +126,4 @@ class Workspace extends Model
         $card = $this->cards()->where('card_id', '=', $id)->firstOrFail();
         return $card;
     }
-
-
 }

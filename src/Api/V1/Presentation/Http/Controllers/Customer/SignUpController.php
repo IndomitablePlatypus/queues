@@ -30,8 +30,7 @@ class SignUpController extends ApiController
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke(SignUpRequest $request)
     {
-        $user = new User($request->toArray());
-        $user->save();
+        $user = (new User($request->toArray()))->persistFirst();
         Auth::login($user);
         $plainTextToken = $user->createToken($request->userAgent())->plainTextToken;
         return $this->respond($plainTextToken);

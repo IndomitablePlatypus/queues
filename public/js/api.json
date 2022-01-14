@@ -101,6 +101,179 @@
                     }
                 }
             }
+        },
+        "\/customer\/workspaces": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Register user",
+                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
+                "operationId": "RegisterCustomer",
+                "requestBody": {
+                    "description": "Register new customer",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "API Access Bearer Token",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/customer\/wipe-tokens": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Clear user tokens",
+                "description": "Removes all existing access tokens for the current user. (I.e. logout)",
+                "operationId": "GetCustomerToken",
+                "responses": {
+                    "200": {
+                        "description": "All tokens successfully cleared",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Ok",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "Ok"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/customer\/card": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Register user",
+                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
+                "operationId": "RegisterCustomer",
+                "requestBody": {
+                    "description": "Register new customer",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "API Access Bearer Token",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/customer\/card\/{cardId}": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Register user",
+                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
+                "operationId": "RegisterCustomer",
+                "parameters": [
+                    {
+                        "name": "cardId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Register new customer",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "API Access Bearer Token",
+                                    "type": "string",
+                                    "nullable": false,
+                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -131,19 +304,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Kuvalis Group"
+                        "example": "Hessel Inc"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Omnis vero eveniet voluptatem consequatur. Eaque dicta dolores officia tempora. Sit ut eligendi cumque fugiat. Similique aut exercitationem ut animi distinctio quia."
+                        "example": "Dolores omnis dolorem non harum hic unde. Maxime minima voluptas perferendis quidem. Eveniet labore modi et hic accusantium accusantium."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "28667 Zieme Crest Suite 893\nHagenesfort, ID 17462-2697"
+                        "example": "316 Waelchi Park Apt. 719\nDickinsonberg, DC 29697-5325"
                     }
                 }
             },
@@ -225,7 +398,7 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Nihil et itaque asperiores sunt. Tenetur exercitationem nulla quidem vel dolores. Corporis ut enim cum distinctio dolor voluptatem velit. Repellendus velit porro officiis velit."
+                                    "example": "Placeat sint quos dolorem voluptates voluptas repudiandae aut officiis. Esse ut qui esse praesentium qui. Consequuntur aliquid sed illo modi adipisci repellat."
                                 }
                             }
                         }
@@ -250,7 +423,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Rerum blanditiis aspernatur aliquid. Dolorem voluptatem et ut repellendus voluptas deleniti."
+                                    "example": "Autem in quidem ipsam cupiditate. Porro aperiam voluptatem et sit. Optio aut fugit officiis eaque et exercitationem quae."
                                 }
                             }
                         }
@@ -269,17 +442,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Hills, Boehm and Langworth"
+                        "example": "Mante-Walsh"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Voluptas explicabo est dolorem qui. Eligendi architecto nemo aut quia ullam. Dolorem officiis quis nulla occaecati quia iure voluptas. Distinctio dolorem ut alias delectus possimus in dolore."
+                        "example": "Minus omnis qui in voluptatem qui nesciunt laudantium. Beatae placeat et ad debitis dignissimos et accusamus. Consectetur eligendi atque quisquam soluta dolores maiores neque iure."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "26969 Ziemann Cape Apt. 652\nRossiemouth, NY 77781-7788"
+                        "example": "685 Pfannerstill Vista Suite 415\nAlmouth, TX 30298-1714"
                     }
                 }
             },
@@ -306,7 +479,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "Quae necessitatibus corporis reiciendis doloribus. Consectetur ducimus aliquid repudiandae est dolorem veritatis labore. Delectus pariatur nihil eum consequatur."
+                        "example": "Minus maiores nihil dolor rem. Repellat magni in similique. Saepe commodi nisi maxime nemo. Delectus natus minus vitae aliquid eligendi aut."
                     }
                 }
             },
@@ -340,7 +513,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Quidem qui expedita maxime. Ex ut esse quo omnis explicabo. Libero voluptatibus et et ducimus veritatis quia."
+                        "example": "Ratione totam nisi blanditiis quos ab enim. Rerum veniam sit aut expedita."
                     }
                 }
             },
@@ -356,18 +529,18 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "gibson.soledad@yahoo.com"
+                        "example": "bbogisich@hotmail.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "72ilk,)]"
+                        "example": "RkE:5PK>M[n)_"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "nam"
+                        "example": "omnis"
                     }
                 }
             },
@@ -384,28 +557,28 @@
                     "phone": {
                         "description": "Phone",
                         "type": "string",
-                        "example": "640.457.4189"
+                        "example": "1-754-977-2408"
                     },
                     "email": {
                         "description": "Email is required if phone is not provided",
                         "type": "string",
-                        "example": "pfeffer.shaun@hotmail.com"
+                        "example": "harvey.marley@jenkins.com"
                     },
                     "name": {
                         "description": "Customer name",
                         "type": "string",
-                        "example": "Lolita Stiedemann"
+                        "example": "Birdie Pfeffer DVM"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "w'7#\\B6*|#Q"
+                        "example": "SuKiI~hi"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "quia"
+                        "example": "ab"
                     }
                 }
             },
@@ -464,7 +637,7 @@
                         "description": "Card (plan) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Deserunt expedita voluptates ab cum non sed. Magnam sit rerum suscipit temporibus consequatur sed quia. Doloribus architecto sit et non voluptas aut dolor."
+                        "example": "Nulla omnis voluptates nulla quia. Possimus tempora minus qui deleniti. Ut sint est voluptate alias velit."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
@@ -496,11 +669,11 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Similique necessitatibus fuga quidem cum maxime sapiente eum. Rerum et ratione maiores in voluptas tenetur aliquam non."
+                                    "example": "Vitae magni quas voluptates. Quia mollitia est ducimus error voluptas veniam. Eum aut non exercitationem praesentium recusandae saepe. Id molestias soluta cum praesentium non occaecati consectetur."
                                 }
                             }
                         },
-                        "example": "Hic sit enim voluptatem necessitatibus officia. Facilis temporibus autem laborum qui voluptates. Fugit eum id quis praesentium ipsam at quod est."
+                        "example": "Labore amet quidem veniam consequatur modi deserunt facere. Alias ea ducimus nihil omnis. Ut sequi unde sunt fuga quia sunt. Tempore voluptates deserunt et praesentium ullam consequatur."
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -522,7 +695,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Ex tempora aut distinctio alias ut dolor doloribus. Laboriosam cupiditate est quis et laborum quia. Iusto itaque doloremque asperiores voluptatem esse odit ex."
+                                    "example": "Repudiandae enim et magnam ullam modi. Voluptas voluptates rem aliquid vel. Rem odio praesentium odio eligendi est molestiae. Expedita et soluta aut autem illo."
                                 }
                             }
                         }
@@ -548,19 +721,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Casper, Windler and Kunze"
+                        "example": "Cremin Group"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Qui quis eum tempore sed debitis possimus. Eaque dignissimos aut qui."
+                        "example": "Aut sequi corrupti repudiandae rerum vero illo id. Et velit ea est nihil alias. Nemo aut iste eum non omnis accusamus quia."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "10102 Batz Harbor\nNew Mattiefort, MA 74480"
+                        "example": "821 Janelle Common\nPort Theronburgh, UT 44306"
                     }
                 }
             },
@@ -592,7 +765,7 @@
                         "description": "Plan description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Architecto itaque temporibus unde ea. Tempore aut asperiores enim excepturi. Sunt dignissimos sapiente corrupti molestias qui quae."
+                        "example": "Consequatur repudiandae vitae et provident odit modi illo. At culpa dolores omnis dolor sunt. Iure quasi sint rerum odio et maxime. Harum voluptas accusantium sit autem voluptatem ut."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
@@ -629,7 +802,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Voluptatum rerum vitae eligendi soluta vero. Voluptates aliquid eligendi consectetur. Culpa quia molestiae porro et tempore tempore. Id in sed ut culpa necessitatibus ab."
+                                    "example": "Odit voluptas vitae laborum nemo commodi. Quia sint qui doloremque voluptate aut dolore. Reprehenderit nam totam molestias nostrum iusto voluptatum. Pariatur quia rerum soluta."
                                 }
                             }
                         }

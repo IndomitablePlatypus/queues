@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Support\PersistTrait;
 use Codderz\Platypus\Contracts\GenericIdInterface;
+use Codderz\Platypus\Exceptions\UserExistsException;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\DBAL\Query\QueryException;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, PersistTrait;
 
     protected $keyType = 'string';
 
@@ -54,6 +58,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'registration_initiated_at' => 'datetime',
     ];
+
+    public function persistFirst(): static
+    {
+        try {
+            $this->save();
+        } catch (UniqueConstraintViolationException $exception) {
+            throw new UserExistsException('User with given identity already exists');
+        }
+        return $this;
+    }
 
     public static function findByCredentialsOrFail(string $username, string $password): static
     {

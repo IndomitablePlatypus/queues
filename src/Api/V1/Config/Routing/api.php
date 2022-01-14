@@ -5,13 +5,12 @@ use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Config\Routing\Routing;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsBlockController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsCompleteController;
-use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsIssueController;
-use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsGetOneController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsIssueController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsRevokeController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsUnblockController;
-use Queues\Api\V1\Presentation\Http\Controllers\Cards\DismissAchievementController;
-use Queues\Api\V1\Presentation\Http\Controllers\Cards\NoteAchievementController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsAchievementDismissController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\CardsAchievementNoteController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationFireController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeaveController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
@@ -61,7 +60,6 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::get(Routing::uri(RouteName::CUSTOMER_CARD))
             ->name(RouteName::CUSTOMER_CARD)
             ->uses(WorkspacesAllController::class);
-
 
         Route::get(Routing::uri(RouteName::GET_WORKSPACES))
             ->name(RouteName::GET_WORKSPACES)
@@ -139,10 +137,6 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(RouteName::REMOVE_PLAN_REQUIREMENT)
             ->uses(RequirementsRemoveController::class);
 
-        Route::get(Routing::uri(RouteName::GET_CARDS))
-            ->name(RouteName::GET_CARDS)
-            ->uses(CardsGetController::class);
-
         Route::get(Routing::uri(RouteName::GET_CARD))
             ->name(RouteName::GET_CARD)
             ->uses(CardsGetOneController::class);
@@ -169,10 +163,10 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
 
         Route::post(Routing::uri(RouteName::NOTE_ACHIEVEMENT))
             ->name(RouteName::NOTE_ACHIEVEMENT)
-            ->uses(NoteAchievementController::class);
+            ->uses(CardsAchievementNoteController::class);
 
         Route::delete(Routing::uri(RouteName::DISMISS_ACHIEVEMENT))
             ->name(RouteName::DISMISS_ACHIEVEMENT)
-            ->uses(DismissAchievementController::class);
+            ->uses(CardsAchievementDismissController::class);
     });
 });

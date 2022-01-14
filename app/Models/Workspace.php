@@ -112,14 +112,6 @@ class Workspace extends Model
         return $plan;
     }
 
-    /**
-     * @return Card[]
-     */
-    public function getCards(): Collection
-    {
-        return $this->cards()->get();
-    }
-
     public function getCard(string $id): Card
     {
         /** @var Card $card */

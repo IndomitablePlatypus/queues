@@ -4,7 +4,9 @@ namespace Queues\Api\V1\Presentation\Http\Controllers\Requirements;
 
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
 use Queues\Api\V1\Presentation\Http\Controllers\Requirements\Requests\AddRequirementRequest;
+use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
+#[OpenApi\PathItem]
 class RequirementsAddController extends ApiController
 {
     public function __invoke(AddRequirementRequest $request)

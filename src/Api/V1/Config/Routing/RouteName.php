@@ -12,7 +12,6 @@ class RouteName
     public const ADD_WORKSPACE = 'AddWorkspace';
     public const GET_PLANS = 'ListAllPlan';
     public const ISSUE_CARD = 'IssueCard';
-    public const GET_CARDS = 'GetCards';
     public const GET_CARD = 'GetCard';
     public const COMPLETE_CARD = 'CompleteCard';
     public const REVOKE_CARD = 'RevokeCard';

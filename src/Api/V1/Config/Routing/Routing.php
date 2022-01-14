@@ -42,7 +42,6 @@ class Routing
         RouteName::CHANGE_PLAN_REQUIREMENT => '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}',
         RouteName::REMOVE_PLAN_REQUIREMENT => '/workspace/{workspaceId}/plan/{planId}/requirement/{requirementId}',
 
-        RouteName::GET_CARDS => '/workspace/{workspaceId}/card',
         RouteName::ISSUE_CARD => '/workspace/{workspaceId}/card',
         RouteName::GET_CARD => '/workspace/{workspaceId}/card/{cardId}',
         RouteName::COMPLETE_CARD => '/workspace/{workspaceId}/card/{cardId}/complete',

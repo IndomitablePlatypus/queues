@@ -41,6 +41,15 @@ class Plan extends Model
         'profile' => 'array',
     ];
 
+    public static function compactRequirements(array $requirements): array
+    {
+        $compact = [];
+        foreach ($requirements as $requirement) {
+            $compact[] = ['requirementId' => $requirement['requirement_id'], 'description' => $requirement['description']];
+        }
+        return $compact;
+    }
+
     public function workspace(): BelongsTo
     {
         return $this->belongsTo(Workspace::class, 'workspace_id', 'workspace_id');
@@ -122,15 +131,6 @@ class Plan extends Model
     {
         $this->archived_at = Carbon::now();
         return $this;
-    }
-
-    public static function compactRequirements(array $requirements): array
-    {
-        $compact = [];
-        foreach ($requirements as $requirement) {
-            $compact[$requirement['requirement_id']] = $requirement['description'];
-        }
-        return $compact;
     }
 
     public function issueCard(string $customerId): Card

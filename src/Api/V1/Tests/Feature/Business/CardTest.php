@@ -167,14 +167,51 @@ class CardTest extends BaseTestCase
         $response->assertSuccessful();
         $this->assertCount(1, $response->json('requirements'));
 
-        $newRequirement = Requirement::factory()->make(['plan_id' => $plan->id]);
         $response = $this->rPost(
             RouteName::NOTE_ACHIEVEMENT,
             ['workspaceId' => $workspace->id, 'cardId' => $card->id],
-            ['achievementId' => $newRequirement->id, 'description' => $newRequirement->description],
+            ['achievementId' => $requirement->id, 'description' => $requirement->description],
+        );
+        $response->assertSuccessful();
+        $this->assertCount(1, $response->json('achievements'));
+    }
+
+    public function test_collaborator_can_dismss_achievement()
+    {
+        /** @var User $collaborator */
+        $collaborator = User::factory()->make();
+        $workspace = Workspace::factory()->make();
+        $plan = Plan::factory()->make(['workspace_id' => $workspace->id]);
+        $requirement = Requirement::factory()->make(['plan_id' => $plan->id]);
+        $collaborator->save();
+        $workspace->save();
+        $plan->save();
+        $requirement->save();
+
+        $card = Card::factory()->make([
+            'plan_id' => $plan->id,
+            'requirements' => Plan::compactRequirements([$requirement]),
+            'achievements' => [['achievementId' => $requirement->id, 'description' => $requirement->description]],
+            'satisfied_at' => Carbon::now(),
+        ])->persist();
+
+        EstablishRelation::dispatchSync($collaborator->id, $workspace->id, RelationType::MEMBER());
+        $this->tokenize($collaborator);
+
+        $response = $this->rGet(
+            RouteName::GET_CARD,
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id],
+        );
+        $response->assertSuccessful();
+        $this->assertCount(1, $response->json('achievements'));
+
+        $response = $this->rDelete(
+            RouteName::DISMISS_ACHIEVEMENT,
+            ['workspaceId' => $workspace->id, 'cardId' => $card->id, 'achievementId' => $requirement->id],
         );
         $response->assertSuccessful();
         $this->assertCount(0, $response->json('achievements'));
+        $this->assertNull($response->json('satisfied_at'));
     }
 
 }

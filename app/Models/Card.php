@@ -39,6 +39,11 @@ class Card extends Model
         return $this->belongsTo(Plan::class, 'plan_id', 'plan_id');
     }
 
+    public function workspace(): Workspace
+    {
+        return $this->plan->workspace;
+    }
+
     public function isSatisfied(): bool
     {
         return $this->satisfied_at !== null;
@@ -104,7 +109,9 @@ class Card extends Model
         if ($this->isSatisfied() || $this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
             throw new LogicException('Invalid card state');
         }
-//        $this->achievements[$id] = $description;
+        $achievements = $this->achievements ?? [];
+        $achievements[] = ['achievementId' => $id, 'description' => $description];
+        $this->achievements = $achievements;
         return $this->tryToSatisfy();
     }
 
@@ -113,15 +120,33 @@ class Card extends Model
         if ($this->isCompleted() || $this->isBlocked() || $this->isRevoked()) {
             throw new LogicException('Invalid card state');
         }
-
-//        unset ($this->achievements[$id]);
+        $achievements = $this->achievements ?? [];
+        foreach ($achievements as $key => $achievement) {
+            if ($achievement['achievementId'] === $id) {
+                unset($achievements[$key]);
+            }
+        }
+        $this->achievements = $achievements;
         return $this->tryToWithdrawSatisfaction();
     }
 
     public function fixRequirementDescription(string $id, string $description): static
     {
-        //$this->achievements[$id] = $description;
-        //$this->requirements[$id] = $description;
+        $achievements = $this->achievements ?? [];
+        foreach ($achievements as $key => $achievement) {
+            if ($achievement['achievementId'] === $id) {
+                $achievements[$key]['description'] = $description;
+            }
+        }
+        $this->achievements = $achievements;
+
+        $requirements = $this->requirements ?? [];
+        foreach ($requirements as $key => $requirement) {
+            if ($requirement['requirementId'] === $id) {
+                $requirements[$key]['description'] = $description;
+            }
+        }
+        $this->requirements = $requirements;
         return $this;
     }
 
@@ -131,10 +156,48 @@ class Card extends Model
         return $this->tryToSatisfy();
     }
 
+    public function getIssuedCardRepresentation(): array
+    {
+        return [
+            'cardId' => $this->card_id,
+            'workspaceName' => $this->workspace->name,
+            'workspaceAddress' => $this->workspace->address,
+            'customerId' => $this->customer_id,
+            'description' => $this->description,
+            'satisfied' => $this->satisfied_at !== null,
+            'completed' => $this->completed_at !== null,
+            'achievements' => $this->achievements,
+            'requirements' => $this->requirements,
+        ];
+    }
+
+    public function getBusinessCardRepresentation(): array
+    {
+        return [
+            'cardId' => $this->card_id,
+            'planId' => $this->plan_id,
+            'customerId' => $this->customer_id,
+            'isIssued' => $this->issued_at !== null,
+            'isSatisfied' => $this->satisfied_at !== null,
+            'isCompleted' => $this->completed_at !== null,
+            'isRevoked' => $this->revoked_at !== null,
+            'isBlocked' => $this->blocked_at !== null,
+            'achievements' => $this->achievements,
+            'requirements' => $this->requirements,
+        ];
+    }
+
     private function tryToSatisfy(): static
     {
-        $requirements = array_diff($this->requirements, $this->achievements);
-        if (empty($requirements)){
+        $requirements = $this->requirements;
+        foreach ($this->achievements as $achievement) {
+            foreach ($requirements as $key => $requirement) {
+                if ($requirement['requirementId'] === $achievement['achievementId']) {
+                    unset($requirements[$key]);
+                }
+            }
+        }
+        if (empty($requirements)) {
             $this->satisfied_at = Carbon::now();
         }
         return $this;
@@ -146,12 +209,18 @@ class Card extends Model
             return $this;
         }
 
-        $requirements = array_diff($this->requirements, $this->achievements);
-        if (empty($requirements)){
+        $requirements = $this->requirements;
+        foreach ($this->achievements as $achievement) {
+            foreach ($requirements as $key => $requirement) {
+                if ($requirement['requirementId'] === $achievement['achievementId']) {
+                    unset($requirements[$key]);
+                }
+            }
+        }
+        if (!empty($requirements)) {
             $this->satisfied_at = null;
         }
 
         return $this;
     }
-
 }

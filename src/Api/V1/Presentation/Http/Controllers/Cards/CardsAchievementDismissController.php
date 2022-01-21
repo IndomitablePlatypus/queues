@@ -9,6 +9,7 @@ use App\OpenApi\Responses\Errors\NotFoundResponse;
 use App\OpenApi\Responses\Errors\UnexpectedExceptionResponse;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
+use Queues\Api\V1\Presentation\Http\Controllers\Cards\Requests\DismissAchievementRequest;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\Requests\NoteAchievementRequest;
 use Ramsey\Uuid\Guid\Guid;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
@@ -32,7 +33,7 @@ class CardsAchievementDismissController extends ApiController
     #[OpenApi\Response(factory: AuthenticationExceptionResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
-    public function __invoke(NoteAchievementRequest $request)
+    public function __invoke(DismissAchievementRequest $request)
     {
         return $this->respond(
             $this

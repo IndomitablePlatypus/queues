@@ -44,6 +44,7 @@ class DismissAchievementRequest extends FormRequest
         $this->merge([
             'workspaceId' => $this->route('workspaceId'),
             'cardId' => $this->route('cardId'),
+            'achievementId' => $this->route('achievementId'),
         ]);
     }
 }

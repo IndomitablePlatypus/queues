@@ -1,20 +1,21 @@
-<!doctype html> <!-- Important: must specify -->
+<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 characters -->
-    <script type="module" src="/js/rapidoc-min.js"></script>
-    <title>Queues</title>
+    <meta charset="utf-8">
+    <script
+        type="module"
+        src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"
+        about="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js.LICENSE.txt"
+    ></script>
+    <title>Cardz Lite API</title>
 </head>
 <body>
 <rapi-doc spec-url="/js/api.json"
           header-color="#2d87e2"
-          theme="dark"
           schema-style="table"
           show-header="false"
           {{--          regular-font="Open Sans"--}}
           {{--          mono-font="Roboto Mono"--}}
-          bg-color="#14191f"
-          text-color="#aec2e0"
           nav-bg-color=""
           nav-text-color=""
           nav-hover-bg-color=""

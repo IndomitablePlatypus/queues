@@ -9,12 +9,15 @@ final class AddPlanRequest extends FormRequest
 {
     public GuidBasedImmutableId $workspaceId;
 
+    public string $name;
+
     public string $description;
 
     public function rules(): array
     {
         return [
             'workspaceId' => 'required',
+            'name' => 'required',
             'description' => 'required',
         ];
     }
@@ -23,6 +26,7 @@ final class AddPlanRequest extends FormRequest
     {
         return [
             'workspaceId.required' => 'workspaceId required',
+            'name.required' => 'name required',
             'description.required' => 'description required',
         ];
     }
@@ -30,6 +34,7 @@ final class AddPlanRequest extends FormRequest
     public function passedValidation(): void
     {
         $this->workspaceId = GuidBasedImmutableId::of($this->input('workspaceId'));
+        $this->name = $this->input('name');
         $this->description = $this->input('description');
     }
 

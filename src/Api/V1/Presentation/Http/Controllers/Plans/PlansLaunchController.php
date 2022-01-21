@@ -3,9 +3,7 @@
 namespace Queues\Api\V1\Presentation\Http\Controllers\Plans;
 
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
-use Queues\Api\V1\Presentation\Http\Controllers\Plans\Requests\ChangePlanDescriptionRequest;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\Requests\LaunchPlanRequest;
-use Queues\Api\V1\Presentation\Http\Controllers\Plans\Requests\PlanRequest;
 
 class PlansLaunchController extends ApiController
 {

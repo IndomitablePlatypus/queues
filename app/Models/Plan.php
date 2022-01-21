@@ -38,6 +38,7 @@ class Plan extends Model
         'stopped_at' => 'datetime',
         'archived_at' => 'datetime',
         'expiration_date' => 'datetime',
+        'profile' => 'array',
     ];
 
     public function workspace(): BelongsTo
@@ -84,9 +85,9 @@ class Plan extends Model
         return $requirement;
     }
 
-    public function setDescription(string $description): static
+    public function setProfile(string $name, string $description): static
     {
-        $this->description = $description;
+        $this->profile = ['name' => $name, 'description' => $description];
         return $this;
     }
 
@@ -138,7 +139,7 @@ class Plan extends Model
         $card = $this->cards()->create([
             'card_id' => GuidBasedImmutableId::makeValue(),
             'customer_id' => $customerId,
-            'description' => $this->description,
+            'description' => $this->profile['description'],
             'issued_at' => Carbon::now(),
             'requirements' => static::compactRequirements($this->getRequirements()->toArray()),
         ]);

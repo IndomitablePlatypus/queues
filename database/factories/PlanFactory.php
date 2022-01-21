@@ -18,7 +18,10 @@ class PlanFactory extends Factory
         return [
             'plan_id' => GuidBasedImmutableId::makeValue(),
             'workspace_id' => GuidBasedImmutableId::makeValue(),
-            'description' => $this->faker->text(),
+            'profile' => [
+                'name' => $this->faker->sentence(),
+                'description' => $this->faker->text(),
+            ],
             'launched_at' => null,
             'stopped_at' => null,
             'archived_at' => null,

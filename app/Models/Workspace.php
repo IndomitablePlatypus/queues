@@ -101,12 +101,12 @@ class Workspace extends Model
         return $plan;
     }
 
-    public function addPlan(string $description): Plan
+    public function addPlan(string $name, string $description): Plan
     {
         /** @var Plan $plan */
         $plan = $this->plans()->create([
             'plan_id' => GuidBasedImmutableId::makeValue(),
-            'description' => $description,
+            'profile' => ['name' => $name, 'description' => $description],
             'workspace_id' => $this->id,
         ]);
         return $plan;

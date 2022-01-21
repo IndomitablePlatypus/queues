@@ -13,7 +13,7 @@ class PlansAddController extends ApiController
             $this
                 ->user()
                 ->getWorkspace($request->workspaceId)
-                ->addPlan($request->description)
+                ->addPlan($request->name, $request->description)
                 ->persist()
         );
     }

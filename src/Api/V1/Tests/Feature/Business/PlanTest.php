@@ -34,7 +34,7 @@ class PlanTest extends BaseTestCase
         $response = $this->rPost(
             RouteName::ADD_PLAN,
             ['workspaceId' => $workspace->id],
-            ['description' => $plan->description],
+            ['name' => $plan->profile['name'], 'description' => $plan->profile['description']],
         );
         $response->assertSuccessful();
 
@@ -61,7 +61,7 @@ class PlanTest extends BaseTestCase
         $response = $this->rPost(
             RouteName::ADD_PLAN,
             ['workspaceId' => $workspace->id],
-            ['description' => $plan->description],
+            ['name' => $plan->profile['name'], 'description' => $plan->profile['description']],
         );
         $response->assertNotFound();
     }

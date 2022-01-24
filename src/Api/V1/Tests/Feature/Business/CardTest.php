@@ -44,8 +44,8 @@ class CardTest extends BaseTestCase
 
         $planId = $this->rGet(
             RouteName::GET_CARD,
-            ['workspaceId' => $workspace->id, 'cardId' => $response->json('card_id')],
-        )->json('plan_id');
+            ['workspaceId' => $workspace->id, 'cardId' => $response->json('cardId')],
+        )->json('planId');
         $this->assertEquals($plan->id, $planId);
     }
 

@@ -11,6 +11,7 @@ use App\OpenApi\Responses\Errors\ValidationErrorResponse;
 use Illuminate\Http\Request;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
+use Queues\Api\V1\Presentation\Http\Responses\CustomerWorkspaces;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -30,6 +31,6 @@ class WorkspacesAllController extends ApiController
     public function __invoke(Request $request)
     {
         $workspaces = Workspace::all();
-        return $this->respond($workspaces);
+        return $this->respond(CustomerWorkspaces::of(...$workspaces));
     }
 }

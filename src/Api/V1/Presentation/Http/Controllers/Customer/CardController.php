@@ -10,6 +10,7 @@ use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\CardRequest;
+use Queues\Api\V1\Presentation\Http\Responses\IssuedCard;
 use Ramsey\Uuid\Guid\Guid;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -29,10 +30,10 @@ class CardController extends ApiController
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke(CardRequest $request)
     {
-        return $this->respond(
+        return $this->respond(IssuedCard::of(
             $this
                 ->user()
                 ->getCard($request->cardId)
-        );
+        ));
     }
 }

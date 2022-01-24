@@ -9,6 +9,7 @@ use App\OpenApi\Responses\Errors\UnexpectedExceptionResponse;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
 use Queues\Api\V1\Presentation\Http\Controllers\Cards\Requests\GetOneRequest;
+use Queues\Api\V1\Presentation\Http\Responses\BusinessCard;
 use Ramsey\Uuid\Guid\Guid;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -31,11 +32,11 @@ class CardsGetOneController extends ApiController
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke(GetOneRequest $request)
     {
-        return $this->respond(
+        return $this->respond(BusinessCard::of(
             $this
                 ->user()
                 ->getWorkspace($request->workspaceId)
                 ->getCard($request->cardId)
-        );
+        ));
     }
 }

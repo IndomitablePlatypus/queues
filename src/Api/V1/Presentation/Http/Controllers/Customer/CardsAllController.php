@@ -8,6 +8,7 @@ use App\OpenApi\Responses\IssuedCardsResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
+use Queues\Api\V1\Presentation\Http\Responses\IssuedCards;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -24,10 +25,11 @@ class CardsAllController extends ApiController
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke()
     {
-        return $this->respond(
-            $this
+        return $this->respond(IssuedCards::of(
+            ...$this
                 ->user()
                 ->getCards()
-        );
+                ->all()
+        ));
     }
 }

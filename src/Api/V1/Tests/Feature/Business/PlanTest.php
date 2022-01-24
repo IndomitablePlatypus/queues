@@ -169,7 +169,7 @@ class PlanTest extends BaseTestCase
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
             ['expirationDate' => Carbon::now()->addDays(2)],
         );
-        $response->assertStatus(500);
+        $response->assertStatus(400);
         $response->assertSee('Logic exception');
     }
 

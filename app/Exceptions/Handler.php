@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof LogicException) {
-            return $this->errorResponse('Logic exception: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse('Logic exception: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
         if ($e instanceof MethodNotAllowedHttpException) {

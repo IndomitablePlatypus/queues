@@ -2,10 +2,9 @@
 
 namespace Codderz\Platypus\Exceptions;
 
-use Codderz\Platypus\Contracts\Exceptions\NotFoundExceptionInterface;
-use Exception;
+use RuntimeException;
 
-class LogicException extends Exception
+class LogicException extends RuntimeException
 {
 
 }

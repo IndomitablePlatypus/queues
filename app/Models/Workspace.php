@@ -7,6 +7,7 @@ use App\Jobs\EstablishRelation;
 use App\Models\Support\IdTrait;
 use App\Models\Support\PersistTrait;
 use Carbon\Carbon;
+use Codderz\Platypus\Exceptions\LogicException;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,16 +41,19 @@ class Workspace extends Model
         return $this;
     }
 
-    public function fire(string $collaboratorId): bool
+    public function fire(string $collaboratorId): string
     {
         CeaseRelation::dispatch($collaboratorId, $this->id, RelationType::MEMBER());
-        return true;
+        return $collaboratorId;
     }
 
-    public function leave(string $collaboratorId): bool
+    public function leave(string $collaboratorId): string
     {
+        if ($this->keeper_id === $collaboratorId) {
+            throw new LogicException('Keepers should not shirk their responsibility');
+        }
         CeaseRelation::dispatch($collaboratorId, $this->id, RelationType::MEMBER());
-        return true;
+        return $collaboratorId;
     }
 
     public function relations(): HasMany

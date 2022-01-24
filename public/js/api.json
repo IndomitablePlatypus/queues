@@ -275,6 +275,265 @@
                 }
             }
         },
+        "\/workspace\/{workspaceId}\/invite": {
+            "post": {
+                "tags": [
+                    "business",
+                    "collaboration"
+                ],
+                "summary": "Propose invite",
+                "description": "Returns id of the new invite to collaborate on the workspace.\nRequires user to be the owner of the current workspace.",
+                "operationId": "ProposeInvite",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Invite Id",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Invite Id",
+                                    "format": "uuid",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/invite\/{inviteId}\/accept": {
+            "put": {
+                "tags": [
+                    "business",
+                    "collaboration"
+                ],
+                "summary": "Accept invite",
+                "description": "Accepts an invitation to collaborate. Authorizes user to work in the current workspace.",
+                "operationId": "AcceptInvite",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "inviteId",
+                        "in": "path",
+                        "description": "Invite GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/invite\/{inviteId}\/discard": {
+            "delete": {
+                "tags": [
+                    "business",
+                    "collaboration"
+                ],
+                "summary": "Discard invite",
+                "description": "Returns id of the new invite to collaborate on the workspace.\nRequires user to be the owner of the current workspace.",
+                "operationId": "DiscardInvite",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "inviteId",
+                        "in": "path",
+                        "description": "Invite GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collaborator Id",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Collaborator Id",
+                                    "format": "uuid",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/collaboration\/leave": {
+            "post": {
+                "tags": [
+                    "business",
+                    "collaboration"
+                ],
+                "summary": "Leave collaboration",
+                "description": "Rescinds the user ability collaborate in the current workspace.\nRequires user to be authorized to work in the current workspace. Requires user to NOT be the owner of it.",
+                "operationId": "LeaveWorkspace",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collaborator Id",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Collaborator Id",
+                                    "format": "uuid",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/collaboration\/fire\/{collaboratorId}": {
+            "post": {
+                "tags": [
+                    "business",
+                    "collaboration"
+                ],
+                "summary": "Remove collaborator",
+                "description": "Fires the collaborator from the team. User with the given id will no longer be able to work in the workspace.\nRequires the current user to be the owner of the workspace.",
+                "operationId": "FireCollaborator",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "collaboratorId",
+                        "in": "path",
+                        "description": "Collaborator GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collaborator Id",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Collaborator Id",
+                                    "format": "uuid",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
         "\/workspace\/{workspaceId}\/card\/{cardId}": {
             "get": {
                 "tags": [
@@ -767,19 +1026,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Schinner, DuBuque and Mann"
+                        "example": "Abshire, Koelpin and Lueilwitz"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Explicabo ab dignissimos alias velit et eum. Eveniet consequatur nihil voluptas ipsam. Rerum aut nesciunt qui voluptatibus quae nam."
+                        "example": "Ut qui qui voluptas quae ab aut. Necessitatibus sapiente consequatur ratione consequuntur. Et cupiditate voluptatem nesciunt vel."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "336 Ramiro Way Suite 305\nNorth Jayson, MI 92068-9579"
+                        "example": "42771 Isaias Centers\nLuciochester, CO 02491-5291"
                     }
                 }
             },
@@ -861,7 +1120,7 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Consectetur aperiam cum minima reprehenderit. Qui sunt esse aut dolor aut libero nemo. Excepturi ab amet distinctio commodi non dicta."
+                                    "example": "Quia iure sint quisquam voluptatem provident voluptas. In veritatis et quia maiores magnam distinctio sint. Et at sit accusantium cum et aspernatur aut necessitatibus."
                                 }
                             }
                         }
@@ -886,7 +1145,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Aut laborum velit dolores in. Iusto officiis velit culpa illum. Dolor ut omnis earum vero ut."
+                                    "example": "Nobis aut dolor voluptatum voluptatibus minus aut ut. Iste voluptas et dolore et voluptates minima molestias. Minus quisquam architecto repellendus fugiat quidem dolor molestiae."
                                 }
                             }
                         }
@@ -905,17 +1164,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Monahan Ltd"
+                        "example": "Brown PLC"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Rerum molestias maiores deserunt ut quia. Provident dolorem quis corrupti et beatae ea. Similique ipsa modi animi illo molestias vel laboriosam est. Quia voluptas eligendi ab temporibus."
+                        "example": "Minima quidem corporis molestiae dolores qui. Aperiam nesciunt perspiciatis sint odit. Numquam beatae quo esse omnis voluptas."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "591 Marquardt Viaduct Suite 793\nLake Elbert, WY 89719"
+                        "example": "39454 Kellie Crossroad Apt. 412\nJamilmouth, DC 95321-7818"
                     }
                 }
             },
@@ -947,7 +1206,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "Est sunt quam consequatur rerum. Est voluptatem itaque doloribus. Quo quos ipsa quae laborum incidunt voluptatem nihil. Sit sed velit possimus at. Repellendus ut laudantium sed."
+                        "example": "Nihil ut quo rerum inventore qui veritatis ea. Fugit cum quis quos atque perferendis sed ut quos. Harum fugit neque fuga similique nisi facere."
                     }
                 }
             },
@@ -981,7 +1240,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Officiis commodi voluptas modi quis ab consequatur. Aut cumque accusamus ea. Aut temporibus assumenda pariatur delectus optio."
+                        "example": "Soluta dolorem adipisci laborum atque et ab. Possimus vitae atque a ratione vel. Vitae ipsam dolores repellendus."
                     }
                 }
             },
@@ -997,18 +1256,18 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "flueilwitz@bartoletti.com"
+                        "example": "christy.wuckert@gmail.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "u)8Yd+"
+                        "example": "NF>WH=!-0"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "cumque"
+                        "example": "dolorem"
                     }
                 }
             },
@@ -1025,28 +1284,28 @@
                     "phone": {
                         "description": "Phone",
                         "type": "string",
-                        "example": "+13468544251"
+                        "example": "+1-620-218-7956"
                     },
                     "email": {
                         "description": "Email is required if phone is not provided",
                         "type": "string",
-                        "example": "feest.alyson@hotmail.com"
+                        "example": "hope.larson@hotmail.com"
                     },
                     "name": {
                         "description": "Customer name",
                         "type": "string",
-                        "example": "Rhianna Skiles MD"
+                        "example": "Hobart Goodwin"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "*+ev(}xK$)WLXo4T"
+                        "example": "6|e\/g2;[4"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "est"
+                        "example": "sit"
                     }
                 }
             },
@@ -1105,7 +1364,7 @@
                         "description": "Card (plan) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Et alias tempore perspiciatis id aliquid. Eius veritatis necessitatibus cum ad animi quod impedit iusto. Quis reiciendis ut ea optio. Deleniti optio sed eos."
+                        "example": "Deleniti corporis deleniti rem laudantium quia quia perspiciatis. Est odio excepturi quod placeat sunt eum."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
@@ -1137,11 +1396,11 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Aut maiores sint iusto velit voluptas. Rerum nam nulla laborum quam qui. Non tenetur deserunt et deleniti repudiandae. Sequi et ab nisi."
+                                    "example": "Autem ut repudiandae qui magnam quia nihil. Officiis sit exercitationem dolorum. Nesciunt neque qui dolorem iure harum amet. Dicta et qui totam ipsam."
                                 }
                             }
                         },
-                        "example": "Dicta aut sit nobis deserunt animi. Occaecati atque repudiandae fugit cum est maxime quod. Porro et placeat possimus."
+                        "example": "Sed exercitationem similique aut ut. Animi iusto ab numquam amet voluptatem recusandae rerum. Assumenda est molestias consequatur molestiae qui quo."
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -1163,7 +1422,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Adipisci ut consectetur repellendus itaque optio perferendis minus. Porro sapiente iusto ut qui. Magni voluptates ad iure vel."
+                                    "example": "Et quia est in eos laborum. Sint natus esse dicta reprehenderit magnam rerum aspernatur. Esse eveniet aperiam aut. Ut eos possimus ut debitis est tempore."
                                 }
                             }
                         }
@@ -1189,19 +1448,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Halvorson and Sons"
+                        "example": "Muller, Feil and Johnston"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Nesciunt temporibus aspernatur provident et. Non cumque placeat et. Ea aliquid assumenda nam qui. Consequatur explicabo quasi suscipit sit facere fugiat cum."
+                        "example": "Et et nobis qui magnam in officia non. Voluptatem ut quibusdam ea. Omnis distinctio aspernatur dolorum est sequi iste ut necessitatibus. Rerum ea sit doloribus ea quia voluptatem."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "70395 Pearlie Plaza\nSouth Arielle, AL 33607-3616"
+                        "example": "395 Larue Forge\nKlinghaven, FL 46741"
                     }
                 }
             },
@@ -1233,7 +1492,7 @@
                         "description": "Plan description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Totam enim et ducimus ut amet inventore. Ipsa corporis deleniti ducimus earum nostrum ipsum. Aut tempora et ex natus et voluptatum."
+                        "example": "Ex ut fugiat ut. Quia ullam amet blanditiis et possimus consequatur explicabo."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
@@ -1270,7 +1529,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Repellendus natus et ipsum sapiente sed ut. Sed ullam exercitationem et perferendis aut quia est. Tempore facere aut maxime facilis. Quam eaque doloribus molestiae voluptatem pariatur voluptates et."
+                                    "example": "Et qui consequuntur aut autem molestias aliquid. Facere et molestiae reiciendis qui. Soluta quisquam facilis est a voluptates est voluptatem."
                                 }
                             }
                         }

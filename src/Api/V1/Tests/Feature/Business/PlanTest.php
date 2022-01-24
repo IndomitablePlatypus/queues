@@ -40,8 +40,8 @@ class PlanTest extends BaseTestCase
 
         $workspaceId = $this->rGet(
             RouteName::GET_PLAN,
-            ['workspaceId' => $workspace->id, 'planId' => $response->json('plan_id')],
-        )->json('workspace_id');
+            ['workspaceId' => $workspace->id, 'planId' => $response->json('planId')],
+        )->json('workspaceId');
         $this->assertEquals($workspace->id, $workspaceId);
     }
 
@@ -92,7 +92,7 @@ class PlanTest extends BaseTestCase
         $planExpirationDate = $this->rGet(
             RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
-        )->json('expiration_date');
+        )->json('expirationDate');
         $this->assertEquals($expirationDate->format('Y-m-d\TH:i:s.000000\Z'), $planExpirationDate);
     }
 
@@ -116,11 +116,11 @@ class PlanTest extends BaseTestCase
         );
         $response->assertSuccessful();
 
-        $launchedAt = $this->rGet(
+        $isLaunched = $this->rGet(
             RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
-        )->json('launched_at');
-        $this->assertNull($launchedAt);
+        )->json('isLaunched');
+        $this->assertFalse($isLaunched);
     }
 
     public function test_collaborator_can_archive_plan()
@@ -143,11 +143,11 @@ class PlanTest extends BaseTestCase
         );
         $response->assertSuccessful();
 
-        $archivedAt = $this->rGet(
+        $isArchived = $this->rGet(
             RouteName::GET_PLAN,
             ['workspaceId' => $workspace->id, 'planId' => $plan->id],
-        )->json('archived_at');
-        $this->assertNotNull($archivedAt);
+        )->json('isArchived');
+        $this->assertTrue($isArchived);
     }
 
     public function test_collaborator_cannot_launch_archived_plan()

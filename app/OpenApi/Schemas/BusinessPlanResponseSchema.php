@@ -23,6 +23,11 @@ class BusinessPlanResponseSchema extends SchemaFactory implements Reusable
             ->nullable(false)
             ->description('Workspace Id');
 
+        $name = Schema::string('name')
+            ->description('Plan name')
+            ->nullable(false)
+            ->example($this->sentence());
+
         $description = Schema::string('description')
             ->description('Plan description')
             ->nullable(false)
@@ -39,6 +44,10 @@ class BusinessPlanResponseSchema extends SchemaFactory implements Reusable
         $isArchived = Schema::boolean('isArchived')
             ->nullable(false)
             ->description('Whether the plan is archived');
+
+        $expirationDate = Schema::string('expirationDate')
+            ->format(Schema::FORMAT_DATE_TIME)
+            ->description('Plan expiration date');
 
         $requirement = Schema::object()->properties(
             Schema::string('requirementId')
@@ -57,8 +66,8 @@ class BusinessPlanResponseSchema extends SchemaFactory implements Reusable
             ->description('All requirements');
 
         return Schema::object('BusinessPlan')
-            ->properties($planId, $workspaceId, $description, $isLaunched, $isStopped, $isArchived, $requirements)
-            ->required($planId, $workspaceId, $description, $isLaunched, $isStopped, $isArchived, $requirements);
+            ->properties($planId, $workspaceId, $name, $description, $isLaunched, $isStopped, $isArchived, $expirationDate, $requirements)
+            ->required($planId, $workspaceId, $name, $description, $isLaunched, $isStopped, $isArchived, $expirationDate, $requirements);
     }
 
 }

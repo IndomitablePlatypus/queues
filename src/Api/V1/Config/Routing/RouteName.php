@@ -22,7 +22,7 @@ class RouteName
     public const DISMISS_ACHIEVEMENT = 'DismissCardAchievement';
 
     public const ADD_PLAN = 'AddPlan';
-    public const CHANGE_PLAN_DESCRIPTION = 'ChangePlanDescription';
+    public const CHANGE_PLAN_PROFILE = 'ChangePlanProfile';
     public const LAUNCH_PLAN = 'LaunchPlan';
     public const STOP_PLAN = 'StopPlan';
     public const ARCHIVE_PLAN = 'ArchivePlan';
@@ -37,7 +37,7 @@ class RouteName
     public const FIRE_COLLABORATOR = 'FireCollaborator';
 
     public const GET_WORKSPACE = 'GetWorkspace';
-    public const CHANGE_WORKSPACE_PROFILE = 'ChangeWorkspaceProfile';
+    public const CHANGE_PROFILE = 'ChangeWorkspaceProfile';
     public const GET_PLAN = 'GetPlan';
 
     public const CUSTOMER_WORKSPACES = 'GetCustomerWorkspaces';

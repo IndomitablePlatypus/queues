@@ -26,7 +26,7 @@ class WorkspaceTest extends BaseTestCase
         $workspace = Workspace::factory()->make(['keeper_id' => $user->id]);
         $response = $this->rPost(RouteName::ADD_WORKSPACE, $workspace->profile);
         $response->assertSuccessful();
-        $workspaceId = $response->json('workspace_id');
+        $workspaceId = $response->json('workspaceId');
 
         $workspace = Workspace::query()->find($workspaceId);
         $this->assertEquals($user->id, $workspace->keeper_id);
@@ -43,7 +43,7 @@ class WorkspaceTest extends BaseTestCase
         $this->tokenize($user);
 
         $profile = array_merge($workspace->profile, ['description' => 'changed']);
-        $response = $this->rPut(RouteName::CHANGE_WORKSPACE_PROFILE, ['workspaceId' => $workspace->id], $profile);
+        $response = $this->rPut(RouteName::CHANGE_PROFILE, ['workspaceId' => $workspace->id], $profile);
         $response->assertSuccessful();
     }
 

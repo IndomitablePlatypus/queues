@@ -7,7 +7,7 @@ use JsonSerializable;
 
 class IssuedCard implements JsonSerializable
 {
-    public function __construct(private Card $card)
+    public function __construct(protected Card $card)
     {
     }
 
@@ -20,8 +20,8 @@ class IssuedCard implements JsonSerializable
     {
         return [
             'cardId' => $this->card->card_id,
-            'workspaceName' => $this->card->workspace()->name,
-            'workspaceAddress' => $this->card->workspace()->address,
+            'workspaceName' => $this->card->workspace()->profile['name'],
+            'workspaceAddress' => $this->card->workspace()->profile['address'],
             'customerId' => $this->card->customer_id,
             'description' => $this->card->description,
             'satisfied' => $this->card->satisfied_at !== null,

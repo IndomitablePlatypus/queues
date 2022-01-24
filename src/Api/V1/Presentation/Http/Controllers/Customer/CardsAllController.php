@@ -25,8 +25,8 @@ class CardsAllController extends ApiController
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke()
     {
-        return $this->respond(IssuedCards::of(
-            ...$this
+        return $this->respond(IssuedCards::of(...
+            $this
                 ->user()
                 ->getCards()
                 ->all()

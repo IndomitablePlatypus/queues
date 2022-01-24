@@ -1,7 +1,9 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "Cardz Lite"
+        "title": "Cardz Lite",
+        "description": "Bonus cards server-side application lite version",
+        "version": "0.1.2.53"
     },
     "servers": [
         {
@@ -275,6 +277,195 @@
                 }
             }
         },
+        "\/workspace": {
+            "get": {
+                "tags": [
+                    "business",
+                    "workspace"
+                ],
+                "summary": "Get workspaces",
+                "description": "Returns all workspaces where the current user is a collaborator.",
+                "operationId": "ListAllWorkspace",
+                "responses": {
+                    "200": {
+                        "description": "List all workspaces of the current collaborator",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Workspace (business) for the collaborator",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/BusinessWorkspace"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "business",
+                    "workspace"
+                ],
+                "summary": "Add a new workspace",
+                "description": "Returns the newly created workspace where the current user is an owner.",
+                "operationId": "AddWorkspace",
+                "requestBody": {
+                    "description": "Add workspace request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/WorkspaceProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Workspace",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessWorkspace"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
+        "\/workspace\/{workspaceId}": {
+            "get": {
+                "tags": [
+                    "business",
+                    "workspace"
+                ],
+                "summary": "Get a workspace",
+                "description": "Returns workspace where the current user is a collaborator.\nRequires user to be authorized to work in this workspace.",
+                "operationId": "GetWorkspace",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business Workspace",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessWorkspace"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
+        "\/workspace\/{workspaceId}\/profile": {
+            "put": {
+                "tags": [
+                    "business",
+                    "workspace"
+                ],
+                "summary": "Change workspace description",
+                "description": "Changes the current workspace description.\nRequires user to be the owner of the current workspace.",
+                "operationId": "ChangeWorkspaceProfile",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Change workspace profile request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/WorkspaceProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business Workspace",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessWorkspace"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
         "\/workspace\/{workspaceId}\/invite": {
             "post": {
                 "tags": [
@@ -521,6 +712,597 @@
                     },
                     "400": {
                         "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan": {
+            "get": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Get plans",
+                "description": "Returns all plans in the current workspace.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "ListAllPlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List all plans for the workspace",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "description": "Plans for the collaborator",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/BusinessPlan"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Add a new plan",
+                "description": "Adds a new plan to the current workspace.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "AddPlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Add plan request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PlanProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}": {
+            "get": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Get plan",
+                "description": "Returns a plans in the current workspace by id.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "GetPlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/profile": {
+            "put": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Change plan profile",
+                "description": "Changes plan profile.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "ChangePlanProfile",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Change plan profile request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PlanProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/launch": {
+            "put": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Launch a plan",
+                "description": "Launches a plan to activity. Requires an expiration date for aut expiration. Can be relaunched with a new date.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "LaunchPlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Launch plan request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PlanExpiration"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/stop": {
+            "put": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Stop a plan",
+                "description": "Stops a plan from active state.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "StopPlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/archive": {
+            "put": {
+                "tags": [
+                    "business",
+                    "plan"
+                ],
+                "summary": "Archive a plan",
+                "description": "Archives plan. Archived plans are invisible by normal means. Plans are archived automatically on their expiration date.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "ArchivePlan",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/requirement": {
+            "post": {
+                "tags": [
+                    "business",
+                    "plan",
+                    "requirement"
+                ],
+                "summary": "Add plan requirement",
+                "description": "Adds a new requirement to the plan. Requirement changes are propagated to the relevant cards.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "AddPlanRequirement",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Add requirement request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RequirementProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#\/components\/responses\/DomainException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            }
+        },
+        "\/workspace\/{workspaceId}\/plan\/{planId}\/requirement\/{requirementId}": {
+            "put": {
+                "tags": [
+                    "business",
+                    "plan",
+                    "requirement"
+                ],
+                "summary": "Change plan requirement description",
+                "description": "Changes the requirement description. Description changes are propagated to the relevant cards.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "ChangePlanRequirement",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "requirementId",
+                        "in": "path",
+                        "description": "Requirement GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Change requirement description request",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RequirementProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationError"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/UnexpectedException"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "business",
+                    "plan",
+                    "requirement"
+                ],
+                "summary": "Remove plan requirement",
+                "description": "Removes the requirement from the plan. Requirement changes are propagated to the relevant cards.\nRequires user to be authorized to work in the current workspace.",
+                "operationId": "RemovePlanRequirement",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "description": "Plan GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "requirementId",
+                        "in": "path",
+                        "description": "Requirement GUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Business plan",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/BusinessPlan"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "$ref": "#\/components\/responses\/AuthenticationException"
@@ -1026,19 +1808,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Abshire, Koelpin and Lueilwitz"
+                        "example": "Ebert Group"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Ut qui qui voluptas quae ab aut. Necessitatibus sapiente consequatur ratione consequuntur. Et cupiditate voluptatem nesciunt vel."
+                        "example": "Quae itaque voluptate natus dolor ipsa omnis odit. Blanditiis velit cupiditate non facilis cum. Sunt repellat aut molestiae sit rem."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "42771 Isaias Centers\nLuciochester, CO 02491-5291"
+                        "example": "619 Caroline Plains Suite 251\nKohlerbury, MD 97334"
                     }
                 }
             },
@@ -1120,7 +1902,7 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Quia iure sint quisquam voluptatem provident voluptas. In veritatis et quia maiores magnam distinctio sint. Et at sit accusantium cum et aspernatur aut necessitatibus."
+                                    "example": "Et ex sint qui sit odit quis. Laudantium quidem est nihil. Eaque vitae neque distinctio quae temporibus."
                                 }
                             }
                         }
@@ -1145,7 +1927,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Nobis aut dolor voluptatum voluptatibus minus aut ut. Iste voluptas et dolore et voluptates minima molestias. Minus quisquam architecto repellendus fugiat quidem dolor molestiae."
+                                    "example": "Est quae consectetur quia dolores. Et doloremque sed rerum omnis sit est mollitia."
                                 }
                             }
                         }
@@ -1164,17 +1946,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Brown PLC"
+                        "example": "Pouros Ltd"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Minima quidem corporis molestiae dolores qui. Aperiam nesciunt perspiciatis sint odit. Numquam beatae quo esse omnis voluptas."
+                        "example": "Nisi voluptatem molestiae corporis nulla quasi sed. Voluptas repellat est autem omnis est et et. Rerum ex est in inventore. Eos deleniti itaque incidunt molestiae asperiores ipsam sequi labore."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "39454 Kellie Crossroad Apt. 412\nJamilmouth, DC 95321-7818"
+                        "example": "91646 Glenda Light Apt. 674\nBoyleview, IA 24292-9596"
                     }
                 }
             },
@@ -1206,7 +1988,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "Nihil ut quo rerum inventore qui veritatis ea. Fugit cum quis quos atque perferendis sed ut quos. Harum fugit neque fuga similique nisi facere."
+                        "example": "Esse similique culpa corporis quod possimus. Omnis debitis quo saepe in qui ad. Officiis velit deleniti tempore molestiae."
                     }
                 }
             },
@@ -1240,7 +2022,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Soluta dolorem adipisci laborum atque et ab. Possimus vitae atque a ratione vel. Vitae ipsam dolores repellendus."
+                        "example": "Quia vero autem nesciunt mollitia perspiciatis illum. Quia et ipsam natus inventore quos atque dolorem est. Earum consequatur deserunt quisquam totam voluptate iusto."
                     }
                 }
             },
@@ -1256,18 +2038,18 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "christy.wuckert@gmail.com"
+                        "example": "sabryna.schumm@gmail.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "NF>WH=!-0"
+                        "example": "]C^gcB9pv_8:((cg#2"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "dolorem"
+                        "example": "provident"
                     }
                 }
             },
@@ -1284,28 +2066,28 @@
                     "phone": {
                         "description": "Phone",
                         "type": "string",
-                        "example": "+1-620-218-7956"
+                        "example": "+13213925139"
                     },
                     "email": {
                         "description": "Email is required if phone is not provided",
                         "type": "string",
-                        "example": "hope.larson@hotmail.com"
+                        "example": "alvis.upton@hotmail.com"
                     },
                     "name": {
                         "description": "Customer name",
                         "type": "string",
-                        "example": "Hobart Goodwin"
+                        "example": "Cierra Ruecker"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "6|e\/g2;[4"
+                        "example": ":sUzrTS08kR"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "sit"
+                        "example": "ipsum"
                     }
                 }
             },
@@ -1364,7 +2146,7 @@
                         "description": "Card (plan) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Deleniti corporis deleniti rem laudantium quia quia perspiciatis. Est odio excepturi quod placeat sunt eum."
+                        "example": "Libero inventore iusto atque corrupti incidunt. Animi est id repellat nemo amet. Temporibus autem cumque velit saepe consequatur."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
@@ -1396,11 +2178,11 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Autem ut repudiandae qui magnam quia nihil. Officiis sit exercitationem dolorum. Nesciunt neque qui dolorem iure harum amet. Dicta et qui totam ipsam."
+                                    "example": "Itaque est necessitatibus ipsa excepturi at voluptas. Aut praesentium facilis et eum suscipit."
                                 }
                             }
                         },
-                        "example": "Sed exercitationem similique aut ut. Animi iusto ab numquam amet voluptatem recusandae rerum. Assumenda est molestias consequatur molestiae qui quo."
+                        "example": "Quia molestias velit aperiam pariatur cum. Ut dolores doloribus laboriosam est veritatis accusantium. Voluptatem earum reiciendis soluta sed id minima sed placeat."
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -1422,7 +2204,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Et quia est in eos laborum. Sint natus esse dicta reprehenderit magnam rerum aspernatur. Esse eveniet aperiam aut. Ut eos possimus ut debitis est tempore."
+                                    "example": "Quis similique voluptas magni. Nihil vero consequatur nemo non velit itaque. Corporis consequatur id aut exercitationem."
                                 }
                             }
                         }
@@ -1448,19 +2230,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Muller, Feil and Johnston"
+                        "example": "Abernathy, Waelchi and Kuvalis"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Et et nobis qui magnam in officia non. Voluptatem ut quibusdam ea. Omnis distinctio aspernatur dolorum est sequi iste ut necessitatibus. Rerum ea sit doloribus ea quia voluptatem."
+                        "example": "Doloremque provident quaerat natus facere ea ad. Sed quos porro ipsum facilis ut aliquid eaque consequatur."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "395 Larue Forge\nKlinghaven, FL 46741"
+                        "example": "632 Karl Canyon\nHarmonview, AZ 71812"
                     }
                 }
             },
@@ -1469,10 +2251,12 @@
                 "required": [
                     "planId",
                     "workspaceId",
+                    "name",
                     "description",
                     "isLaunched",
                     "isStopped",
                     "isArchived",
+                    "expirationDate",
                     "requirements"
                 ],
                 "properties": {
@@ -1488,11 +2272,17 @@
                         "type": "string",
                         "nullable": false
                     },
+                    "name": {
+                        "description": "Plan name",
+                        "type": "string",
+                        "nullable": false,
+                        "example": "Eligendi veniam blanditiis eligendi quia eaque."
+                    },
                     "description": {
                         "description": "Plan description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Ex ut fugiat ut. Quia ullam amet blanditiis et possimus consequatur explicabo."
+                        "example": "Aut enim aliquid officiis dolorem quo voluptas. Et sit optio adipisci laudantium. Cupiditate nobis quia neque expedita officia repellat. Esse suscipit dolorem ut voluptatem."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
@@ -1508,6 +2298,11 @@
                         "description": "Whether the plan is archived",
                         "type": "boolean",
                         "nullable": false
+                    },
+                    "expirationDate": {
+                        "description": "Plan expiration date",
+                        "format": "date-time",
+                        "type": "string"
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -1529,7 +2324,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Et qui consequuntur aut autem molestias aliquid. Facere et molestiae reiciendis qui. Soluta quisquam facilis est a voluptates est voluptatem."
+                                    "example": "Delectus ab aperiam tempore et consequatur error. Consequuntur doloribus molestias sequi quia et. Quam iste nulla minima sit hic."
                                 }
                             }
                         }

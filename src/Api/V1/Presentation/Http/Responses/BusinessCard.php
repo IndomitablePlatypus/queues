@@ -7,7 +7,7 @@ use JsonSerializable;
 
 class BusinessCard implements JsonSerializable
 {
-    public function __construct(private Card $card)
+    public function __construct(protected Card $card)
     {
     }
 

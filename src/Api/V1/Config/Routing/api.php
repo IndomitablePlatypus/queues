@@ -22,7 +22,7 @@ use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignUpController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\WorkspacesAllController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansAddController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansArchiveController;
-use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansChangeDescriptionController;
+use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansChangeProfileController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansGetOneController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansLaunchController;
@@ -73,8 +73,8 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(RouteName::ADD_WORKSPACE)
             ->uses(WorkspacesAddController::class);
 
-        Route::put(Routing::uri(RouteName::CHANGE_WORKSPACE_PROFILE))
-            ->name(RouteName::CHANGE_WORKSPACE_PROFILE)
+        Route::put(Routing::uri(RouteName::CHANGE_PROFILE))
+            ->name(RouteName::CHANGE_PROFILE)
             ->uses(WorkspacesChangeProfileController::class);
 
         Route::post(Routing::uri(RouteName::PROPOSE_INVITE))
@@ -109,9 +109,9 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
             ->name(RouteName::ADD_PLAN)
             ->uses(PlansAddController::class);
 
-        Route::put(Routing::uri(RouteName::CHANGE_PLAN_DESCRIPTION))
-            ->name(RouteName::CHANGE_PLAN_DESCRIPTION)
-            ->uses(PlansChangeDescriptionController::class);
+        Route::put(Routing::uri(RouteName::CHANGE_PLAN_PROFILE))
+            ->name(RouteName::CHANGE_PLAN_PROFILE)
+            ->uses(PlansChangeProfileController::class);
 
         Route::put(Routing::uri(RouteName::LAUNCH_PLAN))
             ->name(RouteName::LAUNCH_PLAN)

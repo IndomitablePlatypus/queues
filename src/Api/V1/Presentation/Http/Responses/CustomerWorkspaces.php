@@ -31,9 +31,9 @@ class CustomerWorkspaces implements JsonSerializable
     {
         return [
             'workspaceId' => $workspace->workspace_id,
-            'name' => $workspace->name,
-            'description' => $workspace->description,
-            'address' => $workspace->address,
+            'name' => $workspace->profile['name'],
+            'description' => $workspace->profile['description'],
+            'address' => $workspace->profile['address'],
         ];
     }
 

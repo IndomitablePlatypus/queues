@@ -48,7 +48,7 @@ class Requirement extends Model
         return $this;
     }
 
-    public function persist(): Plan
+    public function persistInPlan(): Plan
     {
         $this->save();
         return $this->plan;

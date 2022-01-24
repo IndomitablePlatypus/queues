@@ -21,7 +21,7 @@ class Routing
         RouteName::GET_WORKSPACES => '/workspace',
         RouteName::ADD_WORKSPACE => '/workspace',
         RouteName::GET_WORKSPACE => '/workspace/{workspaceId}',
-        RouteName::CHANGE_WORKSPACE_PROFILE => '/workspace/{workspaceId}/profile',
+        RouteName::CHANGE_PROFILE => '/workspace/{workspaceId}/profile',
 
         RouteName::PROPOSE_INVITE => '/workspace/{workspaceId}/invite',
         RouteName::ACCEPT_INVITE => '/workspace/{workspaceId}/invite/{inviteId}/accept',
@@ -33,7 +33,7 @@ class Routing
         RouteName::GET_PLANS => '/workspace/{workspaceId}/plan',
         RouteName::ADD_PLAN => '/workspace/{workspaceId}/plan',
         RouteName::GET_PLAN => '/workspace/{workspaceId}/plan/{planId}',
-        RouteName::CHANGE_PLAN_DESCRIPTION => '/workspace/{workspaceId}/plan/{planId}/description',
+        RouteName::CHANGE_PLAN_PROFILE => '/workspace/{workspaceId}/plan/{planId}/profile',
         RouteName::LAUNCH_PLAN => '/workspace/{workspaceId}/plan/{planId}/launch',
         RouteName::STOP_PLAN => '/workspace/{workspaceId}/plan/{planId}/stop',
         RouteName::ARCHIVE_PLAN => '/workspace/{workspaceId}/plan/{planId}/archive',

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Codderz\Platypus\Exceptions\AuthenticationFailedException;
 use Codderz\Platypus\Exceptions\LogicException;
 use Codderz\Platypus\Exceptions\ParameterAssertionException;
 use Illuminate\Auth\AuthenticationException;
@@ -83,6 +84,10 @@ class Handler extends ExceptionHandler
         if ($e instanceof AuthenticationException) {
             $message = $request->hasHeader('Authorization') ? 'Invalid access token' : 'Access token required';
             return $this->errorResponse($message, Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($e instanceof AuthenticationFailedException) {
+            return $this->errorResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
 
         if ($e instanceof QueryException && str_contains($e->getMessage(), 'personal_access_tokens')) {

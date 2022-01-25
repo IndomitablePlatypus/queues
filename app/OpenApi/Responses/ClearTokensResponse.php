@@ -13,10 +13,7 @@ class ClearTokensResponse extends ResponseFactory
     {
         return Response::ok()
             ->content(MediaType::json()->schema(
-                Schema::string()
-                    ->nullable(false)
-                    ->description('Ok')
-                    ->example('Ok')
+                Schema::string()->format(Schema::FORMAT_UUID)->description('Customer Id')
             ))
             ->description('All tokens successfully cleared');
     }

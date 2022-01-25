@@ -7,24 +7,25 @@ use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
 
-class SignUpTest extends BaseTestCase
+class RegisterTest extends BaseTestCase
 {
     use TestApplicationTrait, RoutingTestTrait;
 
-    public function test_customer_sign_up_fails_on_validation(): void
+    public function test_customer_registration_fails_on_validation(): void
     {
         $response = $this->rPost(RouteName::REGISTER);
-        $response->assertJsonValidationErrorFor('username');
+        $response->assertJsonValidationErrorFor('phone');
         $response->assertJsonValidationErrorFor('password');
-        $response->assertJsonValidationErrorFor('name');
+        $response->assertJsonValidationErrorFor('deviceName');
     }
 
-    public function test_customer_can_sign_up(): void
+    public function test_customer_can_register(): void
     {
         $response = $this->rPost(RouteName::REGISTER, [
-            'username' => $this->faker->userName(),
+            'phone' => $this->faker->phoneNumber(),
             'password' => $this->faker->password(),
             'name' => $this->faker->name(),
+            'deviceName' => $this->faker->word(),
         ]);
         $response->assertSuccessful();
     }

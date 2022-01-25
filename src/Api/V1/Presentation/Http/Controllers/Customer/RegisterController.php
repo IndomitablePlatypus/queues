@@ -11,11 +11,11 @@ use App\OpenApi\Responses\Errors\ValidationErrorResponse;
 use Illuminate\Support\Facades\Auth;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
-use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\SignUpRequest;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\RegisterRequest;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
-class SignUpController extends ApiController
+class RegisterController extends ApiController
 {
     /**
      * Register user
@@ -28,11 +28,11 @@ class SignUpController extends ApiController
     #[OpenApi\Response(factory: UserAlreadyRegisteredExceptionResponse::class, statusCode: 400)]
     #[OpenApi\Response(factory: ValidationErrorResponse::class, statusCode: 422)]
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
-    public function __invoke(SignUpRequest $request)
+    public function __invoke(RegisterRequest $request)
     {
-        $user = (new User($request->toArray()))->persistFirst();
+        $user = (new User($request->toArray()))->persistUnique();
         Auth::login($user);
-        $plainTextToken = $user->createToken($request->userAgent())->plainTextToken;
+        $plainTextToken = $user->createToken($request->deviceName)->plainTextToken;
         return $this->respond($plainTextToken);
     }
 }

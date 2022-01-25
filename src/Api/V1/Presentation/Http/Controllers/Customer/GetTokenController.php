@@ -11,11 +11,11 @@ use App\OpenApi\Responses\Errors\UnexpectedExceptionResponse;
 use App\OpenApi\Responses\Errors\ValidationErrorResponse;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
-use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\SignInRequest;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests\GetTokenRequest;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
-class SignInController extends ApiController
+class GetTokenController extends ApiController
 {
     /**
      * Get user token
@@ -28,10 +28,10 @@ class SignInController extends ApiController
     #[OpenApi\Response(factory: AuthenticationExceptionResponse::class, statusCode: 401)]
     #[OpenApi\Response(factory: ValidationErrorResponse::class, statusCode: 422)]
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
-    public function __invoke(SignInRequest $request)
+    public function __invoke(GetTokenRequest $request)
     {
-        $user = User::findByCredentialsOrFail($request->username, $request->password);
-        $token = $user->createToken($request->userAgent());
+        $user = User::findByCredentialsOrFail($request->identity, $request->password);
+        $token = $user->createToken($request->deviceName);
         ClearTokens::dispatch($user, $token->accessToken->name);
         return $this->respond($token->plainTextToken);
     }

@@ -3,11 +3,8 @@
 namespace Queues\Api\V1\Presentation\Http\Controllers\Customer;
 
 use App\Models\Workspace;
-use App\OpenApi\Requests\Customer\RegisterRequestBody;
-use App\OpenApi\Responses\ApiAccessTokenResponse;
+use App\OpenApi\Responses\CustomerWorkspacesResponse;
 use App\OpenApi\Responses\Errors\UnexpectedExceptionResponse;
-use App\OpenApi\Responses\Errors\UserAlreadyRegisteredExceptionResponse;
-use App\OpenApi\Responses\Errors\ValidationErrorResponse;
 use Illuminate\Http\Request;
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Presentation\Http\Controllers\ApiController;
@@ -18,15 +15,12 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class WorkspacesAllController extends ApiController
 {
     /**
-     * Register user
+     * Workspaces
      *
-     * Registers new user with email OR phone, password, device name (for token). Returns new auth token.
+     * Returns all workspaces
      */
-    #[OpenApi\Operation(id: RouteName::REGISTER, tags: ['customer'])]
-    #[OpenApi\RequestBody(factory: RegisterRequestBody::class)]
-    #[OpenApi\Response(factory: ApiAccessTokenResponse::class, statusCode: 200)]
-    #[OpenApi\Response(factory: UserAlreadyRegisteredExceptionResponse::class, statusCode: 400)]
-    #[OpenApi\Response(factory: ValidationErrorResponse::class, statusCode: 422)]
+    #[OpenApi\Operation(id: RouteName::CUSTOMER_WORKSPACES, tags: ['customer'])]
+    #[OpenApi\Response(factory: CustomerWorkspacesResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: UnexpectedExceptionResponse::class, statusCode: 500)]
     public function __invoke(Request $request)
     {

@@ -23,10 +23,6 @@ class RegisterRequestSchema extends SchemaFactory implements Reusable
             ->description('Phone')
             ->example($this->phone());
 
-        $email = Schema::string('email')
-            ->description('Email is required if phone is not provided')
-            ->example($this->email());
-
         $name = Schema::string('name')
             ->description('Customer name')
             ->example($this->name());
@@ -43,7 +39,7 @@ class RegisterRequestSchema extends SchemaFactory implements Reusable
         return Schema::object('RegisterRequest')
             ->description('Register new user')
             ->required($phone, $name, $password, $deviceName)
-            ->properties($phone, $email, $name, $password, $deviceName);
+            ->properties($phone, $name, $password, $deviceName);
     }
 
 }

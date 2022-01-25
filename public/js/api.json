@@ -109,38 +109,23 @@
                 "tags": [
                     "customer"
                 ],
-                "summary": "Register user",
-                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
-                "operationId": "RegisterCustomer",
-                "requestBody": {
-                    "description": "Register new customer",
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/RegisterRequest"
-                            }
-                        }
-                    }
-                },
+                "summary": "Workspaces",
+                "description": "Returns all workspaces",
+                "operationId": "GetCustomerWorkspaces",
                 "responses": {
                     "200": {
-                        "description": "Access token",
+                        "description": "Customer Workspace",
                         "content": {
                             "application\/json": {
                                 "schema": {
-                                    "description": "API Access Bearer Token",
-                                    "type": "string",
-                                    "nullable": false,
-                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                    "description": "List of all workspaces",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CustomerWorkspace"
+                                    }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
-                    },
-                    "422": {
-                        "$ref": "#\/components\/responses\/ValidationError"
                     },
                     "500": {
                         "$ref": "#\/components\/responses\/UnexpectedException"
@@ -155,7 +140,7 @@
                 ],
                 "summary": "Clear user tokens",
                 "description": "Removes all existing access tokens for the current user. (I.e. logout)",
-                "operationId": "GetCustomerToken",
+                "operationId": "ClearCustomerTokens",
                 "responses": {
                     "200": {
                         "description": "All tokens successfully cleared",
@@ -184,38 +169,23 @@
                 "tags": [
                     "customer"
                 ],
-                "summary": "Register user",
-                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
-                "operationId": "RegisterCustomer",
-                "requestBody": {
-                    "description": "Register new customer",
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/RegisterRequest"
-                            }
-                        }
-                    }
-                },
+                "summary": "Workspaces",
+                "description": "Returns all workspaces",
+                "operationId": "GetCustomerWorkspaces",
                 "responses": {
                     "200": {
-                        "description": "Access token",
+                        "description": "Customer Workspace",
                         "content": {
                             "application\/json": {
                                 "schema": {
-                                    "description": "API Access Bearer Token",
-                                    "type": "string",
-                                    "nullable": false,
-                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                    "description": "List of all workspaces",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CustomerWorkspace"
+                                    }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
-                    },
-                    "422": {
-                        "$ref": "#\/components\/responses\/ValidationError"
                     },
                     "500": {
                         "$ref": "#\/components\/responses\/UnexpectedException"
@@ -228,9 +198,9 @@
                 "tags": [
                     "customer"
                 ],
-                "summary": "Register user",
-                "description": "Registers new user with email OR phone, password, device name (for token). Returns new auth token.",
-                "operationId": "RegisterCustomer",
+                "summary": "Workspaces",
+                "description": "Returns all workspaces",
+                "operationId": "GetCustomerWorkspaces",
                 "parameters": [
                     {
                         "name": "cardId",
@@ -241,35 +211,20 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "description": "Register new customer",
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/RegisterRequest"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Access token",
+                        "description": "Customer Workspace",
                         "content": {
                             "application\/json": {
                                 "schema": {
-                                    "description": "API Access Bearer Token",
-                                    "type": "string",
-                                    "nullable": false,
-                                    "example": "9|eigK2WNOHtJEOKtgcXD6m2NIaDFVcIMDfCMrsKii"
+                                    "description": "List of all workspaces",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CustomerWorkspace"
+                                    }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "$ref": "#\/components\/responses\/UserAlreadyRegisteredException"
-                    },
-                    "422": {
-                        "$ref": "#\/components\/responses\/ValidationError"
                     },
                     "500": {
                         "$ref": "#\/components\/responses\/UnexpectedException"
@@ -1808,19 +1763,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Stroman PLC"
+                        "example": "Schaefer, Prohaska and Goldner"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Aliquam et sit ut ex sit voluptates. Rerum quaerat fuga beatae. Ut illo id ut dolores. Repudiandae culpa aut laboriosam quis iure et quis et."
+                        "example": "Sed quaerat commodi deleniti est qui qui. Modi vel vel et ratione et at sed. Aut rerum sint quia tempore occaecati totam accusantium laboriosam."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "14870 Bergstrom Flats Apt. 899\nNorth Kody, IA 97547-5376"
+                        "example": "3580 Vandervort Camp\nNew Moniqueborough, KY 94399"
                     }
                 }
             },
@@ -1902,7 +1857,7 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Accusantium sunt libero cum autem voluptatem nam. Sint consequatur repudiandae earum ab similique dolorum a. Magnam voluptatem iure placeat eligendi minima quis. Deserunt provident qui perferendis."
+                                    "example": "Quisquam facilis sit doloribus enim sed. Repellat voluptatem ad et commodi aut. Minus velit ipsa ab aut consectetur necessitatibus dolorum. Doloribus et dolorem excepturi saepe sapiente."
                                 }
                             }
                         }
@@ -1927,7 +1882,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Laboriosam ut aspernatur accusantium provident dicta deleniti dolor. Impedit laudantium non voluptatum facilis labore nam nisi. Ipsa qui et ratione ullam. Soluta deserunt facere ad."
+                                    "example": "Sint quis ducimus minima praesentium sed aut. Neque et rerum libero deserunt ut ut dolor."
                                 }
                             }
                         }
@@ -1946,17 +1901,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Grady, DuBuque and Considine"
+                        "example": "Turcotte-Schiller"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Suscipit molestiae voluptas suscipit velit pariatur aliquid. Laudantium facilis voluptatem error voluptatum velit voluptas et quos. Inventore quo voluptatem animi natus et ea."
+                        "example": "Minima tenetur accusantium recusandae dolorem aut dolor. Et aut facilis non possimus. Provident iste maxime commodi qui. Error placeat ab sapiente omnis quod harum."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "67133 Lynch Street Apt. 546\nWest Laila, FL 61268-6515"
+                        "example": "90672 Fisher Brooks Apt. 653\nLake Erickaside, RI 59697"
                     }
                 }
             },
@@ -1970,11 +1925,13 @@
                 "properties": {
                     "name": {
                         "description": "Plan name",
-                        "type": "string"
+                        "type": "string",
+                        "example": "Unde quaerat accusantium sed."
                     },
                     "description": {
                         "description": "Plan description",
-                        "type": "string"
+                        "type": "string",
+                        "example": "Autem neque reiciendis nulla assumenda aut. Rerum pariatur id in molestias eius. Hic amet ex et velit ab. Et fugiat voluptatem quia culpa ducimus. Sint eos ut illum vitae laborum."
                     }
                 }
             },
@@ -1988,7 +1945,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "At libero soluta dolor modi ipsum vel voluptatem. Vel porro dolores magnam et quod. Voluptatem ab omnis et consectetur quos. Suscipit voluptatum laboriosam aspernatur architecto amet placeat vel."
+                        "example": "Doloribus dolor totam sit maxime velit. Sint quibusdam expedita harum et mollitia itaque ut. Aut quis sapiente ab cupiditate ex ut aliquam."
                     }
                 }
             },
@@ -2022,7 +1979,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Modi est blanditiis adipisci et eum eaque quae. Odio architecto facere odit porro et voluptatibus ea blanditiis. Veniam qui cum et ex."
+                        "example": "Incidunt perspiciatis et et doloribus nihil et distinctio. Dolorem distinctio quas quae. Quis sequi expedita autem laborum dicta dicta eos. Velit consequatur ullam dignissimos aut."
                     }
                 }
             },
@@ -2038,18 +1995,18 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "wiegand.dewitt@harber.org"
+                        "example": "rconn@gmail.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "!LvI;<)kBlVMe3[E&'i"
+                        "example": "E[>o20\/k.w!Wv0"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "quisquam"
+                        "example": "magni"
                     }
                 }
             },
@@ -2066,28 +2023,23 @@
                     "phone": {
                         "description": "Phone",
                         "type": "string",
-                        "example": "917.305.0459"
-                    },
-                    "email": {
-                        "description": "Email is required if phone is not provided",
-                        "type": "string",
-                        "example": "hhegmann@schroeder.net"
+                        "example": "1-423-517-8466"
                     },
                     "name": {
                         "description": "Customer name",
                         "type": "string",
-                        "example": "Larry Windler"
+                        "example": "Rose Tillman"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "%2b:TE(DqcV"
+                        "example": "\"4}#pznO}XH;I|}r8"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "quae"
+                        "example": "dolorem"
                     }
                 }
             },
@@ -2146,7 +2098,7 @@
                         "description": "Card (plan) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Ut illo quasi non excepturi fuga. Amet blanditiis quaerat ipsam sed iure quidem. Occaecati nihil quisquam quae quisquam suscipit. Vel alias ea sunt earum distinctio earum."
+                        "example": "Voluptate blanditiis voluptas molestias. Dolores et voluptatem reiciendis. Voluptatibus nobis natus quidem fugit ex est perferendis. Odit occaecati placeat aperiam omnis quis occaecati in eveniet."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
@@ -2178,11 +2130,11 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Quis culpa occaecati optio voluptate. Sit reiciendis expedita saepe voluptatem veritatis aut quia aperiam."
+                                    "example": "Aut rerum pariatur autem autem accusamus. Minus provident quis qui aut aut accusantium. Voluptatem commodi nesciunt qui quo quia ut veniam. Autem et animi sint dolorem."
                                 }
                             }
                         },
-                        "example": "Quidem eum sed officia harum numquam dolores atque. Amet molestias hic ad blanditiis tempore. Eligendi harum quis beatae modi."
+                        "example": "Est repellendus ipsa a voluptate saepe vitae voluptatem. Inventore dolores qui ut sed voluptatem tempora iusto nam. Id et unde esse natus. Est nihil ut culpa id ipsam."
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -2204,7 +2156,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Magnam et veniam mollitia saepe et quod non. Porro suscipit qui voluptates repellendus facere. Et laboriosam in non labore."
+                                    "example": "Eos a doloremque placeat omnis provident qui. Sunt hic quis ipsam voluptatem est."
                                 }
                             }
                         }
@@ -2230,19 +2182,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Reichert Inc"
+                        "example": "Shanahan Ltd"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Sunt voluptate non explicabo aperiam nihil adipisci maiores autem. Consequuntur ut eum est fuga provident dolore quis. Et unde enim deleniti omnis assumenda."
+                        "example": "Assumenda ad sed ullam eligendi id ratione voluptate. Sint est aut placeat nobis. Id ut autem non quam tenetur et autem."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "92658 Jaron Dale\nLake Nikko, HI 04832"
+                        "example": "9746 Hackett Turnpike\nNorth Kieran, MD 54222"
                     }
                 }
             },
@@ -2276,13 +2228,13 @@
                         "description": "Plan name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Et porro impedit eum magni itaque excepturi."
+                        "example": "Sed delectus repellat voluptatem at."
                     },
                     "description": {
                         "description": "Plan description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Dolorem fugit sit maxime iusto ea quis. Repudiandae autem facilis et labore doloribus. Repellat sint quisquam explicabo eos pariatur rem omnis. Magni aliquid quis eaque ducimus delectus."
+                        "example": "Id culpa nam quos maiores omnis voluptatem soluta. Nihil et doloribus eos autem."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
@@ -2324,7 +2276,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Asperiores atque quidem corporis consectetur et nihil. Dolorem ea illum et quaerat. Eos dolorem rerum quia saepe et et."
+                                    "example": "Dolorem molestias qui sed voluptatem. Ullam ratione et amet adipisci nisi. Veniam labore aut corrupti voluptate. Iure atque tempore ad repellat nulla aut mollitia."
                                 }
                             }
                         }

@@ -16,9 +16,9 @@ use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\CollaborationLeave
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteAcceptController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteDiscardController;
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteProposeController;
-use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignInController;
-use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignOutController;
-use Queues\Api\V1\Presentation\Http\Controllers\Customer\SignUpController;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\GetTokenController;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\ClearTokensController;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\RegisterController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\WorkspacesAllController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansAddController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansArchiveController;
@@ -38,11 +38,11 @@ use Queues\Api\V1\Presentation\Http\Controllers\Workspaces\WorkspacesGetOneContr
 Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(function () {
     Route::post(Routing::uri(RouteName::REGISTER))
         ->name(RouteName::REGISTER)
-        ->uses(SignUpController::class);
+        ->uses(RegisterController::class);
 
     Route::post(Routing::uri(RouteName::GET_TOKEN))
         ->name(RouteName::GET_TOKEN)
-        ->uses(SignInController::class);
+        ->uses(GetTokenController::class);
 
     Route::get(Routing::uri(RouteName::CUSTOMER_WORKSPACES))
         ->name(RouteName::CUSTOMER_WORKSPACES)
@@ -51,7 +51,7 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
     Route::group(['middleware' => Routing::MIDDLEWARE_AUTH], function () {
         Route::get(Routing::uri(RouteName::CLEAR_TOKENS))
             ->name(RouteName::CLEAR_TOKENS)
-            ->uses(SignOutController::class);
+            ->uses(ClearTokensController::class);
 
         Route::get(Routing::uri(RouteName::CUSTOMER_CARDS))
             ->name(RouteName::CUSTOMER_CARDS)

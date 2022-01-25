@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Models\Support\PersistTrait;
-use Codderz\Platypus\Contracts\GenericIdInterface;
+use Codderz\Platypus\Exceptions\AuthenticationFailedException;
 use Codderz\Platypus\Exceptions\UserExistsException;
 use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\DBAL\Query\QueryException;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -59,7 +57,7 @@ class User extends Authenticatable
         'registration_initiated_at' => 'datetime',
     ];
 
-    public function persistFirst(): static
+    public function persistUnique(): static
     {
         try {
             $this->save();
@@ -71,12 +69,12 @@ class User extends Authenticatable
 
     public static function findByCredentialsOrFail(string $username, string $password): static
     {
-        $user = User::query()
+        $user = static::query()
             ->where('username', $username)
             ->firstOrFail();
 
         if (!Hash::check($password, $user->password)) {
-            throw new Exception('Unknown credentials');
+            throw new AuthenticationFailedException('Unknown credentials');
         }
 
         return $user;

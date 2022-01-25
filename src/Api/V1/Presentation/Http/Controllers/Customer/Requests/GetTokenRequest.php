@@ -4,17 +4,20 @@ namespace Queues\Api\V1\Presentation\Http\Controllers\Customer\Requests;
 
 use Queues\Api\V1\Presentation\Http\FormRequest;
 
-class SignInRequest extends FormRequest
+class GetTokenRequest extends FormRequest
 {
-    public string $username;
+    public string $identity;
 
     public string $password;
+
+    public string $deviceName;
 
     public function rules(): array
     {
         return [
-            'username' => 'required',
-            'password' => 'required'
+            'identity' => 'required',
+            'password' => 'required',
+            'deviceName' => 'required',
         ];
     }
 

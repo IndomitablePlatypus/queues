@@ -6,22 +6,25 @@ use Codderz\Platypus\Infrastructure\Support\GuidBasedImmutableId;
 use Illuminate\Support\Facades\Hash;
 use Queues\Api\V1\Presentation\Http\FormRequest;
 
-class SignUpRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
-    public GuidBasedImmutableId $id ;
+    public GuidBasedImmutableId $id;
 
-    public string $username;
+    public string $phone;
+
+    public string $name;
 
     public string $password;
 
-    public string $name;
+    public string $deviceName;
 
     public function rules(): array
     {
         return [
-            'username' => 'required',
-            'password' => 'required',
+            'phone' => 'required',
             'name' => 'required',
+            'password' => 'required',
+            'deviceName' => 'required',
         ];
     }
 
@@ -40,8 +43,11 @@ class SignUpRequest extends FormRequest
 
     public function toArray(): array
     {
-        $array = parent::toArray();
-        $array['password'] = Hash::make($this->password);
-        return $array;
+        return [
+            'id' => $this->id,
+            'username' => $this->phone,
+            'name' => $this->name,
+            'password' => Hash::make($this->password),
+        ];
     }
 }

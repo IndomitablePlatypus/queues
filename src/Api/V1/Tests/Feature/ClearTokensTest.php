@@ -10,7 +10,7 @@ use Queues\Api\V1\Tests\RoutingTestTrait;
 use Queues\Api\V1\Tests\TestApplicationTrait;
 use Queues\Tests\BaseTestCase;
 
-class SignOutTest extends BaseTestCase
+class ClearTokensTest extends BaseTestCase
 {
     use TestApplicationTrait, RoutingTestTrait;
 

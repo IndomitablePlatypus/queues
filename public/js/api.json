@@ -3,7 +3,7 @@
     "info": {
         "title": "Cardz Lite",
         "description": "Bonus cards server-side application lite version",
-        "version": "0.1.1.56"
+        "version": "0.1.1.57"
     },
     "servers": [
         {
@@ -1762,19 +1762,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Runolfsson Group"
+                        "example": "Towne, Turcotte and Heller"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Quia qui labore minus consectetur. Quia id eius et labore et. Dicta cupiditate eos enim aliquam rerum dolorem."
+                        "example": "Nesciunt alias magnam itaque natus. Quis hic voluptates sint dolorem totam. Eos qui pariatur explicabo consectetur quo id similique."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "32343 Jakubowski Plain\nSchowalterport, FL 75622"
+                        "example": "9822 Eichmann Junctions\nEast Stewartstad, OK 16850"
                     }
                 }
             },
@@ -1856,7 +1856,7 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Enim rem error qui. Quo cum et dolore recusandae sed inventore laboriosam. Accusantium iusto labore culpa magnam eum ducimus ab quos. Dolorem et nesciunt molestiae delectus esse aliquid."
+                                    "example": "Consequatur tempore qui consequatur voluptates voluptatem distinctio. Eos veniam neque quia reprehenderit et est repellat deleniti."
                                 }
                             }
                         }
@@ -1881,7 +1881,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Soluta perspiciatis libero ut reiciendis quia voluptatem. Ipsum non alias eum rerum optio. Porro suscipit commodi autem eveniet rem quae eum."
+                                    "example": "Voluptatem temporibus aut sint ipsa praesentium cumque. Illo in quis quidem tempore. Velit dicta sunt eum minus minima."
                                 }
                             }
                         }
@@ -1900,17 +1900,17 @@
                     "name": {
                         "description": "Workspace (business) title",
                         "type": "string",
-                        "example": "Powlowski-Beier"
+                        "example": "Smitham-Schroeder"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
-                        "example": "Praesentium sit et amet deserunt corporis. Odio sit voluptas omnis in ullam. Voluptatum ut qui sit placeat ut quasi. Sit praesentium autem nulla veniam."
+                        "example": "Est quo vero fugiat commodi eum voluptates vel optio. Nesciunt soluta repellendus doloribus aperiam. Eaque dolor sunt et tempore quam consectetur provident."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
-                        "example": "318 Violette Vista\nRaynormouth, DC 61478"
+                        "example": "62190 Schowalter Square\nWest Geovanni, LA 59473-3320"
                     }
                 }
             },
@@ -1925,12 +1925,12 @@
                     "name": {
                         "description": "Plan name",
                         "type": "string",
-                        "example": "Incidunt reiciendis quos dolorum aliquid ex."
+                        "example": "Quasi aliquam nulla laboriosam."
                     },
                     "description": {
                         "description": "Plan description",
                         "type": "string",
-                        "example": "Odit quidem omnis eum sed. Et occaecati recusandae doloribus consequatur iure possimus. Ut id a facilis eaque maxime eligendi."
+                        "example": "Placeat sequi et et quasi quis magni dolore. Officia nisi voluptate vitae incidunt. Quisquam quibusdam quisquam blanditiis omnis quia."
                     }
                 }
             },
@@ -1944,7 +1944,7 @@
                     "description": {
                         "description": "Requirement description",
                         "type": "string",
-                        "example": "Et expedita et nostrum ut distinctio ut a. Maxime nesciunt alias sunt porro quod ducimus. Voluptas fuga incidunt dolores rem aliquid. Doloremque sapiente est hic qui sed deleniti recusandae."
+                        "example": "Maiores doloremque facilis iusto nobis iste est harum. Unde ea exercitationem aut iure dolor animi. Est nihil voluptatem vel sed quis."
                     }
                 }
             },
@@ -1978,7 +1978,7 @@
                     "description": {
                         "description": "Achievement (requirement) description",
                         "type": "string",
-                        "example": "Dolores et nobis est harum eum aperiam suscipit nemo. Quae quia ea ut et quia et. Aperiam molestias vero impedit exercitationem magni. Expedita cupiditate commodi qui."
+                        "example": "Voluptas ad enim porro fugiat. Est necessitatibus voluptatum officiis error hic."
                     }
                 }
             },
@@ -1994,18 +1994,18 @@
                     "identity": {
                         "description": "Identity is either phone or email",
                         "type": "string",
-                        "example": "schulist.liana@reilly.org"
+                        "example": "ova.weber@gmail.com"
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "yifK&~{^-|)"
+                        "example": "(-FZA--LPe"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "voluptatem"
+                        "example": "et"
                     }
                 }
             },
@@ -2022,23 +2022,23 @@
                     "phone": {
                         "description": "Phone",
                         "type": "string",
-                        "example": "1-872-962-5604"
+                        "example": "+17264782459"
                     },
                     "name": {
                         "description": "Customer name",
                         "type": "string",
-                        "example": "Maxine Ziemann II"
+                        "example": "Herbert Wilkinson Sr."
                     },
                     "password": {
                         "description": "Password",
                         "format": "password",
                         "type": "string",
-                        "example": "4ARpZ\\$Y\"M.X"
+                        "example": ";]h|lbA9W$Wb`&BInrH"
                     },
                     "deviceName": {
                         "description": "Device name is required to distinguish between different access tokens",
                         "type": "string",
-                        "example": "ut"
+                        "example": "qui"
                     }
                 }
             },
@@ -2097,7 +2097,7 @@
                         "description": "Card (plan) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Quasi aut molestias error illo eos commodi eum dolor. Quis dolores asperiores et. Cupiditate deserunt natus amet possimus. Autem earum voluptas voluptatem explicabo aperiam."
+                        "example": "Natus non distinctio ipsum odio ut nihil ad deleniti. Qui ea et ad commodi et incidunt aut. Voluptatem provident et sed quibusdam."
                     },
                     "satisfied": {
                         "description": "Whether all requirements to receive a bonus are satisfied",
@@ -2129,11 +2129,11 @@
                                     "description": "Achievement description = corresponding requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Assumenda et dolorem officia ut omnis voluptas. Praesentium similique repellat quia earum."
+                                    "example": "Id sapiente vero assumenda a ipsam rerum dolor tempora. Molestiae facere voluptatem temporibus ut possimus aspernatur. Vel porro itaque qui officia. Ea accusamus aut eveniet quibusdam cumque autem."
                                 }
                             }
                         },
-                        "example": "Non voluptas molestiae aut qui. Debitis rerum distinctio neque ut. Voluptatem aperiam omnis perspiciatis neque."
+                        "example": "Fugit quae minus reiciendis in sed magni. Vero vel est sed et et. Modi aut aut quia aliquam corrupti ut vel fuga. Soluta debitis quaerat quia qui dolore quia nihil."
                     },
                     "requirements": {
                         "description": "All requirements",
@@ -2155,7 +2155,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Sit praesentium nam officia aut qui provident ab. Voluptatum molestiae natus consectetur nisi eius nisi quis. Sed corporis saepe aliquam harum. Voluptatem et sequi quisquam eum at quae ipsam."
+                                    "example": "Officiis quas id deserunt id consectetur. Sed totam fuga earum voluptas voluptatem praesentium. Aliquid tempora velit voluptas placeat. Dolore pariatur aspernatur dolorem at illum sint consequatur."
                                 }
                             }
                         }
@@ -2181,19 +2181,19 @@
                         "description": "Workspace (business) name",
                         "type": "string",
                         "nullable": false,
-                        "example": "O'Kon-Considine"
+                        "example": "D'Amore and Sons"
                     },
                     "description": {
                         "description": "Workspace (business) description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Quisquam hic eligendi nisi eligendi. Ex aliquid laborum qui repellat. Nihil pariatur labore saepe eligendi suscipit voluptas."
+                        "example": "Cum qui nemo quam aut. Odit praesentium a alias et adipisci. Odio enim maiores debitis. Voluptates laudantium et magni quia alias et."
                     },
                     "address": {
                         "description": "Workspace (business) address",
                         "type": "string",
                         "nullable": false,
-                        "example": "44933 Grant Parks Suite 906\nLake Brocktown, ME 15496-5656"
+                        "example": "228 Wilson Rue Apt. 864\nNorth Hymanburgh, NV 60730"
                     }
                 }
             },
@@ -2227,13 +2227,13 @@
                         "description": "Plan name",
                         "type": "string",
                         "nullable": false,
-                        "example": "Quasi est et quia iusto."
+                        "example": "Quia ipsa qui delectus quia."
                     },
                     "description": {
                         "description": "Plan description",
                         "type": "string",
                         "nullable": false,
-                        "example": "Est aliquam mollitia aspernatur beatae. Porro velit fugit est nihil. Ut tenetur recusandae hic. Ipsa eum omnis vel. Modi porro dolore sint vel enim."
+                        "example": "Et adipisci placeat vero voluptatem nihil et sapiente. Velit modi ad alias quia quis similique. Quia ullam molestiae perspiciatis voluptatem ratione aliquid."
                     },
                     "isLaunched": {
                         "description": "Whether the plan is launched",
@@ -2275,7 +2275,7 @@
                                     "description": "Requirement description",
                                     "type": "string",
                                     "nullable": false,
-                                    "example": "Blanditiis voluptas aspernatur expedita dolores qui non. Reiciendis at quas dicta a ducimus impedit. Quisquam minus id ea sapiente culpa quam. Nobis id dignissimos natus assumenda recusandae odio."
+                                    "example": "Quos recusandae iure labore voluptas nam nesciunt autem alias. Et sequi numquam corporis sequi mollitia laboriosam provident. Beatae fugit est occaecati cum cumque accusantium eum."
                                 }
                             }
                         }

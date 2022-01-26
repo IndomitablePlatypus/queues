@@ -5,26 +5,29 @@
 This repo is a lightweight version of the "Bonus Cards API" [app](https://github.com/codderzcom/cardz). Please refer to
 the [Cardz](https://github.com/codderzcom/cardz) documentation to get acquainted with the domain.
 
-In this instance, the underlying idea is slightly different. We try to use native Laravel features as much as possible
-while keeping the (relatively) same API routes and responses as in the main app.
+Oftentimes, the value of the new project is not yet apparent, and the management wishes to test some working prototype
+without fully committing to the project, thus creating the need for some kind of quick pilot project, MVP or the likes
+of it. In this instance, the idea is to create a simple MVP app with an extensive use of native Laravel features. We'll
+keep the same API routes and responses as in the main app to make them compatible and interchangeable from the frontend
+perspective.
 
-A couple of features diverge from this simplification concept, but only inasmuch as native Laravel features allow us to
-go. We use docker with Laravel Sail, a Redis container, and a RabbitMQ container instead of using a fake provider like
-in the main app, for example. Given the availability of Redis and RabbitMQ, we use queued jobs to handle asynchronous
-data transfer when applicable. Actually, as you've probably guessed from the name of this repo, checking Laravel queues'
-capabilities of working with RabbitMQ was one of the reasons to even try this at all.
+In some aspects it diverges from the simplification concept, but only inasmuch as native Laravel features allow us to
+go. For example, we use docker with Laravel Sail and a RabbitMQ container instead of using a fake provider. Given the
+availability of containers, queues, RabbitMQ and such, we use queued jobs to handle asynchronous data transfer when
+applicable.
 
 We were going to use Laravel Sanctum authorization capabilities instead of something more involved but settled on
-foregoing it altogether, at least for now.
+foregoing it altogether, at least for now, as they do not add a lot of visible value for the MVP. However, Sanctum is
+still used as an authentication module.
 
-This version casts aside a lot of design patterns used in the main one. There are basically no bounded contexts,
-aggregate roots, repositories, buses, and other stuff. This code is a somewhat small ball of mud... as muddy as we were
-willing to go.
+This version casts aside a lot of design patterns used in the main one. This, of course, does not mean that it's
+unstructured or not scalable. It's quite possible to develop this MVP into a fully functional production application.
+The main difference between the two approaches (this and the [main app](https://github.com/codderzcom/cardz)) is the
+starting point of development and presumed managerial requirements.
 
 ## Installation instructions
 
 - clone the [repo](https://github.com/codderzcom/queues) with `git clone`;
-- ensure you have PHP 8.1+ (it's not strictly required to run containers);
 - run `composer install`;
 - copy `.env.example` to `.env`;
 - provide your app key with `php artisan key:generate`;

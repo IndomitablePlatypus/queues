@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use JetBrains\PhpStorm\ArrayShape;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -33,7 +34,6 @@ class User extends Authenticatable
         'id',
         'name',
         'username',
-        'phone',
         'password',
     ];
 
@@ -132,5 +132,15 @@ class User extends Authenticatable
         /** @var Card $card */
         $card = $this->cards()->where('card_id', '=', $cardId)->firstOrFail();
         return $card;
+    }
+
+    #[ArrayShape(['profileId' => "string", 'name' => "string", 'identity' => "string"])]
+    public function asPerson(): array
+    {
+        return [
+            'profileId' => $this->id,
+            'name' => $this->name,
+            'identity' => $this->username,
+        ];
     }
 }

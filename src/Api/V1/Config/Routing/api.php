@@ -18,6 +18,8 @@ use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteDiscardContr
 use Queues\Api\V1\Presentation\Http\Controllers\Collaboration\InviteProposeController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\GetTokenController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\ClearTokensController;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\IdController;
+use Queues\Api\V1\Presentation\Http\Controllers\Customer\ProfileController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\RegisterController;
 use Queues\Api\V1\Presentation\Http\Controllers\Customer\WorkspacesAllController;
 use Queues\Api\V1\Presentation\Http\Controllers\Plans\PlansAddController;
@@ -52,6 +54,14 @@ Route::prefix(Routing::PREFIX_API)->middleware(Routing::MIDDLEWARE_API)->group(f
         Route::get(Routing::uri(RouteName::CLEAR_TOKENS))
             ->name(RouteName::CLEAR_TOKENS)
             ->uses(ClearTokensController::class);
+
+        Route::get(Routing::uri(RouteName::CUSTOMER_ID))
+            ->name(RouteName::CUSTOMER_ID)
+            ->uses(IdController::class);
+
+        Route::get(Routing::uri(RouteName::CUSTOMER_PROFILE))
+            ->name(RouteName::CUSTOMER_PROFILE)
+            ->uses(ProfileController::class);
 
         Route::get(Routing::uri(RouteName::CUSTOMER_CARDS))
             ->name(RouteName::CUSTOMER_CARDS)

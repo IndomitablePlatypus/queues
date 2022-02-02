@@ -1,6 +1,6 @@
 <?php
 
-namespace Queues\Api\V1\Tests\Feature;
+namespace Queues\Api\V1\Tests\Feature\Customer;
 
 use Queues\Api\V1\Config\Routing\RouteName;
 use Queues\Api\V1\Tests\RoutingTestTrait;

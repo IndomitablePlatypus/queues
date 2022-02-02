@@ -1,6 +1,6 @@
 <?php
 
-namespace Queues\Api\V1\Tests\Feature;
+namespace Queues\Api\V1\Tests\Feature\Customer;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

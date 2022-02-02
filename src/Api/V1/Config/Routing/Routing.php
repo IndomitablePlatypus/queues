@@ -17,6 +17,7 @@ class Routing
         RouteName::CUSTOMER_CARDS => '/customer/card',
         RouteName::CUSTOMER_CARD => '/customer/card/{cardId}',
         RouteName::CUSTOMER_ID => '/customer/id',
+        RouteName::CUSTOMER_PROFILE => '/customer/profile',
 
         RouteName::GET_WORKSPACES => '/workspace',
         RouteName::ADD_WORKSPACE => '/workspace',

@@ -4,7 +4,6 @@ namespace App\OpenApi\Schemas;
 
 use GoldSpecDigital\ObjectOrientedOAS\Contracts\SchemaContract;
 use GoldSpecDigital\ObjectOrientedOAS\Exceptions\InvalidArgumentException;
-use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
 use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
@@ -17,7 +16,7 @@ class PlanExpirationRequestSchema extends SchemaFactory implements Reusable
      */
     public function build(): SchemaContract
     {
-        $expires = Schema::string('expires')
+        $expires = Schema::string('expirationDate')
             ->format(Schema::FORMAT_DATE_TIME)
             ->description('Plan expiration date');
 

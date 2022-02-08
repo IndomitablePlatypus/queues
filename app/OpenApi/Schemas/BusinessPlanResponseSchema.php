@@ -47,6 +47,7 @@ class BusinessPlanResponseSchema extends SchemaFactory implements Reusable
 
         $expirationDate = Schema::string('expirationDate')
             ->format(Schema::FORMAT_DATE_TIME)
+            ->nullable(true)
             ->description('Plan expiration date');
 
         $requirement = Schema::object()->properties(

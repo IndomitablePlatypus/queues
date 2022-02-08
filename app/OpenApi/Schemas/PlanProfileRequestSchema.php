@@ -21,6 +21,7 @@ class PlanProfileRequestSchema extends SchemaFactory implements Reusable
         $name = Schema::string('name')
             ->description('Plan name')
             ->example($this->sentence());
+
         $description = Schema::string('description')
             ->description('Plan description')
             ->example($this->text());

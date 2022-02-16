@@ -156,37 +156,6 @@ class Card extends Model
         return $this->tryToSatisfy();
     }
 
-    public function getIssuedCardRepresentation(): array
-    {
-        return [
-            'cardId' => $this->card_id,
-            'workspaceName' => $this->workspace->name,
-            'workspaceAddress' => $this->workspace->address,
-            'customerId' => $this->customer_id,
-            'description' => $this->description,
-            'satisfied' => $this->satisfied_at !== null,
-            'completed' => $this->completed_at !== null,
-            'achievements' => $this->achievements,
-            'requirements' => $this->requirements,
-        ];
-    }
-
-    public function getBusinessCardRepresentation(): array
-    {
-        return [
-            'cardId' => $this->card_id,
-            'planId' => $this->plan_id,
-            'customerId' => $this->customer_id,
-            'isIssued' => $this->issued_at !== null,
-            'isSatisfied' => $this->satisfied_at !== null,
-            'isCompleted' => $this->completed_at !== null,
-            'isRevoked' => $this->revoked_at !== null,
-            'isBlocked' => $this->blocked_at !== null,
-            'achievements' => $this->achievements,
-            'requirements' => $this->requirements,
-        ];
-    }
-
     private function tryToSatisfy(): static
     {
         $requirements = $this->requirements;

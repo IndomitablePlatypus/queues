@@ -108,7 +108,7 @@ class Plan extends Model
         try {
             $this->expiration_date = new Carbon($expirationDate);
         } catch (Throwable) {
-            throw new ParameterAssertionException("Expiration date should be valid date");
+            throw new ParameterAssertionException("Expiration date should be a valid date");
         }
 
         $this->launched_at = Carbon::now();
@@ -141,8 +141,9 @@ class Plan extends Model
             'customer_id' => $customerId,
             'description' => $this->profile['description'],
             'issued_at' => Carbon::now(),
-            'requirements' => static::compactRequirements($this->getRequirements()->toArray()),
         ]);
-        return $card;
+        return $card->acceptRequirements(
+            static::compactRequirements($this->getRequirements()->toArray())
+        );
     }
 }

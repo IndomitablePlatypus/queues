@@ -64,8 +64,8 @@ services:
             - 'sailrabbitmqdata:/var/lib/rabbitmq/'
             - 'sailrabbitmqlog:/var/log/rabbitmq/'
         ports:
-            - '${FORWARD_REDIS_PORT:-6672}:5672'
-            - '${FORWARD_REDIS_MAN_PORT:-6673}:15672'
+            - '${FORWARD_RABBITMQ_PORT:-6672}:5672'
+            - '${FORWARD_RABBITMQ_MAN_PORT:-6673}:15672'
         networks:
             - sail
         healthcheck:

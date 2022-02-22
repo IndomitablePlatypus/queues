@@ -18,10 +18,15 @@ class IssuedCardResponseSchema extends SchemaFactory implements Reusable
             ->nullable(false)
             ->description('Card Id');
 
-        $planId = Schema::string('planId')
-            ->format(Schema::FORMAT_UUID)
+        $workspaceName = Schema::string('workspaceName')
             ->nullable(false)
-            ->description('Plan Id');
+            ->description('Workspace (business) name')
+            ->example($this->company());
+
+        $workspaceAddress = Schema::string('workspaceAddress')
+            ->nullable(false)
+            ->description('Workspace (business) address')
+            ->example($this->address());
 
         $customerId = Schema::string('customerId')
             ->format(Schema::FORMAT_UUID)
@@ -40,6 +45,10 @@ class IssuedCardResponseSchema extends SchemaFactory implements Reusable
         $completed = Schema::boolean('completed')
             ->nullable(false)
             ->description('Whether customer has received the bonus for this card');
+
+        $blocked = Schema::boolean('blocked')
+            ->nullable(false)
+            ->description('Whether the card has been blocked');
 
         $achievement = Schema::object()->properties(
             Schema::string('achievementId')
@@ -74,8 +83,8 @@ class IssuedCardResponseSchema extends SchemaFactory implements Reusable
             ->description('All requirements');
 
         return Schema::object('IssuedCard')
-            ->properties($cardId, $planId, $customerId, $description, $satisfied, $completed, $achievements, $requirements)
-            ->required($cardId, $planId, $customerId, $description, $satisfied, $completed, $achievements, $requirements);
+            ->properties($cardId, $workspaceName, $workspaceAddress, $customerId, $description, $satisfied, $completed, $blocked, $achievements, $requirements)
+            ->required($cardId, $workspaceName, $workspaceAddress, $customerId, $description, $satisfied, $completed, $blocked, $achievements, $requirements);
     }
 
 }

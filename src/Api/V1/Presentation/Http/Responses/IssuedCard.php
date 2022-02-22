@@ -26,6 +26,7 @@ class IssuedCard implements JsonSerializable
             'description' => $this->card->description,
             'satisfied' => $this->card->satisfied_at !== null,
             'completed' => $this->card->completed_at !== null,
+            'blocked' => $this->card->blocked_at !== null,
             'achievements' => $this->card->achievements,
             'requirements' => $this->card->requirements,
         ];

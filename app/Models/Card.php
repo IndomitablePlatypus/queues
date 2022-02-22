@@ -158,8 +158,9 @@ class Card extends Model
 
     private function tryToSatisfy(): static
     {
-        $requirements = $this->requirements;
-        foreach ($this->achievements as $achievement) {
+        $requirements = $this->requirements ?? [];
+        $achievements = $this->achievements ?? [];
+        foreach ($achievements as $achievement) {
             foreach ($requirements as $key => $requirement) {
                 if ($requirement['requirementId'] === $achievement['achievementId']) {
                     unset($requirements[$key]);

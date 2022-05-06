@@ -37,7 +37,9 @@ starting point of development and presumed managerial requirements.
 - run migrations for your DB with `sail artisan migrate`;
 - the demo application is now running on the `http://localhost/`.
 
-Optionally, you can run `sail artisan tests` to take a look at the small assortment of included tests.
+Optionally, you can run `sail artisan test` to take a look at the small assortment of included tests. 
+For this to work you will need to either add `queues_testing` database in the postgres container or to modify 
+`.env.testing` to work with other database. 
 
 ### Code structure
 
